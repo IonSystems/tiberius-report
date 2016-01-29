@@ -1,0 +1,127 @@
+% LaTeX cheatsheet at:
+% https://docs.google.com/document/d/1siJmv6TOJMdM7CNSkKBk8bU9iwQ3qLodOJSmk4UGuCc/edit?usp=sharing
+
+%% This example file demonstrating the use of the Caltech Thesis LaTeX Class file
+%% has been provided by Overleaf to help you get started writing your thesis.
+%%
+%% This example uses the new_cit_thesis.cls file produced by Daniel M. Zimmerman 
+%% An updated version of this class file has been produced by Ling Li, and is 
+%% available at: https://www.overleaf.com/read/njjxyzszvjzx
+%%
+%% Before starting your thesis, it is recommended to read the Caltech Library
+%% thesis guide at: http://libguides.caltech.edu/content.php?pid=22955&sid=487035
+%%
+\documentclass{new_cit_thesis}
+
+%Definition of our names
+\newcommand{\cameron}{Cameron A. Craig}
+\newcommand{\euan}{Euan W. Mutch}
+\newcommand{\duncan}{Duncan A. Robertson}
+\newcommand{\stuart}{Stuart J. Thain}
+\newcommand{\aidan}{Aidan P.J. Gallagher}
+\newcommand{\andrew}{Andrew J. Rigg}
+
+\usepackage[a4paper, total={6in, 8.5in}]{geometry}
+\usepackage{url}				%Use package for generating urls
+\usepackage{multirow}			%For authors table
+\usepackage[table,x11names]{xcolor} %To give table rows a bit of colour if so desired
+\usepackage[export]{adjustbox}	%To position logo on right
+\usepackage{xstring}			%For case statement on strings
+\usepackage[toc,page]{appendix}	%Use package for generating appendices
+\usepackage{amssymb}			%Use package for checkmark
+\usepackage{pdfpages}			%Use package for including pdf files
+\usepackage{longtable}			%Used for tables over more than one page
+\usepackage{booktabs}			%For height of stuff (adjustments)
+%\usepackage{morefloats}		%Get more floats for stuff
+%\extrafloats{100}				%same as above
+\usepackage{nth}				%For adding nth st etc to numbers, pretty cool
+\usepackage{cite}				%For references
+\usepackage{textcomp}			%To suppress warnings from gensymb
+\usepackage{gensymb}				%For special characters
+\newcommand\mathplus{+}			%For math plus symbol in biblio
+\usepackage{graphicx}			%For adding images
+\graphicspath{ {figures/} }
+\usepackage{float}				%For positioning things correctly
+\usepackage{listings}			%For code formatting and highlighting
+\usepackage{enumitem}			%Custom enumerion of lists
+\usepackage[normalem]{ulem}
+\usepackage{fancyhdr}			%For the header names at the top right 
+\usepackage{tikz}				%For the logo at top of title page
+\usepackage{notoccite}			%Stops citation numbering starting from their appearance in ToC
+\usepackage{subcaption}			%For subfigures
+\input{macros.tex}				%Contains custom macros
+\usepackage{csquotes}			%For big quotes
+\useunder{\uline}{\ul}{}
+
+%Row counting to continue list numbering across lists
+\usepackage{array}
+\newcounter{rowcount}
+\setcounter{rowcount}{0}
+
+\renewcommand{\arraystretch}{1.5} %Set a bit more padding in the tables
+
+\usepackage[xindy]{glossaries}
+\input{glossary}
+\makeglossaries
+
+
+\begin{document}
+\title{Final Group Report for the\\Development of an Autonomous Robot}
+\author{
+ \cameron	\\
+  \aidan	\\
+  \euan		\\
+  \andrew	\\
+  \duncan	\\
+  \stuart	\\
+}
+
+\degreeaward{MEng Computing and Electronics}	% Degree to be awarded
+\university{Heriot-Watt University}	% Institution name
+\address{Riccarton, Edinburgh}		% Institution address
+\unilogo{hw_logo}					% Institution logo
+\tiblogo{tib_logo}					% Tiberius logo
+\copyyear{\the\year}				% Year on diploma
+\pubnum{}							% Publication number
+\maketitle
+
+
+
+\begin{frontmatter}
+%   \makecopyright            % copyright page
+%  \makededication           % optional dedication
+%   \begin{acknowledgements}  % optional acknowledgements
+%We would like to thank Jim for his continued enthusiasm for his subject. Jim has provided us with the tools and components required to further develop Tiberius.\newline
+%During the writing of this report, Jim has remained patient and constructive.
+%   \end{acknowledgements}
+	\begin{authors}
+	\input{authors.tex}
+    \end{authors}
+    \begin{quote}
+    \input{quote.tex}
+    \end{quote}
+   \begin{abstract}
+   \input{abstract.tex}
+   \end{abstract}
+%   Additional front matter can be added here, e.g. tables of contents, figures.
+%   The command \verb|\extrachapter| will generate an unnumbered chapter heading, and will produce a corresponding entry in the Table of Contents. This command is used for the abstract and acknowledgements environments, and can also be used for extra front matter content such as lists of figures or theorems.
+\end{frontmatter}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\input{chapters/introduction_planning/chapter_introduction_planning.tex}
+\input{chapters/background_theory/chapter_background_theory.tex}
+\input{chapters/design_implementation/chapter_design_implementation.tex}
+\input{chapters/verification_validation/chapter_verification_validation.tex}
+\input{chapters/conclusions_future_work/chapter_conclusions_future_work.tex}
+\input{appendices/appendices.tex}
+\backmatter
+\pagestyle{blank}			%Set the page style to blank for the rest of the document.
+\bibliography{biblio}{}		%Define bibliography file
+\bibliographystyle{unsrt}
+%\begin{glossarys}
+
+\printglossaries
+%\end{glossarys}
+\end{document}

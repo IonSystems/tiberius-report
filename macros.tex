@@ -1,0 +1,49 @@
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{14pt}
+
+\fancypagestyle{cameron}{
+        \fancyhead[R]{\cameron}
+}
+\fancypagestyle{cameroneuan}{
+        \fancyhead[R]{\cameron \euan}
+}
+\fancypagestyle{euan}{
+        \fancyhead[R]{\euan}
+}
+\fancypagestyle{duncan}{
+        \fancyhead[R]{\duncan}
+}
+\fancypagestyle{stuart}{
+        \fancyhead[R]{\stuart}
+}
+\fancypagestyle{aidan}{
+        \fancyhead[R]{\aidan}
+}
+\fancypagestyle{andrew}{
+        \fancyhead[R]{\andrew}
+}
+\fancypagestyle{blank}{
+%This is blank
+		\fancyhead[R]{ }
+}
+
+\newcommand{\getname}[1]{%
+    \IfEqCase{#1}{%
+        {cameron}{\cameron}%
+        {euan}{\euan}%
+        {duncan}{\duncan}%
+        {stuart}{\stuart}%
+        {aidan}{\aidan}%
+        {andrew}{\andrew}%
+    }[\PackageError{getname}{Undefined option to tree: #1}{}]%
+}%
+
+
+
+\newcommand\authordescription[2]{
+  \begin{tabular}{lp{4cm}}
+  \multirow{2}{*}{\includegraphics[width=2cm]{profiles/#1}} & \multicolumn{1}{l}{\getname{#1}} \\ 
+                         & #2\\ 
+  \end{tabular}
+  \vspace*{0.5cm}
+}
