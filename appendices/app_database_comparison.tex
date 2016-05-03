@@ -1,0 +1,83 @@
+\chapter{Comparison of IMDB Implementations}
+\pagestyle{cameron}
+\section{Overview}
+Tiberius's In-memory Database is a critical area of our architecture. Two decisions regarding the architecture were which RPi to use and which database to use. A script was created to measure the speed at which different configuration could carry out operations. This script created a database, inserted arbitrary values, updated the values, queried the  values and then deleted the database. All of these functions were carried out 1000 times and then an average was taken.
+
+\section{Test Results}
+\subsection{Create}
+Each database must be created before any operations can be carried out on it. The creation if a one off event that occurs at the start, therefore the time delay does not have significant importance.  
+
+\begin{table}[!htb]
+\centering
+\caption{Create database }
+\label{Create}
+\begin{tabular}{lllll}
+     & RP1         & RP2 & RP3 &  \\
+Poly & 0.00338196 &     &     &  \\
+SQL  & 0.03206205 &     &     &  \\
+     &             &     &     & 
+\end{tabular}
+\end{table}
+
+\subsection{Insert}
+New data received from the sensors must be inserted into the database to be stored. This action is done regularly and there the time delay is important. 
+\begin{table}[!htb]
+\centering
+\caption{insert into database}
+\label{insert}
+\begin{tabular}{lllll}
+     & RP1         & RP2 & RP3 &  \\
+Poly & 0.00236365 &     &     &  \\
+SQL  & 0.032062053 &     &     &  \\
+     &             &     &     & 
+\end{tabular}
+\end{table}
+
+\subsection{Update}
+On certain occasions data in the table may need to be updated. This differs from inserted information as a new row of information is not appended however an existing row is searched for and it values are changed. This action is not done as often as inserting or querying although more often than creating and deleting.
+\begin{table}[!htb]
+\centering
+\caption{Update the database}
+\label{Update}
+\begin{tabular}{lllll}
+     & RP1         & RP2 & RP3 &  \\
+Poly & 0.00347629 &     &     &  \\
+SQL  & 0.03939703 &     &     &  \\
+     &             &     &     & 
+\end{tabular}
+\end{table}
+
+\subsection{Query}
+To retrieve the information stored in the database it has to be queried (searched). This is done regularly and the time delay is important.
+\begin{table}[!htb]
+\centering
+\caption{Query into database}
+\label{Query}
+\begin{tabular}{lllll}
+     & RP1         & RP2 & RP3 &  \\
+Poly & 0.138572986 &     &     &  \\
+SQL  & 0.051900138 &     &     &  \\
+     &             &     &     & 
+\end{tabular}
+\end{table}
+
+\subsection{Delete}
+The database may need to be deleted under certain circumstances. This will not happen often and therefore the delay is not important.
+\begin{table}[!htb]
+\centering
+\caption{Delete the database}
+\label{Delete}
+\begin{tabular}{lllll}
+     & RP1         & RP2 & RP3 &  \\
+Poly & 0.001752495 &     &     &  \\
+SQL  & 0.068341016 &     &     &  \\
+     &             &     &     & 
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+
+\iffalse
+The chosen RPi we are using is ...
+For this RPi this bar graph which seperate bar for each operation and shaded for sql and unshaded for poly.
+\fi

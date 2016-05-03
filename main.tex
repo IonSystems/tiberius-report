@@ -22,6 +22,7 @@
 \newcommand{\andrew}{Andrew J. Rigg}
 
 \usepackage[a4paper, total={6in, 8.5in}]{geometry}
+\usepackage[absolute]{textpos} % Used for positioning logo absolutely
 \usepackage{url}				%Use package for generating urls
 \usepackage{multirow}			%For authors table
 \usepackage[table,x11names]{xcolor} %To give table rows a bit of colour if so desired
@@ -90,7 +91,7 @@
 \begin{frontmatter}
 %   \makecopyright            % copyright page
 %  \makededication           % optional dedication
-%   \begin{acknowledgements}  % optional acknowledgements
+%   \begin{acknowledgements}  % optional acknowledgments
 %We would like to thank Jim for his continued enthusiasm for his subject. Jim has provided us with the tools and components required to further develop Tiberius.\newline
 %During the writing of this report, Jim has remained patient and constructive.
 %   \end{acknowledgements}
@@ -110,12 +111,14 @@
 \tableofcontents
 \listoffigures
 \listoftables
+
 \input{chapters/introduction_planning/chapter_introduction_planning.tex}
 \input{chapters/background_theory/chapter_background_theory.tex}
 \input{chapters/design_implementation/chapter_design_implementation.tex}
 \input{chapters/verification_validation/chapter_verification_validation.tex}
 \input{chapters/conclusions_future_work/chapter_conclusions_future_work.tex}
 \input{appendices/appendices.tex}
+
 \backmatter
 \pagestyle{blank}			%Set the page style to blank for the rest of the document.
 \bibliography{biblio}{}		%Define bibliography file
