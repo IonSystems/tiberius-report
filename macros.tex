@@ -43,12 +43,10 @@
     }[\PackageError{getname}{Undefined option to tree: #1}{}]%
 }%
 
-
-
-\newcommand\authordescription[2]{
-  \begin{tabular}{lp{4cm}}
-  \multirow{2}{*}{\includegraphics[width=2cm]{profiles/#1}} & \multicolumn{1}{l}{\getname{#1}} \\ 
-                         & #2\\ 
-  \end{tabular}
-  \vspace*{0.5cm}
-}
+\newcommand\authordescription[2]{%
+  \begin{tabular}{lp{4cm}}%
+  \multirow{2}{*}{\includegraphics[width=2cm]{profiles/#1}} & \multicolumn{1}{l}{\getname{#1}}\\%
+                         & #2\\%
+  \end{tabular}%
+  \vspace*{0.5cm}%
+}%

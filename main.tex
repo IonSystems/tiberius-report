@@ -4,8 +4,8 @@
 %% This example file demonstrating the use of the Caltech Thesis LaTeX Class file
 %% has been provided by Overleaf to help you get started writing your thesis.
 %%
-%% This example uses the new_cit_thesis.cls file produced by Daniel M. Zimmerman 
-%% An updated version of this class file has been produced by Ling Li, and is 
+%% This example uses the new_cit_thesis.cls file produced by Daniel M. Zimmerman
+%% An updated version of this class file has been produced by Ling Li, and is
 %% available at: https://www.overleaf.com/read/njjxyzszvjzx
 %%
 %% Before starting your thesis, it is recommended to read the Caltech Library
@@ -20,6 +20,8 @@
 \newcommand{\stuart}{Stuart J. Thain}
 \newcommand{\aidan}{Aidan P.J. Gallagher}
 \newcommand{\andrew}{Andrew J. Rigg}
+
+\renewcommand{\arraystretch}{1.5} %Set a bit more padding in the tables
 
 \usepackage[a4paper, total={6in, 8.5in}]{geometry}
 \usepackage[absolute]{textpos} % Used for positioning logo absolutely
@@ -46,25 +48,23 @@
 \usepackage{listings}			%For code formatting and highlighting
 \usepackage{enumitem}			%Custom enumerion of lists
 \usepackage[normalem]{ulem}
-\usepackage{fancyhdr}			%For the header names at the top right 
+\usepackage{fancyhdr}			%For the header names at the top right
 \usepackage{tikz}				%For the logo at top of title page
 \usepackage{notoccite}			%Stops citation numbering starting from their appearance in ToC
 \usepackage{subcaption}			%For subfigures
 \input{macros.tex}				%Contains custom macros
 \usepackage{csquotes}			%For big quotes
-\useunder{\uline}{\ul}{}
 
 %Row counting to continue list numbering across lists
 \usepackage{array}
 \newcounter{rowcount}
 \setcounter{rowcount}{0}
 
-\renewcommand{\arraystretch}{1.5} %Set a bit more padding in the tables
+
 
 \usepackage[xindy]{glossaries}
-\input{glossary}
 \makeglossaries
-
+\input{glossary}
 
 \begin{document}
 \title{Final Group Report for the\\Development of an Autonomous Robot}

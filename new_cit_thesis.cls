@@ -1,126 +1,11 @@
-%% 2015/10/14: Update to use ifpdf package
-%% 
-%% NEW_CIT_THESIS.CLS
-%% Primary LaTeX2e Document Class for Caltech Ph.D. Thesis
-%%
-%% This class is an extension of the {report} document class, v1.4b, that
-%% formats the title page and chapters according to Caltech's thesis 
-%% regulations. It additionally adds the ability to use the Lucida Bright
-%% font set and have the table of contents render properly, and
-%% automatically includes the correct version of the graphicx graphics 
-%% package when used with LaTeX or pdfLaTeX. This class requires the
-%% "setspace" and "graphicx" packages.
-%%
-%% The files "cit_logo.eps" and "cit_logo.pdf" are the Caltech logos for the
-%% title page, and should be distributed with this class.
-%%
-%% This class supports all options of the {report} document class, plus the 
-%% following additional options:
-%%
-%% defended - causes the cover page to list a "Defended" date instead of a
-%% "Submitted" date (the date itself is still set the same way it would
-%% be in a standard report class document). The option "\ifthesisdefended"
-%% allows the author to write conditional code based on whether or not 
-%% this option is specified.
-%%
-%% techreport - causes a local publication number (see "\pubnum", below) to
-%% be printed on the cover page instead of the copyright year and defense
-%% or submission date.
-%%
-%% doublespace - causes the thesis to be rendered double-spaced, for ease in
-%% writing comments
-%%
-%% draftfoot - adds a draft footer to each page, as well as changing the
-%% "Submitted" (or "Defended") line on the cover to indicate that the thesis
-%% is a draft copy. The macro "\ifthesisdraft" allows the to write
-%% conditional code based on whether or not this option is specified.
-%%
-%% lucida - causes the document to be typeset with the Lucida Bright font
-%% set, and modifies spacing in the table of contents appropriately. The
-%% macro "\iflucidafont" allows the author to write conditional code based 
-%% on whether or not this option is specified. In order to use lists of
-%% theorems with the ntheorem package and Lucida Bright fonts, the author
-%% should use the "ntheorem-thesis" style included with this document class;
-%% it will format the list of theorems similarly to the list of figures 
-%% format defined herein.
-%%
-%% preprint - causes a local publication number (see "\pubnum", below) to be
-%% added to the upper right corner of the title page. The macro
-%% "\ifthesispreprint" allows the author to write conditional code based on
-%% whether or not this option is specified.
-%%
-%% In addition to these options, the following macros are available:
-%%
-%% \ifpdf - allows the author to write conditional code based on whether or %% not pdftex is being used to typeset the thesis. This is potentially 
-%% important when importing graphics files, and can also be used to 
-%% determine whether or not to set PDF document attributes.
-%%
-%% \iftwoside - allows the author to detect whether two-sided layout was
-%% selected (for the purpose of including extra blank pages and the like).
-%%
-%% The following macros are available with this class, in addition to the 
-%% standard LaTeX macros for the report class (the macro arguments indicate
-%% the default values as specified in this class):
-%%
-%% \degreeaward{Doctor of Philosophy}                 Degree to be awarded
-%% \university{California Institute of Technology}    Institution name
-%% \address{Pasadena, California}                     Institution address
-%% \unilogo{cit_logo}                                 Institution logo
-%% \copyyear{\the\year}                               Year on diploma
-%% \pubnum{}                                          Publication number
-%% \dedication{}                                      Dedication text
-%%  
-%%
-%% The command "\maketitle" will generate a title page conforming to Caltech
-%% requirements, and including all the above information except the 
-%% dedication. Note that the logo specified in "\unilogo" should be 
-%% provided as both an .eps and a .pdf file, for use with both regular LaTeX
-%% and pdfLaTeX, and the file extension should not be specified in
-%% "\unilogo". 
-%%
-%% The command "\makededication" will generate a page with the dedication
-%% text. This command will cause an error if the dedication text has not
-%% been set.
-%%
-%% The command "\extrachapter" will generate an unnumbered chapter heading,
-%% and will produce a corresponding entry in the Table of Contents. This
-%% command is used for the {abstract} and {acknowledgements} environments,
-%% defined below, and can also be used for extra front matter content such
-%% as lists of figures or theorems.
-%%
-%% The initial portion of the document, which usually includes the copyright
-%% page, abstract, acknowledgements, table of contents, and any lists of
-%% figures or other items that may be necessary, is numbered in roman 
-%% numerals, while the body of the thesis is numbered in arabic numerals. 
-%% The {frontmatter} environment handles these page numbering conventions.
-%% The author should place the {frontmatter} environment immediately after
-%% the \maketitle command, and it should be structured as follows (this is
-%% the recommended order for components of the front matter):
-%%
-%%   \begin{frontmatter}
-%%      \makecopyright            % copyright page, required by Caltech
-%%      \makededication           % optional dedication
-%%      \begin{acknowledgements}  % optional acknowledgements
-%%         (body of acknowledgements)
-%%      \end{acknowledgements}
-%%      \begin{abstract}
-%%         (body of abstract)     % abstract, required by Caltech
-%%      \end{abstract}
-%%      (tables of contents, figures, other front matter) 
-%%   \end{frontmatter}
-%%
-%% The {abstract} and {acknowledgements} environments generate unnumbered 
-%% chapters that are listed in the table of contents.
-%%
-%% This class is adapted from Michael H. Kelsey's cit_thesis.cls, from
-%% February 1995. Unlike that class, this class does not work with LaTeX 
-%% 2.09.
-%%
+% Tiberius Report Style Class
+% Adapted from new_cit_thesis.cls - A Caltech Thesis Template
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{new_cit_thesis}
-              [2001/12/10 v1.2
- Caltech Thesis Class for LaTeX2e/pdfLaTeX2e, by Daniel M. Zimmerman.
+              [2016/05/04 v1.0
+ Tiberius Report Class for LaTeX2e/pdfLaTeX2e, by Daniel M. Zimmerman,
+ modified By Cameron A. Craig.
  Adapted from the LaTeX2e report class and M. Kelsey's cit_thesis.sty.]
 %
 % Define our new \if's
@@ -363,7 +248,7 @@
     \global\let\author\relax
     \global\let\date\relax
     \global\let\and\relax
-  }  
+  }
   \def\@maketitle{%
     \newpage
     \null
@@ -480,11 +365,11 @@
 \def\@makechapterhead#1{\vspace*{50pt}
   {\parindent 0pt \raggedright \setstretch{1} \huge\bf%
    \ifnum \c@secnumdepth>\m@ne%
-     \@chapapp{} \thechapter 
+     \@chapapp{} \thechapter
      \par
      \vskip 20pt
    \fi
-   \Huge \bf 
+   \Huge \bf
    #1\par \nobreak \vskip 40pt  \setstretch{1.5}}
 }				%% End of \@makechapterhead
 %
@@ -926,8 +811,8 @@
 \ifdoublespace
   \setstretch{2.0}
 \else
-  \setstretch{1.5}		
-\fi    	    
+  \setstretch{1.5}
+\fi
 %
 \setlength{\oddsidemargin}{.5in}	%% Left margin = 1-1/2 inches
 \setlength{\evensidemargin}{0in}	%% Right margin = 1 1/2 on even pgs
@@ -958,13 +843,13 @@
 \degreeaward{Doctor of Philosophy}			        % Default is Ph.D.
 
 \def\university{\gdef\@university}
-\university{California Institute of Technology}		% Default is Caltech 
+\university{California Institute of Technology}		% Default is Caltech
 
 \def\unilogo{\gdef\@unilogo}
 \unilogo{cit_logo}                                  % HW logo
 
 \def\tiblogo{\gdef\@tiblogo}						% Tiberius Logo
-\tiblogo{tib_logo}   
+\tiblogo{tib_logo}
 
 \def\address{\gdef\@address}
 \address{Pasadena, California}				        % Default is Caltech
@@ -982,12 +867,12 @@
 
  \begin{titlepage}
  \hspace*{-1.5cm}
- 
+
 %Position the university logo at the top right of the title page
  \begin{textblock}{3}[1,0](15,0.7)
  \includegraphics[scale=0.2, right]{\@unilogo}
  \end{textblock}
- 
+
    \let\footnotesize\small \let\footnoterule\relax \setcounter{page}{1}
    %\vskip-\headsep
    \beforetitleskip
@@ -1015,7 +900,7 @@
  	   \else
  	     \includegraphics[width=2in]{\@tiblogo.eps} \\
  	   \fi
-     \@university\\ 
+     \@university\\
      \@address\par
      \authorskip
      \iftechreport
@@ -1024,7 +909,7 @@
      \@copyyear\par
         \ifthesisdraft
            {\normalsize (DRAFT - NOT FOR DISTRIBUTION - \thesistime)\par}
-        \else 
+        \else
            \ifthesisdefended
               {\normalsize (Defended \@date)\par}
            \else
@@ -1071,16 +956,16 @@
 % The abstract and acknowledgements are treated as unnumbered chapters
 % with Table of Contents entries.
 %
-\def\abstract{\extrachapter{Abstract}}		
-\def\endabstract{\clearpage}			
+\def\abstract{\extrachapter{Abstract}}
+\def\endabstract{\clearpage}
 
 \def\acknowledgements{\extrachapter{Acknowledgements}}
 \def\endacknowledgements{\clearpage}
 
-\def\authors{\extrachapter{Authors}}		
+\def\authors{\extrachapter{Authors}}
 \def\endauthors{\clearpage}
 
-\def\glossarys{\extrachapter{Glossary}}		
+\def\glossarys{\extrachapter{Glossary}}
 \def\endglossarys{\clearpage}
 %
 % The {thebibliography} environment should put an entry into the Table
