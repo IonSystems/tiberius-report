@@ -1,1 +1,40 @@
 \section{Conclusions and Future Work}
+
+\subsection{Future Work}
+The web interface is very easy to extend, encouraging future development.
+The work carried out this year is simply a proof-of-concept, so there is a large
+chunk of work that could be done to further improve intergration with Tiberius.
+
+\subsubsection{Joystick Intergration}
+
+\subsubsection{MPEG-2 Video Streams}
+
+\subsubsection{Database Synchronisation}
+During a full system run there are currently two seperate databases up and
+running. The in-memory database runs on a Raspeberry Pi (Tiberius-side) and the
+SQLite database running on a web server. These two databases enable the
+possibity of database synchronisation. This would ease the communication of
+information between the web interface and Tiberius. Currenly, communication of
+data is acheieved by sending HTTP requests to the Control API, where the
+requests are translated to an SQL query, and the results of that query returned
+in the HTTP response.
+
+Database synchronisation would be an interesting alternative for communications,
+but comes with benefits as well as drawbacks.
+
+An Sqlite implementation of Tiberius's in-memory database exists, but isn't
+favoured for normal use. Polyehedra demonstarted superior performance in
+our benchmark testing. The Pytohn database wrapper has been designed to allow
+any SQL database engine to be used. Further information about the database
+wrapper can be found in our online documentation.
+
+
+\subsubsection{Improved Security}
+A framework is already in place to support authenticated requests between
+Tiberius and the web interface. However, currently we have a fixed
+authentication token, configured via the web interface and API settings.
+
+This is is an acceptable level of security for the scope of this project, which
+is purely research and education-based work. However, security improvements
+should be considered as a possible area of work for future years, if this
+project is to ever be considered as a more commercial/educational project.
