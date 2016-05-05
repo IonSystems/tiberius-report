@@ -46,7 +46,7 @@
 \graphicspath{ {figures/} }
 \usepackage{float}				%For positioning things correctly
 \usepackage{listings}			%For code formatting and highlighting
-\usepackage{enumitem}			%Custom enumerion of lists
+\usepackage{enumitem}			%Custom enumeration of lists
 \usepackage[normalem]{ulem}
 \usepackage{fancyhdr}			%For the header names at the top right
 \usepackage{tikz}				%For the logo at top of title page
@@ -59,8 +59,6 @@
 \usepackage{array}
 \newcounter{rowcount}
 \setcounter{rowcount}{0}
-
-
 
 \usepackage[xindy]{glossaries}
 \makeglossaries
@@ -86,31 +84,29 @@
 \pubnum{}							% Publication number
 \maketitle
 
-
-
 \begin{frontmatter}
-%   \makecopyright            % copyright page
-%  \makededication           % optional dedication
-%   \begin{acknowledgements}  % optional acknowledgments
-%We would like to thank Jim for his continued enthusiasm for his subject. Jim has provided us with the tools and components required to further develop Tiberius.\newline
-%During the writing of this report, Jim has remained patient and constructive.
-%   \end{acknowledgements}
-	\begin{authors}
-	\input{authors.tex}
-    \end{authors}
-    \begin{quote}
-    \input{quote.tex}
-    \end{quote}
-   \begin{abstract}
-   \input{abstract.tex}
-   \end{abstract}
-%   Additional front matter can be added here, e.g. tables of contents, figures.
-%   The command \verb|\extrachapter| will generate an unnumbered chapter heading, and will produce a corresponding entry in the Table of Contents. This command is used for the abstract and acknowledgments environments, and can also be used for extra front matter content such as lists of figures or theorems.
-\end{frontmatter}
+
+\begin{authors}
+\input{authors.tex}
+\end{authors}
+
+\begin{acknowledgements}
+\input{acknowledgements.tex}
+\end{acknowledgements}
+
+\begin{quote}
+\input{quote.tex}
+\end{quote}
+
+\begin{abstract}
+\input{abstract.tex}
+\end{abstract}
 
 \tableofcontents
 \listoffigures
 \listoftables
+
+\end{frontmatter}
 
 \input{index.tex}
 \input{appendices/appendices.tex}
@@ -119,8 +115,7 @@
 \pagestyle{blank}			%Set the page style to blank for the rest of the document.
 \bibliography{biblio}{}		%Define bibliography file
 \bibliographystyle{unsrt}
-%\begin{glossarys}
 
 \printglossaries
-%\end{glossarys}
+
 \end{document}

@@ -1,0 +1,40 @@
+\section{Software Overview}
+
+Our software is primarily written in Python, with a small amount of C++ running on various microcontrollers.
+All software is under version control on Github (\url{https://github.com/IonSystems/tiberius-robot}), and included version history as far back as 22nd January 2015 \cite{oldest-commit}.
+
+\subsection{Software Modules}
+Our software is split into many modules, each of which is briefly described below:
+\begin{description}[align=left]
+\item [Control] Contains drivers and control functions to communicate with all hardware devices. The module is structured with three layers of abstraction:
+\begin{description}
+\item [Integration-Level] Defines control loops and logic encompassing multiple specialised devices that were defined at the previous level.
+
+\item [Specialised-Level] Defines the functionality of each hardware device, makes use of the drivers defined at the Driver-Level to communicate with the devices. Functions defined at this level only have access to the specialised driver for a particular device. 
+
+\item [Driver-Level] Interacts with hardware at the most primative level. Does not contain any complex calculations or sophisticated behaviour, and data is not modified in any way to cause loss in precision.
+\end{description}
+
+\item [Web Interface] contains the Django Web Interface codebase. Does not depend on any other Tiberius modules.
+
+\item [Database] provides functions to interact with the database.
+
+\item [Database Wrapper] is a general purpose database wrapper, bridging the gap between the database engine and easy to write functions. This module can be used in any context (not just on Tiberius) and is designed to be extensible, so other database engines can be supported in future versions.
+
+\item [Logging] provides a consistent logging behavior throughout all Tiberius software. All logging information is stored to the same file, with the source of the message clearly stated.
+
+\item [Utilities] Contains miscellaneous functions that may come in handy in any other module.
+
+\item [Configuration] allows the configuration file to be read from any other Tiberius module. 
+
+\item [Navigation] contains an A-Start algorithm implementation, as well as basic navigation algorithms, allowing Tiberius to navigate using the GPS.
+
+\item [Testing] is a central testing module, containing unit tests for all other Tiberius modules. Also contains useful developer scripts designed to initialise particular classes and print out logging information.
+
+\item [Validation] contains validation logic to determine the status of database sensor information.
+
+\item [Diagnostics] an incomplete module designed to contain a diagnosis thread. This thread is designed to run in the background, constantly monitoring sensor data and looking for pre-defined patterns. If a pattern was matched, then the module would diagnose a problem, and indicate the problem via status LED's and log messages. This module is further discussed in Future Work.
+
+\item [Android Control]contains a 'legacy' android application developed in the previous year to ours. This application hasn't been touched, and not currently supported by the Control API. This module is also discussed further in the Future Work section.
+
+\end{description}

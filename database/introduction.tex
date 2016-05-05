@@ -1,6 +1,32 @@
 \section{Introduction and Planning}
 
+\subsection{Introduction}
+The database was completely redesigned from previous years in terms of the schema, and how our Python code interfaces with the database.
 
-The the database works. sensor data in, any component can read from database.
+A highly extendable database wrapper was written in Python, and support for SQLite and Polyhedra was included. The design of this wrapper makes incorporating new database engines - other than SQLite and Polyhedra - extremely easy.
 
-Types of database
+A layer of abstraction is created to separate the developer from the raw SQL statements, but also allowing controller access to raw SQL statements when no other option is available.
+
+A comparison of two possible interactions with the database are given below:
+
+\begin{lstlisting}
+def query_sensor_validity(poly):
+    return poly.query(
+        SensorValidityTable.table_name,
+        [
+            'ultrasonics',
+            'compass',
+            'gps'
+        ]
+    )
+\end{lstlisting}
+
+\begin{lstlisting}
+return poly.sql("SELECT ultrasonics, compass, gps from sensor_validity_table;")
+\end{lstlisting}
+
+As well as creating a layer of abstraction to aid database development and integration, database interaction also take place behind the scenes, thanks to Python decorators.
+
+%The the database works. sensor data in, any component can read from database.
+
+%Types of database
