@@ -1,7 +1,55 @@
 \section{Design and Implementation}
 
+\subsubsection{Table definitions}
+Each table has unique columns to suit the sensor data.
+Each table is defined in its own class.
+Below is an example of the GPS table. The reason for the column names is expanded later in the GPS section.
+\begin{lstlisting}     
+class GPSTable(Table):
+    table_name = "gps_reading"
+    columns = {
+        'id': 'int primary key',
+        'latitude': 'float',
+        'longitude': 'float',
+        'altitude': 'float',
+        'gps_qual': 'int',
+        'num_sats': 'int',
+        'dilution_of_precision': 'float',
+        'velocity': 'float',
+        'fixmode': 'int',
+        'timestamp': 'float'}
+\end{lstlisting} 
+
+
 \subsubsection{Creating database}
-The database is checked to see if it already exists. If it does it is deleted (dropped). It is then created with the unique row described in the next subsections.
+Several functions are called when creating the tables. On normal usage the table are created when start_tiberius.py is run. 
+
+
+
+It is then created with the unique row described in the next subsections.
+
+\begin{lstlisting}       
+def drop_create(poly, table):
+    '''
+    Drop a table then create it, this ensures the table has the latest column
+    definitions and is initiall free of any data.
+    '''
+    try:
+        poly.drop(table.table_name)
+    except poly.NoSuchTableError:
+        # Table didn't exist previously, no worries!
+        pass
+    try:
+        poly.create(
+            table.table_name,
+            table.columns
+        )
+    except poly.OperationalError:
+        print "something went wrong... "
+    except poly.TableAlreadyExistsError:
+        print table.table_name + " already exists."
+\end{lstlisting}  
+As can be seen the table is dropped before being created. This means is Tiberius was previously running and Tiberius had not been switched off
 
 \subsubsection{Ultrasonics}
 insert image of database in every chapter

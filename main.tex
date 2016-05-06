@@ -21,6 +21,15 @@
 \newcommand{\aidan}{Aidan P.J. Gallagher}
 \newcommand{\andrew}{Andrew J. Rigg}
 
+% Define figure folders, so we don't need to define the full path
+% just the figure name.
+\usepackage{graphicx}
+\graphicspath {
+	{system_overview/figures/}
+	{mechanical/figures/}
+    {web/figures/}
+}
+
 \renewcommand{\arraystretch}{1.5} %Set a bit more padding in the tables
 
 \usepackage[a4paper, total={6in, 8.5in}]{geometry}
@@ -42,8 +51,6 @@
 \usepackage{textcomp}			%To suppress warnings from gensymb
 \usepackage{gensymb}				%For special characters
 \newcommand\mathplus{+}			%For math plus symbol in biblio
-\usepackage{graphicx}			%For adding images
-\graphicspath{ {figures/} }
 \usepackage{float}				%For positioning things correctly
 \usepackage{listings}			%For code formatting and highlighting
 \usepackage{enumitem}			%Custom enumeration of lists

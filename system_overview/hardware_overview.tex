@@ -1,8 +1,24 @@
 \section{Hardware Overview}
 
+\subsection{Motor Control Architecture}
+A new motor control subsystem has been introduced, introducing a \gls{canbus} network, a \gls{UDP} interface, whilst maintaining the existing \gls{i2c} interfaced MD03 motor drivers. \ref{fig:motor-control-architecture} illustrates the communications that exist in order to drive the wheel and steering motors.
+
+The new control system introduces a PID control loop, working with the rotary encoders to provide a controlled motor speed.
+
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=11.5cm]{motor_control.png}
+\end{center}
+\caption{Motor Control Communication Architecture}
+\label{fig:motor-control-architecture}
+\end{figure}
+
 \subsection{Sensors}
 \subsubsection{Ultrasonics}
 \subsubsection{Motor Encoders}
+\subsubsection{Kinect}
+
 
 \subsection{compute power}
 \subsubsection{Raspberry Pi}
@@ -11,6 +27,9 @@
 \subsubsection{mbed}
 \subsubsection{Arduino}
 \subsubsection{RAMPS board}
+\subsubsection{MD03 Motor drivers}
 
 \subsection{Actuators}
+\subsubsection{Robot Arm}
+\subsubsection{Motors}
 

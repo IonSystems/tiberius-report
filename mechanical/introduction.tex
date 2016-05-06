@@ -5,7 +5,7 @@ This group's involvement in the Tiberius project began with Tiberius II - a four
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=10cm]{mechanical/figures_mech/mech_Tib_old_diagram.png}
+\includegraphics[width=10cm]{mech_Tib_old_diagram.png}
 \end{center}
 \caption{Tiberius II}
 \label{fig:mech_old}
@@ -17,17 +17,29 @@ In a similar fashion the wheel and motor system left much to be desired. While s
 
 Clearly with so many changes it was likely that the entire structure of the robot would have to be changed. However, this opened up the opportunity to think about further mechanical features that would have been harder to implement while keeping the old robot intact. Drastic changes such as the addition of a steering system or shock absorbers to the frame would now be possible.
 
-With so many possible changes in the pipeline it was decided that this project would culminate in an entirely new version of the Tiberius robot - Tiberius III.
+With so many opportunities for change in the pipeline it was decided that this project would culminate in an entirely new version of the Tiberius robot - dubbed `Tiberius III'.
 \subsection{Aims and objectives}
 
-With practically endless options for changing the design, the team settled on the below objectives:
+With practically endless options for changing the design, it was important to plan our objectives carefully, keeping in mind the time constraints of the project. Three main areas for improvement were identified:
 
 \begin{enumerate}
 	\item Motors
 	\begin{itemize}
-     	\item New motors
+    	\item New motors
+    
+    	As stated above, there were some issues with the motors on Tiberius II. As such, new motors were provided at the commencement of the project with the expectation that we would integrate them into the new design. These new DC motors are much more versatile than the old ones, and being new and of a high standard have superior power efficiency. This should improve Tiberius' power usage and increase its range.
+        \newline
+        The new motors include a 100:1 \gls{epicyclic gearbox}, maintaining extremely high torque while allowing them to be fixed parallel to the wheels, using very little space and removing the need for a 90\degree{} gearbox, as can be found on Tiberius II.
+        \newline
+        As a result, when integrated onto Tiberius the new motors provide a noticeably faster running speed - a maximum of XX \gls{RPM}, rather than the XX \gls{RPM} of the older motors.
+
     	\item Velocity control
+        
+        The previous version of Tiberius relied on each motor running at identical velocities to maintain a straight path. This was far from ideal, and the robot had a tendency to veer off-track, especially on rough terrain. To amend the issue, some sort of velocity control system would need to be implemented, using feedback to ensure that the motors matched each other's speed.
+        
        	\item mbed control units
+        
+        
    	\end{itemize}
     
    	\item Wheel mounting
