@@ -1,7 +1,9 @@
 \section{Design and Implementation}
 
-\subsubsection{Table definitions}
-Each table has unique columns to suit the sensor data.
+\subsection{Table definitions}
+Each table has unique set of columns to suit the sensor data.
+Every table has 2 columns in common. One is the id, this column represents the reading and provides a way to identify each reading. The first reading has id 1, and it increments with each reading. The other column in the timestamp, this is the time when the sensor data was inserted into the database - which is very close to the time the sensor data was aquired. Therefore the timestamp can be used to determine how old a sensor reading is. 
+\newline
 Each table is defined in its own class.
 Below is an example of the GPS table. The reason for the column names is expanded later in the GPS section.
 \begin{lstlisting}     
@@ -21,12 +23,155 @@ class GPSTable(Table):
 \end{lstlisting} 
 
 
-\subsubsection{Creating database}
-Several functions are called when creating the tables. On normal usage the table are created when start_tiberius.py is run. 
+\subsubsection{Ultrasonics}
+The \gls{ultrasonicsensor} table has 6 columnns, one for each sensor. Each row in the table is a new reading of each sensor. The data represents the distance in millimeters to an object in its line of sight.  
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[!htb]
+\centering
+\caption{ultrasonic table}
+\label{my-label}
+\begin{tabular}{@{}llllllll@{}}
+\toprule
+id              & fl    & fc    & fr    & rl    & rc    & rr    & timestamp \\ \midrule
+int primary key & float & float & float & float & float & float & float    
+\end{tabular}
+\end{table}
+
+In the table the following abbreviation are used:
+\begin{itemize}
+ \item front left is abbreviated to fl.
+ \item front centre is abbreviated to fc. 
+ \item front right is abbreviated to fr
+ \item rear left is abbreviated to rl.
+ \item rear centre is abbreviated to rc. 
+ \item rear right is abbreviated to rr.
+\end{itemize}
+
+\subsubsection{LIDAR}
+\iffalse
+\gls{LIDAR} data read using SDK (C++)
+Changed the output to return a JSON format
+Python dictionary in this format...
+Small error with the last comma breaking the JSON object so used python \lstinline{data.replace(',\n' , ']')} which replaced the last comma with a ]
+
+Lidar class validates the data
+ - removes data (angle) which is obscured by the antenna
+\fi
 
 
 
-It is then created with the unique row described in the next subsections.
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[!htb]
+\centering
+\caption{lidar table}
+\label{my-label}
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+id              & start\_flag & angle & distance & quality & reading\_iteration & timestamp \\ \midrule
+int primary key & varchar     & float & float    & float   & int            & float    
+\end{tabular}
+\end{table}
+\textbf{start\_flag} is a flag which is toggled on the last reading iteration of a full spin. It is included as it is produces by the SDK, however currently it is not used. 
+\newline
+\textbf{angle} is the angle which the reading was taken at. 
+\newline
+\textbf{distance} is the distance of an object that is line the lidar's line of sight.
+\newline
+\textbf{qualitty} is the measure of certanity that there is an object is that location
+\newline
+\textbf{reading\_iteration} increments after each full spin. This means that when querying the database, the user can ensure that all the readings come from the same 360 degree spin.
+
+
+
+\subsubsection{GPS}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[!htb]
+\centering
+\caption{GPS table}
+\label{my-label}
+\begin{tabular}{@{}lllllllll@{}}
+\toprule
+id              & latitude & longitude & altitude & gps\_qual & num\_sats & velocity & fixmode & timestamp \\ \midrule
+int primary key & float    & float     & float    & int       & int       & float    & int     & float    
+\end{tabular}
+\end{table}
+\textbf{latitude}
+\newline
+\textbf{longitude} 
+\newline
+\textbf{altitude} 
+\newline
+
+\subsubsection{Compass}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[!htb]
+\centering
+\caption{Compass table}
+\label{my-label}
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+id              & heading & tilt  & pitch & roll  & temperature & timestamp \\ \midrule
+int primary key & float   & float & float & float & float       & float    
+\end{tabular}
+\end{table}
+
+\subsubsection{Motors}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[!htb]
+\centering
+\caption{Motors table}
+\label{my-label}
+\begin{tabular}{@{}llllll@{}}
+\toprule
+id              & front\_left & front\_right & rear\_left & rear\_right & timestamp \\ \midrule
+int primary key & float       & float        & float      & float       & float    
+\end{tabular}
+\end{table}
+
+\subsubsection{Steering}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[!htb]
+\centering
+\caption{Steering table}
+\label{my-label}
+\begin{tabular}{@{}llllll@{}}
+\toprule
+id              & front\_left & front\_right & rear\_left & rear\_right & timestamp \\ \midrule
+int primary key & float       & float        & float      & float       & float    
+\end{tabular}
+\end{table}
+
+\subsubsection{Arm}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[!htb]
+\centering
+\caption{Arm table}
+\label{my-label}
+\begin{tabular}{@{}llllllll@{}}
+\toprule
+id              & X     & Y     & Z     & waist & elbow & shoulder & timestamp \\ \midrule
+int primary key & float & float & float & float & float & float    & float    
+\end{tabular}
+\end{table}
+
+
+\subsection{Creating database}
+Several functions are called when creating the tables. On normal usage the table are created when start\_tiberius.py is run. In start Tiberius all the configured files are called
+
+
+
+
+It is then created with unique columns described in the next subsections.
 
 \begin{lstlisting}       
 def drop_create(poly, table):
@@ -51,27 +196,86 @@ def drop_create(poly, table):
 \end{lstlisting}  
 As can be seen the table is dropped before being created. This means is Tiberius was previously running and Tiberius had not been switched off
 
-\subsubsection{Ultrasonics}
-insert image of database in every chapter
+\subsection{Insert}
+\begin{lstlisting} 
+def insert_gps_reading(poly, id, data):
+    poly.insert(
+        GPSTable.table_name,
+        {
+            'id': id,
+            'latitude': data['latitude'],
+            'longitude': data['longitude'],
+            'gps_qual': data['gps_qual'],
+            'num_sats': data['num_sats'],
+            'dilution_of_precision': data['dilution_of_precision'],
+            'velocity': data['velocity'],
+            'fixmode': data['fixmode'],
+            'timestamp': data['timestamp']
+        }
+    )
+\end{lstlisting}  
+\subsection{Update}
+\begin{lstlisting} 
+def update_gps_sensor_validity(poly, value):
+    poly.update(
+        SensorValidityTable.table_name,
+        {
+            'gps': value
+        },
+        {
+            'clause': 'WHERE',
+            'data': [
+                            {
+                                'column': 'id',
+                                'assertion': '=',
+                                'value': '0'
+                            }
+                        ]
+                    }
+                )
+\end{lstlisting}
+
+\subsection{Polyhedra wrapper}
 
 
-\subsubsection{LIDAR}
-\gls{LIDAR} data read using SDK (C++)
-Changed the output to return a JSON format
-Python dictionary in this format...
-Small error with the last comma breaking the JSON object so used python \lstinline{data.replace(',\n' , ']')} which replaced the last comma with a ]
 
-Lidar class validates the data
- - removes data (angle) which is obscured by the antenna
 
-% insert id, start flag, angle, distance ,reading_iteration, timestamp
 
-\subsubsection{GPS}
+\subsection{Procedure}
+\subsubsection{Starting database}
+Upon start up the database will not be running. It is therefore necessary to run the start tiberius script to initiate the database and start the threads. The database is started using the command shown below.
 
-\subsubsection{Compass}
+\begin{lstlisting} 
+database = Popen("/home/pi/poly9.0/linux/raspi/bin/rtrdb -r data_service=8001 db", shell=True, stdout=PIPE)
+\end{lstlisting}
 
-\subsubsection{Motors}
+The tables for all the sensors are then created. This is done by calling the create function described above. Next the threads are started to continuously update the database. Threads are only started if the sensor is installed - this is ensured by the configuration file. For more detail on the configuration file see configuration  (\ref{configuration}). The motor and arm are actuators rather than sensors, and therefore are employ a different technique to update the value; this technique is further described in the Decorators section (\ref{decoratordefinition})
 
-\subsubsection{Encoders}
+\subsubsection{Sensor threads}
+Each sensor has its own thread; the purpose of which is to collect the data from the sensor it is assigned to. The threads run concurrently and have a their own time delay to reduce the workload. 
+Below is a shortened version of the GPS thread.
+\begin{lstlisting} 
+while True:
+  gps_data = gps.read_gps()
+  if gps_data is not False:
+    if gps_read_id < GPS_NUMBER_OF_READINGS:
+   		ins.insert_gps_reading(self.poly, gps_read_id, gps_data)
+    else:  # start updating results
+   		gps_update_id = gps_read_id % GPS_NUMBER_OF_READINGS
+    	up.overwrite_gps_reading(self.poly, gps_update_id, gps_data)
+    gps_read_id += 1
+    no_data_time = 0
+\end{lstlisting}          
 
-\subsubsection{Steering}
+\subsubsection{Actuator decorators}
+Unlike the sensors, the actuator database should not be updated in a 
+
+\label{decoratordefinition}
+Decorators dynamically alter the functionality of a function, method or class without having to directly use subclasses \ref{decoratordefinition}.
+
+
+
+
+
+
+

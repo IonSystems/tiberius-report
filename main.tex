@@ -30,6 +30,11 @@
     {web/figures/}
 }
 
+% Enable these lines for draft reports
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT}
+\SetWatermarkScale{4}
+
 \renewcommand{\arraystretch}{1.5} %Set a bit more padding in the tables
 
 \usepackage[a4paper, total={6in, 8.5in}]{geometry}
@@ -62,6 +67,8 @@
 \input{macros.tex}				%Contains custom macros
 \usepackage{csquotes}			%For big quotes
 
+\renewcommand{\lstlistingname}{Code Listing}
+
 %Row counting to continue list numbering across lists
 \usepackage{array}
 \newcounter{rowcount}
@@ -85,7 +92,7 @@
 \degreeaward{MEng Computing and Electronics}	% Degree to be awarded
 \university{Heriot-Watt University}	% Institution name
 \address{Riccarton, Edinburgh}		% Institution address
-\unilogo{hw_logo}					% Institution logo
+\unilogo{HW_logo}					% Institution logo
 \tiblogo{tib_logo}					% Tiberius logo
 \copyyear{\the\year}				% Year on diploma
 \pubnum{}							% Publication number

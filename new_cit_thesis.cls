@@ -870,7 +870,7 @@
 
 %Position the university logo at the top right of the title page
  \begin{textblock}{3}[1,0](15,0.7)
- \includegraphics[scale=0.2, right]{\@unilogo}
+ \includegraphics[scale=0.5, right]{\@unilogo}
  \end{textblock}
 
    \let\footnotesize\small \let\footnoterule\relax \setcounter{page}{1}

@@ -1,13 +1,14 @@
 \section{Introduction and Planning}
 
 \subsection{Introduction}
-Within this navigation chapter, there will be an in-depth look at the algorithms and ideals envisioned for Tiberius III. Each section will deal with different parts of the navigation development, including what was created and what can be further developed.
+Within this navigation chapter, there will be an in-depth look at the algorithms and ideals envisioned for \gls{tiberius3}. Each section will deal with different parts of the navigation development, including what was created and what can be further developed.
 \newline
-
+Navigation for \gls{tiberius3} was to be designed to be used from the \gls{webinterface}. Where the user could select from which type of navigation algorithm that they wished to use. The options chosen within this iteration of the project were, a base point to point algorithm using GPS, an extension of this algorithm using multiple points called follow path and a A-Star algorithm implementation that used sensor data to build a view of the current location of \gls{tiberius3} and then creates a path to follow that would be inputted into the follow path algorithm.
 \subsection{GPS Navigation}
-
+\gls{GPS} is a fundamental part of \gls{tiberius3}' outdoor navigation, as it allows for the position of \gls{tiberius3} to be found from a longitude and latitude point. It can also be used to find the requested destination from within a given task. \gls{GPS} was used as the base sensor for movement between points, with other sensors being used as safety mechanisms to secure against collisions, or to help map the area around \gls{tiberius3} when using the A-Star algorithm.
 \subsection{A-Star Grid}
-
+For \gls{tiberius3} to work with the proposed \gls{a-star} algorithm it was required that a grid that could hold information about the surrounding area. The grid was then stored within the database in order to let it be accessed again if \gls{tiberius3} was to re-enter a grid location that it had already been in. This grid was designed to work outside, using \gls{GPS} as a means to correctly position objects within the grid.
 \subsection{Indoor and Outdoor navigation}
-
+\gls{tiberius3} was designed with the intention of being both an outdoor robot as well as being an indoor robot. However because of this multiple navigation systems would have to be implemented. As \gls{GPS} can only reliably be used outdoors, it was not useful for the indoor systems. This meant that the indoor systems where left to use the other sensors such as the \gls{LIDAR} and the Kinect. An initial attempt was made to use \gls{SLAM} in order to map out an indoor area. This however was not used within the final design of \gls{tiberius3}. As a result the outdoor navigation ended up being the main focus of the project.
 \subsection{Building a World}
+Overall the navigation systems contained within \gls{tiberius3}' are designed to create a clear picture of the world around the robot.

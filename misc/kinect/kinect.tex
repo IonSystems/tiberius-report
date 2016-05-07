@@ -1,14 +1,25 @@
-\section{Kinect}
+\section{Kinect 2}
 
-\subsection{Standard Deviation}
+\subsection{Introduction}
 
-\subsection{Chunking}
+Picture of depth grid
 
-\subsection{Depth Data}
+\subsection{Standard Deviation}\label{StandardDeviation}
 
-\subsection{Camera Feed}
+\subsection{Chunking}\label{Chunking}
+Chunking is the process of dividing a large dataset into several smaller ones. In our case this allowed us to split the depth image data that was received from the Kinect 2 and splitting it into an 8 by 8 grid. We could then perform the calculations on each element of the grid. The main reason for chunking our data was give us a much lower resolution image which was more useful and easily used on the control pi.
 
-\pagestyle{euan}
+diagram of structure of camera streamer
+
+\subsection{Camera Streamer}
+This C\# console application runs on the pc. It takes all the data coming from the Kinect 2 and processes it into a useful format.
+The depth data is processed using the methods described in \ref{Chunking} \textit{Chunking} and \ref{StandardDeviation} \textit{Standard Deviation} 
+
+
+  
+refrence picture of website view
+
+\pagestyle{euanstuart}
 
 
 
