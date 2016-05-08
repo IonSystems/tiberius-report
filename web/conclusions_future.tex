@@ -1,9 +1,27 @@
 \section{Conclusions and Future Work}
 
+\subsection{Conclusion}
+The development of the web interface and it's supporting software has been extremely time constrained. During the preliminary stages of the project, no plans were made for the development of the database, or control software as these topics had been covered in previous work. This led to an extremely busy development schedule in semester 2 of the project.
+
+Looking back, it would have been sensible to limit the scope of work planned to be carried out. In our Preliminary Design Review \cite{tibby-lit-review} we discussed six areas of work, covering almost every topic imaginable. This meant that each member of the team had a area of work to cover. Any two of the topics discussed could have been removed, an each team member would still have a a decent amount of work.
+
+The work carried out by me personally (\cameron) ranged from writing drivers for new sensors, integrating existing C++ drivers into our control software, writing a Python database wrapper class, integrating Polyhedra database with our existing control software, creating scripts to automate repetitive tasks and developing the web interface. The \gls{webinterface} was a trivial task compared to some of the task mentioned before. I can say that almost all of the additional tasks I just described were not planned for in the first semester. A more thorough plan from the outset would have revealed a more accurate picture, at an early enough stage that the workload could be managed and better spread over time.
+
+
+If time and foresight had permitted, the following implementation changes would have been made:
+\begin{itemize}
+\item If this project had not been time constrained, or (more realistically) had more time allocated, then our software implementation would most likely have been in C/C++. This is a more suited language for an embedded system such as Tiberius, lower level languages allow more explicit control of memory, and (in this case) compiled, rather than interpreted. But the explicit control of memory (no garbage collection) is more hassle, and certainly more time consuming. That is the primary reason why it was decided to stick with Python. A port of our current code is an idea for future work, described later on.
+
+\item Rather than using the stock Raspbian OS, a lighter weight operating system would have been considered. Raspbian comes with a lot of applications that are not needed by Tiberius, so just waste space. A recommended alternative would be \gls{yocto}, which creates an  operating system that is custom to the requirements of the project, and is designed for embedded systems.
+
+\end{itemize}
+
 \subsection{Future Work}
+\label{sec:web_future_work}
+
 The web interface is very easy to extend, encouraging future development.
 The work carried out this year is simply a proof-of-concept, so there is a large
-chunk of work that could be done to further improve intergration with Tiberius.
+chunk of work that could be done to further improve integration with Tiberius.
 
 \subsubsection{Joystick Integration}
 During development of Tiberius - before all systems were fully integrated, we required an easy
@@ -22,7 +40,7 @@ compute power on Tiberius' PC, and the device viewing the stream. Rather than st
 We are aware of the inefficiencies, but haven't had the time to implement a full video stream. This is a suggested improvement if the video streaming is to be improved.
 
 \subsubsection{Database Synchronisation}
-During a full system run there are currently two seperate databases up and
+During a full system run there are currently two separate databases up and
 running. The in-memory database runs on a Raspberry Pi (Tiberius-side) and the
 SQLite database running on a web server. These two databases enable the
 possibility of database synchronisation. This would ease the communication of

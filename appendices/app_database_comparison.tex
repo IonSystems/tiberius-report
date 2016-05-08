@@ -1,7 +1,5 @@
 \chapter{Comparison of IMDB Implementations}
-\pagestyle{cameron}
-\section{Overview}
-Tiberius's In-memory Database is a critical area of our architecture. Two decisions regarding the architecture were which RPi to use and which database to use. A script was created to measure the speed at which different configuration could carry out operations. This script created a database, inserted arbitrary values, updated the values, queried the  values and then deleted the database. All of these functions were carried out 1000 times and then an average was taken.
+\pagestyle{aidan}
 
 \section{Test Results}
 \subsection{Create}
@@ -13,8 +11,8 @@ Each database must be created before any operations can be carried out on it. Th
 \label{Create}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
-Poly & 0.00338196 &     &     &  \\
-SQL  & 0.03206205 &     &     &  \\
+Poly & 0.00338196 & N/A    & 0.00092792    &  \\
+SQL  & 0.03206205 & N/A    & 0.04080892    &  \\
      &             &     &     & 
 \end{tabular}
 \end{table}
@@ -27,8 +25,8 @@ New data received from the sensors must be inserted into the database to be stor
 \label{insert}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
-Poly & 0.00236365 &     &     &  \\
-SQL  & 0.032062053 &     &     &  \\
+Poly & 0.00236365 & N/A    & 0.0002626    &  \\
+SQL  & 0.03206205 & N/A    & 0.0577037    &  \\
      &             &     &     & 
 \end{tabular}
 \end{table}
@@ -41,8 +39,8 @@ On certain occasions data in the table may need to be updated. This differs from
 \label{Update}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
-Poly & 0.00347629 &     &     &  \\
-SQL  & 0.03939703 &     &     &  \\
+Poly & 0.00347629 & N/A    & 0.00042764    &  \\
+SQL  & 0.03939703 & N/A    & 0.04500420    &  \\
      &             &     &     & 
 \end{tabular}
 \end{table}
@@ -55,8 +53,8 @@ To retrieve the information stored in the database it has to be queried (searche
 \label{Query}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
-Poly & 0.138572986 &     &     &  \\
-SQL  & 0.051900138 &     &     &  \\
+Poly & 0.138572986 & N/A    & 0.02222729 &  \\
+SQL  & 0.051900138 & N/A    & 0.00766252 &  \\
      &             &     &     & 
 \end{tabular}
 \end{table}
@@ -69,13 +67,12 @@ The database may need to be deleted under certain circumstances. This will not h
 \label{Delete}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
-Poly & 0.001752495 &     &     &  \\
-SQL  & 0.068341016 &     &     &  \\
+Poly & 0.001752495 & N/A    & 0.00370311    &  \\
+SQL  & 0.068341016 & N/A    & 0.07257699    &  \\
      &             &     &     & 
 \end{tabular}
 \end{table}
 
-\section{Conclusion}
 
 \iffalse
 The chosen RPi we are using is ...

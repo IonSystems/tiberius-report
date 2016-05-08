@@ -1,6 +1,7 @@
 \section{Design and Implementation}
 
 \subsection{Subsystem Overview}
+\label{sec:web_subsystem_overview}
 A lightweight Python framework was used to create an API, the communication bridge between Tiberius and the \gls{webinterface}. The \gls{webinterface} interacts with Tiberius by sending authenticated \gls{HTTP} \gls{POST} requests to the \gls{API} running on Tiberius' \gls{controlpi}.
 
 Each request is sent with an X-Auth \gls{POST} parameter, with a authentication token. The authentication token set on Tiberius and the web server must match.
@@ -44,16 +45,12 @@ The \gls{API} and \gls{webinterface} server must be operating on the same networ
 
 \subsection{Control API}
 
-% Diagram illustrating all the modules used within the API and web interface.
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=12cm]{api_falcon.png}
-\end{center}
-\caption{Falcon Overview \cite{falcon-big-picture}}
-\label{fig:api-falcon}
-\end{figure}
+
 
 
 \subsection{Web Interface}
+
+\subsection{Missions}
+\label{sec:web_design_missions}
 
 \subsection{System Integration}

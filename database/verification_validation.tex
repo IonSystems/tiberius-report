@@ -24,3 +24,43 @@ standard deviation
 \subsubsection{Steering}
 
 \subsection{Testing}
+\subsubsection{Overview}
+Tiberius's In-memory Database is a critical area of our architecture. Two decisions regarding the architecture were which RPi to use and which database to use. A script was created to measure the speed at which different configuration could carry out operations. This script created a database, inserted arbitrary values, updated the values, queried the  values and then deleted the database. All of these functions were carried out 1000 times and then an average was produced for each of the following tasks.
+\begin{itemize}
+\item drop table
+\item create
+\item insert
+\item update
+\item query
+\end{itemize}
+
+The script was tested using the SQL database and using the polyhedra database, to determine which version was superior. The test was to be run again on three different raspberry pi models - model 1 version B, model 2 version B and model 3 version B. However the development team did not have a model 2, and therefore the results for that section are ommitted. 
+
+\subsubsection{Results}
+The results can be found under appendix A.
+
+\subsubsection{Analysis}
+Polyhedra tends to outperform SQL in most operations. For create, insert, update and delete polyhedra will usually perform the task in less than a tenth of time it takes SQL. Query is the only operation in which SQL out performs polyhedra, although the difference is less significant as seen in the other operations.
+\newline
+Changing between Raspberry Pi had a small effect on the SQL database; the only operation which had a noticable effect was query which was speed up. This differed from polyhedra database which benefited significantly by the change in Raspberry Pi. Every operation other than delete had it time reduced by atleast one order of magnitude.
+\newline
+Considering the above analysis tiberius 3 will run polyhedra database and run on a raspberry pi 3 model B. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

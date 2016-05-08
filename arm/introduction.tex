@@ -10,3 +10,31 @@ In light of the problems of the old arm it was decided that a new arm would be d
 The arm also had to be able to keep position without requiring power which required the use of worm drives for all joints. This would stop the arm from flailing around when not in use, since it would be a huge waste of power to keep it powered all the time. Additionally the use of worm drives gives a very large gear ratio with a simple design so makes the arm easier to design.
 
 \subsubsection{Software}
+
+Inverse Kinematics
+
+Consideration was given on how to implement the robotic arm, including ideas such as robotic software packages or libraries such as ROS, but eventually our own implementation was decided on.  This was partly due to the fact that the robotic arm was a customised arm made with 2 joints and a limited gripper capability.  These libraries were quite involved and would not fit easily into our Raspberry Pi controlled python code, additionally, a lot of examples of robotic arm had 3 or more joints and were structured quite differently so our own customised code would be the best option for controlling the arm.
+
+
+I was responsible for programming the inverse kinematics for the robotic arm.  This involved taking a 3 dimensional Cartesian coordinate and converting it into angular coordinates that the three arm motors would position to.  The basic way this was done was by using trigonometry to identify the required vertical angle, which would be done with the base motor and by using further trigonometry to determine the two joint angles required to manoeuvre the joints to the correct point in space.
+
+The first stage was to calculate the 	
+
+The code was designed to be flexible and adaptable so the arm segments’ lengths were used as parameters in the code along with the x, y and z Cartesian coordinates of the desired position.
+
+Each Cartesian coordinate was computed in terms of the angles of the three motors from rest, which were denoted as ρ,σ and τ.  The angle of rotation, ρ around the base of the arm, was controlled by a large stepper motor, τ was the angle of the upper arm joint which could be positioned forwards or backwards depending on the depth of the object being picked up and σ was the angle of the elbow joint which allowed the gripper to be positioned above the object of interest.  
+
+
+$cos⁡〖τ=(m^2+s^2-n^2)/2ms〗
+
+cos⁡〖σ=(m^2+n^2-s^2)/2mn〗
+
+ρ 〖=tan^(-1)〗⁡〖(z/√(x^2+y^2 ))+cos^(-1)⁡((m^2+(x^2+y^2+z^2 ))/2mn) 〗
+
+
+σ⁡〖=cos^(-1)⁡((m^2+s^2-(x^2+y^2+z^2 ))/2ms) 〗
+
+τ⁡〖=cos^(-1)⁡((m^2+s^2-n^2)/2ms) 〗
+
+θ 〖=tan^(-1)〗⁡(y/x)
+

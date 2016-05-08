@@ -1,7 +1,13 @@
 \section{Conclusions and Future Work}
 \subsection{Conclusions}
-
+Tiberius has shown that a database model for information passing in robotics is possilbe. During certain applications, the sensor data has to be written to the database and then read shortly after by the control software in order to manipulate some actuator; this process has to happen in real time, meaning the write time and access time of the database must be very fast. The use of an in-memory database ensures fast read and write times. As RAM is getting cheaper, more RAM is being incorporated into systems, therefore the use of database's in robotics may become more prevalient.  
 
 \subsection{Future Work}
 \subsection{Dedicated database Pi}
 Since polyhedra uses an in-memory database, it is required to run on a system with sufficient RAM. Currently the database and all the control software is being run on the same raspberry pi, which leaves limited RAM for the database when all the control software is running. Future work measure the RAM usage and analyse the effect on the database.
+
+
+
+
+
+

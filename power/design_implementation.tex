@@ -1,4 +1,26 @@
 \section{Design and Implementation}
+
+
+
 \subsection{Overall power management design}
+
+The aims set out for the preliminary design were to incorporate new batteries into Tiberius III, use more efficient motors, reduce the weight and improve the monitoring and control of the power from the various devices and motors that Tiberius would use.  These features were implemented with varying degrees of success.  
+The weight was dramatically reduced due to the restructuring of the chassis by removing about half of the aluminium extrusion, the various mountings and battery holders were all 3D printed using lightweight PLA, the batteries themselves were also significantly lighter than the previous versions.  However, the total weight reduction ended up being quite small due to the additional hardware including a robotic arm which added quite a bit of weight.  
+
+The total weight reduction was -10 kilograms.
+
+The motors were tested and ran at 13.2V giving a higher output torque.
+
+The control Raspberry Pi had a power management module that allowed it to monitor and control the different components and even turn parts of the vehicle off, including the Kinect sensor and processor, the robotic arm and even the ability to shut down the motors if necessary.  
+Relays were used to allow the Kinect, the motors and the robotic arm which are controlled by the control pi and can turn off those components in low power mode.  
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=10cm]{power.png}
+\end{center}
+\caption{Power Management}
+\label{fig:power}
+\end{figure}
+
 \subsection{Power monitoring and usage}
 \subsection{Wiring Diagram}

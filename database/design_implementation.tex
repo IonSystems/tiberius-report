@@ -37,15 +37,13 @@ id              & fl    & fc    & fr    & rl    & rc    & rr    & timestamp \\ \
 int primary key & float & float & float & float & float & float & float
 \end{tabular}
 \end{table}
-
-In the table the following abbreviation are used:
 \begin{itemize}
- \item front left is abbreviated to fl.
- \item front centre is abbreviated to fc.
- \item front right is abbreviated to fr
- \item rear left is abbreviated to rl.
- \item rear centre is abbreviated to rc.
- \item rear right is abbreviated to rr.
+\item{\textbf{fl}} is the sensor placed on the front left
+\item{\textbf{fc}} is the sensor placed on the front centre 
+\item{\textbf{fr}} is the sensor placed on the front right
+\item{\textbf{rl}} is the sensor placed on the rear left 
+\item{\textbf{rc}} is the sensor placed on the rear centre
+\item{\textbf{rr}} is the sensor placed on the rear right 
 \end{itemize}
 
 \subsubsection{LIDAR}
@@ -73,16 +71,13 @@ id              & start\_flag & angle & distance & quality & reading\_iteration 
 int primary key & varchar     & float & float    & float   & int            & float
 \end{tabular}
 \end{table}
-\textbf{start\_flag} is a flag which is toggled on the last reading iteration of a full spin. It is included as it is produces by the SDK, however currently it is not used.
-\newline
-\textbf{angle} is the angle which the reading was taken at.
-\newline
-\textbf{distance} is the distance of an object that is line the lidar's line of sight.
-\newline
-\textbf{qualitty} is the measure of certanity that there is an object is that location
-\newline
-\textbf{reading\_iteration} increments after each full spin. This means that when querying the database, the user can ensure that all the readings come from the same 360 degree spin.
-
+\begin{itemize}
+\item{\textbf{start\_flag}} is a flag which is toggled on the last reading iteration of a full spin. It is included as it is produces by the SDK, however currently it is not used.
+\item{\textbf{angle}} is the angle which the reading was taken at.
+\item{\textbf{distance}} is the distance of an object that is line the lidar's line of sight.
+\item{\textbf{qualitty}} is the measure of certanity that there is an object is that location
+\item{\textbf{reading\_iteration}} increments after each full spin. This means that when querying the database, the user can ensure that all the readings come from the same 360 degree spin.
+\end{itemize}
 
 
 \subsubsection{GPS}
@@ -101,12 +96,16 @@ id              & latitude & longitude & altitude & gps\_qual & num\_sats & velo
 int primary key & float    & float     & float    & int       & int       & float    & int     & float
 \end{tabular}
 \end{table}
-\textbf{latitude}
-\newline
-\textbf{longitude}
-\newline
-\textbf{altitude}
-\newline
+\begin{itemize}
+\item{\textbf{latitude}} The latitude specifies a location's distance north or south of the equator
+\item{\textbf{longitude}}  
+\item{\textbf{altitude}} 
+\item{\textbf{gps\_qual}}: the value of the signal
+\item{\textbf{num\_stats}}: the number of satellites the gps unit has communication with
+\item{\textbf{velocity}}: the velocity which the robot is travelling at
+\item{\textbf{fixmode}}: boolean value which represents whether the gps has a location or not.  
+\end{itemize}
+
 
 \subsubsection{Compass}
 % Please add the following required packages to your document preamble:
