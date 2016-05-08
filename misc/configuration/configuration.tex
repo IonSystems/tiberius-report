@@ -17,7 +17,7 @@ The set-up script copies the configuration file into /etc/tiberius. Since the se
 The configuration parser contains the function to read the configuration file. 
 
 An example function which return true if the lidar is installed and false if it is not is shown below.
-\begin{lstlisting} 
+\begin{lstlisting}[style=custompython]
 @staticmethod
 def isLidarEnabled():
         return TiberiusConfigParser.getParser().getboolean(LIDAR_SECTION, 'installed')

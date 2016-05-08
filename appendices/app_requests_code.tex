@@ -1,0 +1,97 @@
+\chapter{Web Interface Request Code Walkthrough}
+\label{app:web_walkthrough}
+\pagestyle{cameron}
+
+This walkthrough will provide a detailed description of all the steps that take place to communicate a command from the web interface to Tiberius. A standard configuration is assumed. A robotic arm command will be used as the example throughout this walkthrough.
+\newline
+
+\begin{enumerate}
+
+\item The sequence of events is initiated by the user pressing a button on the web interface. In order to produce a button on the web page, the following \gls{HTML} code is used. See Code Listing \ref{cl:html_button}.
+\newline
+
+\begin{lstlisting}[caption=HTML Button, label=cl:html_button]
+<button id="arm_button_y_minus" class="btn btn-white" title="Y -">
+    <span class="fa fa-2x fa-arrow-down"></span>
+</button>
+\end{lstlisting}
+
+\item The below jQuery function is executed when the button is clicked. The send\_command function, with specific parameters for the button clicked. See Code Listing \ref{cl:html_listener}.
+\newline
+
+\begin{lstlisting}[language=JavaScript, caption=jQuery Click Listener, label=cl:button_listener]
+$('#arm_button_y_minus').click(function() {
+		send_command(ip_address, 'arm_dy', -d);
+});
+\end{lstlisting}
+
+\item The send\_command function sends a \gls{HTTP} \gls{POST} request to the \textit{web server}, passing on the parameters into the request. Note that we cannot directly message Tiberius's API at this point, as we are client-side. See Code Listing \ref{cl:js_ajax_post}.
+\newline
+
+\begin{lstlisting}[language=JavaScript, caption=Javascript message to web server, label=cl:js_ajax_post]
+function send_command(ip_address, command_name, command_value){
+	$.ajax({
+			url: '../send_arm_request',
+			type: 'POST',
+			data: {
+				'command_name':command_name,
+				'command_value':command_value,
+				'ip_address':ip_address
+			},
+			success: function (result) {
+				//alert("anything");
+			},
+			error: function(error_msg){
+				alert(error_msg);
+			}
+	});
+}
+\end{lstlisting}
+
+\item The Django web app forwards the \gls{POST} request (with a matching URL) to the send\_arm\_request view. See Code Listing \ref{cl:django_urls}.
+\newline
+
+%from web interface control urls.py
+\begin{lstlisting}[style=custompython, caption=Django URL Dispatcher, label=cl:django_urls]
+urlpatterns = [
+  url(r'^$', views.index, name='index'),
+  url(r'^(?P<id>\d+)/', views.control, name='control'),
+  url(r'^send_control_request', views.send_control_request,
+  name='send_control_request'),
+  url(r'^send_task_request', views.send_task_request,
+  name='send_task_request'),
+  url(r'^send_arm_request', views.send_arm_request,
+  name='send_arm_request'),
+]
+\end{lstlisting}
+
+\item The send\_arm\_request view forwards the request over the \gls{VPN}. Because Javascript code is executed client-side, we have no guarantee that the particular client will be connected to the VPN, so all requests are relayed through the web server to guarantee access to the \gls{VPN}.
+
+Some security measures are in place here, the request to the web server must be a \gls{POST} request and a valid authentication token must be present. See Code Listing \ref{cl:django_arm_view}.
+\newline
+
+  % From web interface control views file.
+  \begin{lstlisting}[style=custompython, caption=Django Arm Request Forwarding View, label=cl:django_arm_view]
+  @require_http_methods(["POST"])
+  def send_arm_request(request):
+      headers = {'X-Auth-Token': settings.SUPER_SECRET_PASSWORD}
+
+      # Contruct url for motor resource on Control API
+      ip_address = request.POST.get('ip_address')
+      url_start = "http://"
+      url_end = ":8000/arm"
+      url = url_start + ip_address + url_end
+      response = ""
+
+      try:
+          r = requests.post(url,
+                            data=request.POST.lists(),
+                            headers=headers)
+          response = r.text
+      except ConnectionError as e:
+          response = e
+      return HttpResponse(response)
+  \end{lstlisting}
+
+\end{enumerate}
+

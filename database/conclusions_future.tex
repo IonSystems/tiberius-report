@@ -6,6 +6,15 @@ Tiberius has shown that a database model for information passing in robotics is 
 \subsection{Dedicated database Pi}
 Since polyhedra uses an in-memory database, it is required to run on a system with sufficient RAM. Currently the database and all the control software is being run on the same raspberry pi, which leaves limited RAM for the database when all the control software is running. Future work measure the RAM usage and analyse the effect on the database.
 
+\subsection{Sensor validity}
+Currently the sensor validity is done in the database threads. To increase modularity, this should be seperated into its own class. 
+The algorithm for validating the compass data is not perfect and has not been tested thoroughly. New algorithms should be derived and tested thoroughly.
+
+\subsection{Steering table}
+Since the steering was not added until added did not have time to store steering information. 
+
+\subsection{Arm table}
+Ontop of storing all the arm positions as is currently implemented, the arm should store certain key position which are not overwritten. These key positions would be user defined, and would specify a position of interest during a mission. For instance if a mission meant the arm was required to pick up a number of objects and drop them from the same location, the user could save the drop location. This would allow the user to recall that location, and the arm would move there without further input from the user.
 
 
 

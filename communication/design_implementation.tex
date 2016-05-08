@@ -26,6 +26,9 @@ Since mobile phones are an extremely easy way to get a 4G connection, it seemed 
 \subsubsection{OpenWRT router}
 At the core of the new networking system on Tiberius III is a Raspberry Pi running OpenWRT open-source router software. This was required since a special network interface card was needed in order to use the directional antenna to its full potential. It also allows for other connections to be added in the future. In addition it also provides the essential failover capability for the Wi-Fi and 4G connections.
 
+\subsubsection{VPN failover}
+The failover capability is mostly provided by the OpenWRT router which will automatically route packets through another WAN interface if it loses Wi-Fi. This behaviour was achieved by setting the metrics on both Interfaces within OpenWRT.
+
 \subsubsection{Local Wi-Fi Access Point and switch}
 The Wi-Fi access point is an essential component for outdoor testing, since it removes the requirement for a network cable between a laptop and Tiberius. It also allows for lots of devices to be connected to Tiberius as it is moving around without the need for extra switches and cabling. When testing outdoors it is often very useful to have an internet connection, Tiberius can  provide any device connected access to the internet through its own long range communications system.
 

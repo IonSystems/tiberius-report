@@ -6,7 +6,7 @@ Every table has 2 columns in common. One is the id, this column represents the r
 \newline
 Each table is defined in its own class.
 Below is an example of the GPS table. The reason for the column names is expanded later in the GPS section.
-\begin{lstlisting}
+\begin{lstlisting}[style=custompython]
 class GPSTable(Table):
     table_name = "gps_reading"
     columns = {
@@ -38,12 +38,12 @@ int primary key & float & float & float & float & float & float & float
 \end{tabular}
 \end{table}
 \begin{itemize}
-\item{\textbf{fl}} is the sensor placed on the front left
-\item{\textbf{fc}} is the sensor placed on the front centre 
-\item{\textbf{fr}} is the sensor placed on the front right
-\item{\textbf{rl}} is the sensor placed on the rear left 
-\item{\textbf{rc}} is the sensor placed on the rear centre
-\item{\textbf{rr}} is the sensor placed on the rear right 
+\item{\textbf{fl}}: the sensor placed on the front left
+\item{\textbf{fc}}: the sensor placed on the front centre 
+\item{\textbf{fr}}: the sensor placed on the front right
+\item{\textbf{rl}}: the sensor placed on the rear left 
+\item{\textbf{rc}}: the sensor placed on the rear centre
+\item{\textbf{rr}}: the sensor placed on the rear right 
 \end{itemize}
 
 \subsubsection{LIDAR}
@@ -72,10 +72,10 @@ int primary key & varchar     & float & float    & float   & int            & fl
 \end{tabular}
 \end{table}
 \begin{itemize}
-\item{\textbf{start\_flag}} is a flag which is toggled on the last reading iteration of a full spin. It is included as it is produces by the SDK, however currently it is not used.
-\item{\textbf{angle}} is the angle which the reading was taken at.
-\item{\textbf{distance}} is the distance of an object that is line the lidar's line of sight.
-\item{\textbf{qualitty}} is the measure of certanity that there is an object is that location
+\item{\textbf{start\_flag}}: a flag which is toggled on the last reading iteration of a full spin. It is included as it is produces by the SDK, however currently it is not used.
+\item{\textbf{angle}}: the angle which the reading was taken at.
+\item{\textbf{distance}}: the distance of an object that is line the lidar's line of sight.
+\item{\textbf{qualitty}}: the measure of certanity that there is an object is that location
 \item{\textbf{reading\_iteration}} increments after each full spin. This means that when querying the database, the user can ensure that all the readings come from the same 360 degree spin.
 \end{itemize}
 
@@ -120,6 +120,14 @@ id              & heading & tilt  & pitch & roll  & temperature & timestamp \\ \
 int primary key & float   & float & float & float & float       & float
 \end{tabular}
 \end{table}
+\begin{itemize}
+\item{\textbf{heading}}: the magnetic bearing that the front of the robot is pointing to
+\item{\textbf{tilt}}: rotation around the vertical axis
+\item{\textbf{pitch}}: rotation around the side to side axis
+\item{\textbf{roll}}: rotation around the front to back axis
+\item{\textbf{temperature}}: temperature reading of the compass
+\end{itemize}
+
 
 \subsubsection{Motors}
 % Please add the following required packages to your document preamble:
@@ -134,6 +142,13 @@ id              & front\_left & front\_right & rear\_left & rear\_right & timest
 int primary key & float       & float        & float      & float       & float
 \end{tabular}
 \end{table}
+\begin{itemize}
+\item{\textbf{front\_left}}: the speed the front left motor is set at
+\item{\textbf{front\_right}}: the speed the front right motor is set at
+\item{\textbf{rear\_left}}: the speed the rear left motor is set at
+\item{\textbf{rear\_right}}: the speed the rear right motor is set at
+\end{itemize}
+
 
 \subsubsection{Steering}
 % Please add the following required packages to your document preamble:
@@ -148,6 +163,12 @@ id              & front\_left & front\_right & rear\_left & rear\_right & timest
 int primary key & float       & float        & float      & float       & float
 \end{tabular}
 \end{table}
+\begin{itemize}
+\item{\textbf{front\_left}}: the angle the front left wheel is set at
+\item{\textbf{front\_right}}: the angle the front right wheel is set at
+\item{\textbf{rear\_left}}:  the angle the rear left wheel is set at
+\item{\textbf{rear\_right}}:  the angle the rear right wheel is set at
+\end{itemize}
 
 \subsubsection{Arm}
 % Please add the following required packages to your document preamble:
@@ -162,7 +183,14 @@ id              & X     & Y     & Z     & waist & elbow & shoulder & timestamp \
 int primary key & float & float & float & float & float & float    & float
 \end{tabular}
 \end{table}
-
+\begin{itemize}
+\item{\textbf{X}}: the x position of the gripper 
+\item{\textbf{Y}}: the y position of the gripper
+\item{\textbf{Z}}: the z position of the gripper
+\item{\textbf{waist}}: the angle of the waist
+\item{\textbf{elbow}}: the angle of the elbow
+\item{\textbf{shoulder}}: the angle of the shoulder
+\end{itemize}
 
 \subsection{Creating database}
 Several functions are called when creating the tables. On normal usage the table are created when start\_tiberius.py is run. In start Tiberius all the configured files are called
@@ -172,7 +200,7 @@ Several functions are called when creating the tables. On normal usage the table
 
 It is then created with unique columns described in the next subsections.
 
-\begin{lstlisting}
+\begin{lstlisting}[style=custompython]
 def drop_create(poly, table):
     '''
     Drop a table then create it, this ensures the table has the latest column
@@ -196,7 +224,9 @@ def drop_create(poly, table):
 As can be seen the table is dropped before being created. This means is Tiberius was previously running and Tiberius had not been switched off
 
 \subsection{Insert}
-\begin{lstlisting}
+Insert is used to add a new row to of data to into a table. The data is packed into one variable using python dictionary. The data is then extracted by specifying the keyword, which the data is related to.  
+
+\begin{lstlisting}[style=custompython]
 def insert_gps_reading(poly, id, data):
     poly.insert(
         GPSTable.table_name,
@@ -214,24 +244,36 @@ def insert_gps_reading(poly, id, data):
     )
 \end{lstlisting}
 \subsection{Update}
-\begin{lstlisting}
-def update_gps_sensor_validity(poly, value):
+Update is used whe only one value in a certain row needs changed, and all other rows remain the same. This is not currently used, as the need to alter a reading has never arised. 
+
+\subsection{Overwrite}
+Overwrite allow a compelete row to be overwritten with new information. The id remains the same, as the function calling overwrite has to use the id inorder to specify which row it wants overwrite.
+\begin{lstlisting}[style=custompython]
+def overwrite_gps_reading(poly, id, data):
     poly.update(
-        SensorValidityTable.table_name,
+        GPSTable.table_name,
         {
-            'gps': value
+            # 'id': id,
+            'latitude': data['latitude'],
+            'longitude': data['longitude'],
+            'gps_qual': data['gps_qual'],
+            'num_sats': data['num_sats'],
+            'dilution_of_precision': data['dilution_of_precision'],
+            'velocity': data['velocity'],
+            'fixmode': data['fixmode'],
+            'timestamp': time.time()
         },
         {
             'clause': 'WHERE',
             'data': [
-                            {
-                                'column': 'id',
-                                'assertion': '=',
-                                'value': '0'
-                            }
-                        ]
-                    }
-                )
+                {
+                    'column': 'id',
+                    'assertion': '=',
+                    'value': id
+                }
+            ]
+        }
+    )
 \end{lstlisting}
 
 \subsection{Polyhedra wrapper}
@@ -244,7 +286,7 @@ def update_gps_sensor_validity(poly, value):
 \subsubsection{Starting database}
 Upon start up the database will not be running. It is therefore necessary to run the start tiberius script to initiate the database and start the threads. The database is started using the command shown below.
 
-\begin{lstlisting}
+\begin{lstlisting}[style=custompython]
 database = Popen("/home/pi/poly9.0/linux/raspi/bin/rtrdb -r data_service=8001 db", shell=True, stdout=PIPE)
 \end{lstlisting}
 
@@ -253,7 +295,7 @@ The tables for all the sensors are then created. This is done by calling the cre
 \subsubsection{Sensor threads}
 Each sensor has its own thread; the purpose of which is to collect the data from the sensor it is assigned to. The threads run concurrently and have a their own time delay to reduce the workload.
 Below is a shortened version of the GPS thread.
-\begin{lstlisting}
+\begin{lstlisting}[style=custompython]
 while True:
   gps_data = gps.read_gps()
   if gps_data is not False:
@@ -265,6 +307,8 @@ while True:
     gps_read_id += 1
     no_data_time = 0
 \end{lstlisting}
+
+old data in the database is overwritten with new data TODO:fill this in
 
 \subsubsection{Actuator decorators}
 Unlike the sensors, the actuator database should not be updated in a

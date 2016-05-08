@@ -85,3 +85,11 @@ An Android Application was developed in the year prior to ours, by Tasos Deligia
 Restoring support would involve changing the Android Application to interface with the Control API via HTTP POST requests. The control API already supports motor, database and robotic arm interaction. But does not currently support control of missions. The control of missions is another matter to be discussed elsewhere.
 
 \subsubsection{Control API Mission Support}
+
+\subsubsection{Limited Access Teleoperation}
+\label{sec:web_future_work_access_tele}
+Currently there is no measure in place to prevent multiple users controlling a robot simultaneously. This is unlikely to cause problems for experienced users, may cause confusion if two separate remote users are simultaneously trying to navigate a robot.
+
+The \gls{controlapi} should only allow a single user to teleoperate a robot. This additional measure will require a user identification number to be sent with each request, so that the \gls{controlapi} can recognise the user.
+
+

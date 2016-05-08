@@ -3,25 +3,26 @@
 \subsection{Data validation}
 Each sensor has it own validation before being inserted into the database. This ensures the sensor is reading correct data.
 
-
 \subsubsection{Ultrasonics}
-none
-
+There is currently no verification on this data.
 
 \subsubsection{LIDAR}
-ignore the antenna and stuff below 1m
+The lidar SDK contains it's own validity on the data it recieves. It was considered to remove readings in which the distance was below the radius of tiberius, however this was decided against since this would disregard any overhanging object. 
+\newline
+Unforunatly the lidar is not the highest component of tiberius and therefore does not have a full 360 degree view. Its's line of sight is obstructred by the directional antenna. Therefore the lidar reading which have angles which are affected by the antenna are removed; the rest of the lidar readings are inserted into the database. 
 
 \subsubsection{GPS}
-
+The gps is checked to see if it is usable. 
+The usability function returns usable  if the gps has a fix, it has a position and that information is recent. 
+the gps validity is set to false.
 
 \subsubsection{Compass}
-standard deviation
+Heading is read of compass, and the 10 most recent readings are stored into an array. 
+The standard deviation is taken of the last 10 readings. 
+If the standard deviation > 10 then the last reading must be false. Typically this may be because the robot has neared at an ionized metal structure such as a steel support beam in a building. 
+The compass validity is set to false.
 
-\subsubsection{Motors}
 
-\subsubsection{Encoders}
-
-\subsubsection{Steering}
 
 \subsection{Testing}
 \subsubsection{Overview}

@@ -1,5 +1,4 @@
 \section{Introduction and Planning}
-
 \subsection{Introduction}
 The database was completely redesigned from previous years in terms of the schema, and how our Python code interfaces with the database.
 
@@ -9,7 +8,7 @@ A layer of abstraction is created to separate the developer from the raw SQL sta
 
 A comparison of two possible interactions with the database are given below:
 
-\begin{lstlisting}
+\begin{lstlisting}[style=custompython]
 def query_sensor_validity(poly):
     return poly.query(
         SensorValidityTable.table_name,
@@ -21,7 +20,7 @@ def query_sensor_validity(poly):
     )
 \end{lstlisting}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=custompython]
 return poly.sql("SELECT ultrasonics, compass, gps from sensor_validity_table;")
 \end{lstlisting}
 
@@ -30,4 +29,9 @@ As well as creating a layer of abstraction to aid database development and integ
 %The the database works. sensor data in, any component can read from database.
 The 
 
-%Types of database
+\subsection{Planning}
+The plan is to have a unique table for each sensor. Each row in the table shall be a new reading. The table shall include both sensors and actuators. 
+\newline
+The two actuator tables will be the motor table and the arm table. 
+
+

@@ -13,9 +13,7 @@ diagram of structure of camera streamer
 
 \subsection{Camera Streamer}
 This C\# console application runs on the pc. It takes all the data coming from the Kinect 2 and processes it into a useful format.
-The depth data is processed using the methods described in \ref{Chunking} \textit{Chunking} and \ref{StandardDeviation} \textit{Standard Deviation} 
-
-
+The depth data is processed using the methods described in \ref{Chunking} \textit{Chunking} and \ref{StandardDeviation} \textit{Standard Deviation}. The colour, infrared and depth streams are all downscaled to a lower resolution and then saved as JPEG image files on disk. Windows's built in web server IIS (Internet Information Services) then serves the image files to anyone that requests them.
   
 refrence picture of website view
 

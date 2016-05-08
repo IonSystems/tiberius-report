@@ -25,16 +25,16 @@ The code was designed to be flexible and adaptable so the arm segments’ length
 Each Cartesian coordinate was computed in terms of the angles of the three motors from rest, which were denoted as ρ,σ and τ.  The angle of rotation, ρ around the base of the arm, was controlled by a large stepper motor, τ was the angle of the upper arm joint which could be positioned forwards or backwards depending on the depth of the object being picked up and σ was the angle of the elbow joint which allowed the gripper to be positioned above the object of interest.  
 
 
-$cos⁡〖τ=(m^2+s^2-n^2)/2ms〗
-
-cos⁡〖σ=(m^2+n^2-s^2)/2mn〗
-
-ρ 〖=tan^(-1)〗⁡〖(z/√(x^2+y^2 ))+cos^(-1)⁡((m^2+(x^2+y^2+z^2 ))/2mn) 〗
+$\cos \tau = \frac{m^{2}+s^{2}-n^{2}}{2ms}$
 
 
-σ⁡〖=cos^(-1)⁡((m^2+s^2-(x^2+y^2+z^2 ))/2ms) 〗
+$\cos \sigma  = \frac{m^{2}+n^{2}-s^{2}}{2mn}$
 
-τ⁡〖=cos^(-1)⁡((m^2+s^2-n^2)/2ms) 〗
 
-θ 〖=tan^(-1)〗⁡(y/x)
+$\theta = tan^{-1}\left (  \frac{y}{x}\right )$
+
+$\rho = tan^{-1}\left ( \frac{z}{\sqrt{{x^{2}+y^{2}}}} \right )+ cos^{-1}\left ( \frac{m^{2}+(x^{2}+y^{2}+z^{2})}{2mn} \right )$
+
+$\sigma = cos^{-1}\left (\frac{m^{2}+s^{2}-(x^{2}+y^{2}+z^{2})}{2ms} \right )$
+$\tau = cos^{-1}\left (\frac{m^{2}+s^{2}-n^{2}}{2ms}\right )$
 
