@@ -8,6 +8,9 @@ Each request is sent with an X-Auth \gls{POST} parameter, with a authentication 
 
 The \gls{API} and \gls{webinterface} server must be operating on the same network, to allow a route for packets to reach their destination address. In our instance we have used a \gls{VPN} to allow all devices to operate on the same network.
 
+Diagram \ref{fig:api-modules} gives an overview of all \gls{webinterface} and \gls{controlapi} components.
+\newline
+
 % Diagram illustrating all the modules used within the API and web interface.
 \begin{figure}[!htb]
 \begin{center}
@@ -16,6 +19,8 @@ The \gls{API} and \gls{webinterface} server must be operating on the same networ
 \caption{API Modules}
 \label{fig:api-modules}
 \end{figure}
+
+The following describes each web application component with reference to Figure \ref{fig:api-modules}.
 
 \begin{enumerate}[label=(\alph*)]
   \item Tiberius API: Uses Falcon to accept \gls{HTTP} \gls{POST} requests and act upon the body of the messages.  % (a)
@@ -66,9 +71,5 @@ A walkthrough of the sequence of events to send an authenticated \gls{HTTP} \gls
 \label{sec:web_design_missions}
 
 
-
-\begin{lstlisting}
-
-\end{lstlisting}
 
 \subsection{System Integration}

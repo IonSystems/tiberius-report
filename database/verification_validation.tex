@@ -3,6 +3,12 @@
 \subsection{Data validation}
 Each sensor has it own validation before being inserted into the database. This ensures the sensor is reading correct data.
 
+It is beneficial for the user and possibly in the future some control software to know if a sensor is producing invalid data. Therefore a data validation table exists; which sets a sensor to false when it gives invalid data. 
+\newline
+This table is read by the diagnostics program, which operates a series of LEDs to give a physical indication of erroneous sensor data. To read more on the diagnostics LEDs see diagnostic section (\ref{diagnostics}).
+\newline
+The table can also be read by control software in the future. By collating all the sensor validity into one table, it allows the validity of all the sensors to be determined by one table query as opposed to a query for each sensor table.
+
 \subsubsection{Ultrasonics}
 There is currently no verification on this data.
 

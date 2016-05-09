@@ -20,8 +20,9 @@ If time and foresight had permitted, the following implementation changes would 
 \label{sec:web_future_work}
 
 The web interface is very easy to extend, encouraging future development.
-The work carried out this year is simply a proof-of-concept, so there is a large
-chunk of work that could be done to further improve integration with Tiberius.
+The work carried out this year is simply a proof-of-concept, so there is a large chunk of work that could be done to further improve integration with Tiberius.
+
+Our issue tracker on Github also displays work that has not yet been completed. (\url{https://github.com/IonSystems/tiberius-robot/issues}).
 
 \subsubsection{Joystick Integration}
 During development of Tiberius - before all systems were fully integrated, we required an easy
@@ -82,9 +83,10 @@ This work includes the following:
 \subsubsection{Restoring support for Android}
 An Android Application was developed in the year prior to ours, by Tasos Deligiannis. It was always our intention in re-integrate this application with our new Control API, however time did not allow. This would be an interesting task, that would require familiarisation with HTTP, and Android Programming.
 
-Restoring support would involve changing the Android Application to interface with the Control API via HTTP POST requests. The control API already supports motor, database and robotic arm interaction. But does not currently support control of missions. The control of missions is another matter to be discussed elsewhere.
+Restoring support would involve changing the Android Application to interface with the Control API via \gls{HTTP} \gls{POST} requests. The control API already supports motor, database and robotic arm interaction. But does not currently support control of missions. The control of missions is another matter to be discussed elsewhere.
 
 \subsubsection{Control API Mission Support}
+Missions are not well integrated into the \gls{webinterface}/gls{controlapi}. Further work on the web interface to fully integrate mission support would be one of the first tasks if development was to be continued.
 
 \subsubsection{Limited Access Teleoperation}
 \label{sec:web_future_work_access_tele}

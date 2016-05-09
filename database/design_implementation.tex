@@ -24,26 +24,26 @@ class GPSTable(Table):
 
 
 \subsubsection{Ultrasonics}
-The \gls{ultrasonicsensor} table has 6 columnns, one for each sensor. Each row in the table is a new reading of each sensor. The data represents the distance in millimeters to an object in its line of sight.
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
+
 \begin{table}[!htb]
 \centering
-\caption{ultrasonic table}
-\label{tab:db-ultrasonics}
-\begin{tabular}{@{}llllllll@{}}
-\toprule
-id              & fl    & fc    & fr    & rl    & rc    & rr    & timestamp \\ \midrule
-int primary key & float & float & float & float & float & float & float
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+id              & fl    & fc    & fr    & rl    & rc    & rr    & timestamp \\ \hline
+int primary key & float & float & float & float & float & float & float \\ \hline
 \end{tabular}
+\caption{IMDB: Ultrasonics Table}
+\label{tab:db-ultrasonics}
 \end{table}
+
+
 \begin{itemize}
-\item{\textbf{fl}}: the sensor placed on the front left
-\item{\textbf{fc}}: the sensor placed on the front centre 
-\item{\textbf{fr}}: the sensor placed on the front right
-\item{\textbf{rl}}: the sensor placed on the rear left 
-\item{\textbf{rc}}: the sensor placed on the rear centre
-\item{\textbf{rr}}: the sensor placed on the rear right 
+\item{\textbf{fl}}: distance in millimeters from front left sensor
+\item{\textbf{fc}}: distance in millimeters from  front centre sensor
+\item{\textbf{fr}}: distance in millimeters from  front right sensor
+\item{\textbf{rl}}: distance in millimeters from rear left sensor
+\item{\textbf{rc}}: distance in millimeters from rear centre sensor
+\item{\textbf{rr}}: distance in millimeters from rear right sensor
 \end{itemize}
 
 \subsubsection{LIDAR}
@@ -63,13 +63,13 @@ Lidar class validates the data
 % \usepackage{booktabs}
 \begin{table}[!htb]
 \centering
-\caption{lidar table}
-\label{tab:db-lidar}
-\begin{tabular}{@{}lllllll@{}}
-\toprule
-id              & start\_flag & angle & distance & quality & reading\_iteration & timestamp \\ \midrule
-int primary key & varchar     & float & float    & float   & int            & float
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+id              & start\_flag & angle & distance & quality & reading\_iteration & timestamp \\ \hline
+int primary key & varchar     & float & float    & float   & int            & float\\ \hline
 \end{tabular}
+\caption{IMDB: LIDAR Table}
+\label{tab:db-lidar}
 \end{table}
 \begin{itemize}
 \item{\textbf{start\_flag}}: a flag which is toggled on the last reading iteration of a full spin. It is included as it is produces by the SDK, however currently it is not used.
@@ -88,13 +88,13 @@ int primary key & varchar     & float & float    & float   & int            & fl
 % \usepackage{booktabs}
 \begin{table}[!htb]
 \centering
-\caption{GPS table}
-\label{tab:db-gps}
-\begin{tabular}{@{}lllllllll@{}}
-\toprule
-id              & latitude & longitude & altitude & gps\_qual & num\_sats & velocity & fixmode & timestamp \\ \midrule
-int primary key & float    & float     & float    & int       & int       & float    & int     & float
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+\hline
+id              & latitude & longitude & altitude & gps\_qual & num\_sats & velocity & fixmode & timestamp \\ \hline
+int primary key & float    & float     & float    & int       & int       & float    & int     & float\\ \hline
 \end{tabular}
+\caption{IMDB: GPS Table}
+\label{tab:db-gps}
 \end{table}
 \begin{itemize}
 \item{\textbf{latitude}}: the latitude specifies a location's distance north or south of the equator.
@@ -112,13 +112,13 @@ int primary key & float    & float     & float    & int       & int       & floa
 % \usepackage{booktabs}
 \begin{table}[!htb]
 \centering
-\caption{Compass table}
-\label{tab:db-compass}
-\begin{tabular}{@{}lllllll@{}}
-\toprule
-id              & heading & tilt  & pitch & roll  & temperature & timestamp \\ \midrule
-int primary key & float   & float & float & float & float       & float
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+id              & heading & tilt  & pitch & roll  & temperature & timestamp \\ \hline
+int primary key & float   & float & float & float & float       & float \\ \hline
 \end{tabular}
+\caption{IMDB: Compass Table}
+\label{tab:db-compass}
 \end{table}
 \begin{itemize}
 \item{\textbf{heading}}: the magnetic bearing that the front of the robot is pointing to
@@ -136,11 +136,13 @@ int primary key & float   & float & float & float & float       & float
 \centering
 \caption{Motors table}
 \label{tab:db-motors}
-\begin{tabular}{@{}llllll@{}}
+\begin{tabular}{|l|l|l|l|l|l|}
 \toprule
 id              & front\_left & front\_right & rear\_left & rear\_right & timestamp \\ \midrule
 int primary key & float       & float        & float      & float       & float
 \end{tabular}
+\caption{IMDB: Motors table}
+\label{tab:db-motors}
 \end{table}
 \begin{itemize}
 \item{\textbf{front\_left}}: the speed the front left motor is set at
@@ -157,11 +159,13 @@ int primary key & float       & float        & float      & float       & float
 \centering
 \caption{Steering table}
 \label{tab:db-steering}
-\begin{tabular}{@{}llllll@{}}
+\begin{tabular}{|l|l|l|l|l|l|}
 \toprule
 id              & front\_left & front\_right & rear\_left & rear\_right & timestamp \\ \midrule
 int primary key & float       & float        & float      & float       & float
 \end{tabular}
+\caption{IMDB: Steering Table}
+\label{tab:db-steering}
 \end{table}
 \begin{itemize}
 \item{\textbf{front\_left}}: the angle the front left wheel is set at
@@ -175,13 +179,13 @@ int primary key & float       & float        & float      & float       & float
 % \usepackage{booktabs}
 \begin{table}[!htb]
 \centering
-\caption{Arm table}
-\label{tab:db-arm}
-\begin{tabular}{@{}llllllll@{}}
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
 \toprule
 id              & X     & Y     & Z     & waist & elbow & shoulder & timestamp \\ \midrule
 int primary key & float & float & float & float & float & float    & float
 \end{tabular}
+\caption{IMDB: Arm Table}
+\label{tab:db-arm}
 \end{table}
 \begin{itemize}
 \item{\textbf{X}}: the x position of the gripper 
@@ -221,6 +225,7 @@ def drop_create(poly, table):
     except poly.TableAlreadyExistsError:
         print table.table_name + " already exists."
 \end{lstlisting}
+
 As can be seen the table is dropped before being created. This means is Tiberius was previously running and Tiberius had not been switched off
 
 \subsection{Insert}
@@ -243,11 +248,13 @@ def insert_gps_reading(poly, id, data):
         }
     )
 \end{lstlisting}
+
 \subsection{Update}
 Update is used whe only one value in a certain row needs changed, and all other rows remain the same. This is not currently used, as the need to alter a reading has never arised. 
 
 \subsection{Overwrite}
 Overwrite allow a compelete row to be overwritten with new information. The id remains the same, as the function calling overwrite has to use the id inorder to specify which row it wants overwrite.
+
 \begin{lstlisting}[style=custompython]
 def overwrite_gps_reading(poly, id, data):
     poly.update(
@@ -311,7 +318,26 @@ while True:
 old data in the database is overwritten with new data TODO:fill this in
 
 \subsubsection{Actuator decorators}
-Unlike the sensors, the actuator database should not be updated in a
+Unlike the sensors, the actuator database should not be updated in a periodic manner. This is because the actuators don't change unless specified by the control software. Therefore decorators are placed on the functions that alter an actuators position.
+\newline
+Decorators dynamically alter the functionality of a function, method or class without having to directly use subclasses \cite{decoratordefinition}. A decorator function is called, whenever the function it is decorating is called. So for this implementation, whenever the function to move an actuator is called, the function to update the actuators location is called.
+\newline
+The three function to move the arm are:
+\begin{lstlisting}[style=custompython]
+def rotate_waist(self,change, angle=None):  
+\end{lstlisting}
+\begin{lstlisting}[style=custompython]
+def move_shoulder(self, change, angle=None):  
+\end{lstlisting}
+\begin{lstlisting}[style=custompython]
+def move_elbow(self, change, angle=None):  
+\end{lstlisting}
+Therefore each one of these function is decorated with the database arm update function. This function takes the new values of X, Y, Z, waist, elbow, shoulder and writes it to the database. 
+\newline
 
-\label{decoratordefinition}
-Decorators dynamically alter the functionality of a function, method or class without having to directly use subclasses \ref{decoratordefinition}.
+
+
+
+
+
+

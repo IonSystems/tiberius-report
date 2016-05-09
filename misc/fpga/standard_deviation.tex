@@ -1,7 +1,13 @@
 \section{FPGA Standard Deviation}
 
+\subsection{Ethernet communication}
 
-\pagestyle{stuart} %staurt little (cock)
+\subsection{Standard Deviation Implementation}
+
+\subsection{Limited Gains compared to Cost}
+The use of an \gls{FPGA} could have a positive effect on the speed of calculating the standard deviation of the kinect depth data, however it comes at to high a cost. This cost is not simply monitory as the increased power consumption and the need for very fast Ethernet communication meant that it was not a feasible addition to \gls{tiberius3}. The main flaw in the idea of using an \gls{FPGA} as a unit for calculating the standard deviation was that the data needed to be passed between the PC and \gls{FPGA} multiple times before a result could be entered into the database. With the \gls{FPGA} board's available within the project the best Ethernet that could be obtained was well below a viable level for a speed-up to be gained compared to simply using the CPU of the PC.
+
+\pagestyle{stuart}
 
 
 

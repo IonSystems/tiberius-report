@@ -10,12 +10,12 @@ In light of the problems of the old arm it was decided that a new arm would be d
 The arm also had to be able to keep position without requiring power which required the use of worm drives for all joints. This would stop the arm from flailing around when not in use, since it would be a huge waste of power to keep it powered all the time. Additionally the use of worm drives gives a very large gear ratio with a simple design so makes the arm easier to design.
 
 \subsubsection{Software}
+The software consisted of several pieces of code working in combination.  The arm joints were controlled by stepper motors which required an accurate number of steps to translate to an angle.
 
-Inverse Kinematics
 
 Consideration was given on how to implement the robotic arm, including ideas such as robotic software packages or libraries such as ROS, but eventually our own implementation was decided on.  This was partly due to the fact that the robotic arm was a customised arm made with 2 joints and a limited gripper capability.  These libraries were quite involved and would not fit easily into our Raspberry Pi controlled python code, additionally, a lot of examples of robotic arm had 3 or more joints and were structured quite differently so our own customised code would be the best option for controlling the arm.
 
-
+%yo, presumably andrew! Try not to say I or we in this report. Save the individual things for the individual report.
 I was responsible for programming the inverse kinematics for the robotic arm.  This involved taking a 3 dimensional Cartesian coordinate and converting it into angular coordinates that the three arm motors would position to.  The basic way this was done was by using trigonometry to identify the required vertical angle, which would be done with the base motor and by using further trigonometry to determine the two joint angles required to manoeuvre the joints to the correct point in space.
 
 The first stage was to calculate the 	
@@ -37,4 +37,10 @@ $\rho = tan^{-1}\left ( \frac{z}{\sqrt{{x^{2}+y^{2}}}} \right )+ cos^{-1}\left (
 
 $\sigma = cos^{-1}\left (\frac{m^{2}+s^{2}-(x^{2}+y^{2}+z^{2})}{2ms} \right )$
 $\tau = cos^{-1}\left (\frac{m^{2}+s^{2}-n^{2}}{2ms}\right )$
+
+\subsection{Gripper}
+The gripper was designed by .... and released on an open source license. It was printed in ... amount of parts and assembled.
+
+\subsection{Camera}
+It is inevitable that if the arm was to be controlled by teleoperation the robot would require a robust image capturing device with a clear view of arms area of operations. The kinect was situated to the front of the vehicle such that it provided a clear view perpendicular to the robot’s arm when it would try to grasp objects. A second camera was placed inside the gripper. The gripper camera allows the user to navigate the arm in the x and y axis and the kinect allows navigation in the z axis. 
 

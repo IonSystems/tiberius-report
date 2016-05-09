@@ -6,28 +6,10 @@ A highly extendable database wrapper was written in Python, and support for SQLi
 
 A layer of abstraction is created to separate the developer from the raw SQL statements, but also allowing controller access to raw SQL statements when no other option is available.
 
-A comparison of two possible interactions with the database are given below:
-
-\begin{lstlisting}[style=custompython]
-def query_sensor_validity(poly):
-    return poly.query(
-        SensorValidityTable.table_name,
-        [
-            'ultrasonics',
-            'compass',
-            'gps'
-        ]
-    )
-\end{lstlisting}
-
-\begin{lstlisting}[style=custompython]
-return poly.sql("SELECT ultrasonics, compass, gps from sensor_validity_table;")
-\end{lstlisting}
-
 As well as creating a layer of abstraction to aid database development and integration, database interaction also take place behind the scenes, thanks to Python decorators.
 
 %The the database works. sensor data in, any component can read from database.
-The 
+
 
 \subsection{Planning}
 The plan is to have a unique table for each sensor. Each row in the table shall be a new reading. The table shall include both sensors and actuators. 
