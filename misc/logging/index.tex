@@ -1,9 +1,22 @@
 \section{Logging}
+\pagestyle{cameron}
 
-\subsection{Justification}
+% \subsection{Justification}
 During development, it is important to be able to understand exactly what the system is doing. This is especially useful when debugging. 
 
-\subsection{Implementation}
+% \subsection{Implementation}
 A consistent logging format that indicates the source of the message, with various logging levels was developed using Python's logging package.
 
-All messages are stored in a log file, allowing developers to look back at a sequence of events.
+All messages are stored in a log file, allowing developers to look back at a sequence of events. This can be crucial for tracing a bug to it's source, if not already highlighted in Code Listing \ref{code:logging-example} a snippet from Tiberius's log file. 
+
+
+\begin{lstlisting}[label=code:logging-example]
+2016-05-11 14:24:27,756 - tiberius.control.drivers.motor_udp - INFO - Node: Front Left, Speed: 127
+2016-05-11 14:24:27,782 - tiberius.control.drivers.motor_udp - INFO - Node: Rear Left, Speed: 127
+2016-05-11 14:24:27,809 - tiberius.control.drivers.motor_udp - INFO - Node: Front Right, Speed: 127
+2016-05-11 14:24:27,835 - tiberius.control.drivers.motor_udp - INFO - Node: Rear Right, Speed: 127
+2016-05-11 14:24:27,863 - tiberius.control_api.MotorResource - DEBUG - Moving forward at speed 50
+2016-05-11 14:24:31,864 - tiberius.control_api.MotorResource - DEBUG - Request Params: {u'command': u'get_speed'}
+2016-05-11 14:24:31,865 - tiberius.control_api.MotorResource - DEBUG - Request Headers: {'CONTENT-LENGTH': '17', 'ACCEPT-ENCODING': 'gzip, deflate', 'HOST': '10.113.211.242:8000', 'ACCEPT': '*/*', 'USER-AGENT': 'python-requests/2.10.0', 'CONNECTION': 'keep-alive', 'X-AUTH-TOKEN': 'supersecretpassword', 'CONTENT-TYPE': 'application/x-www-form-urlencoded'}
+2016-05-11 14:24:31,866 - tiberius.control_api.MotorResource - DEBUG - Request Speed: None
+\end{lstlisting}

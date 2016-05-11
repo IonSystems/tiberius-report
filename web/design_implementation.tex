@@ -3,11 +3,11 @@
 \subsection{Subsystem Overview}
 \label{sec:web_subsystem_overview}
 A lightweight Python framework was used to create an API, the communication bridge between Tiberius and the \gls{webinterface}. The \gls{webinterface} interacts with Tiberius by sending authenticated \gls{HTTP} \gls{POST} requests to the \gls{API} running on Tiberius' \gls{controlpi}.
-
+\newline
 Each request is sent with an X-Auth \gls{POST} parameter, with a authentication token. The authentication token set on Tiberius and the web server must match.
-
+\newline
 The \gls{controlapi} and \gls{webinterface} server must be operating on the same network, to allow a route for packets to reach their destination address. In our instance we have used a \gls{VPN} to allow all devices to operate on the same network.
-
+\newline
 Diagram \ref{fig:api-modules} gives an overview of all \gls{webinterface} and \gls{controlapi} components.
 \newline
 
@@ -20,7 +20,7 @@ Diagram \ref{fig:api-modules} gives an overview of all \gls{webinterface} and \g
 \label{fig:api-modules}
 \end{figure}
 
-The following describes each web application component with reference to Figure \ref{fig:api-modules}.
+The following describes each web application component with reference to Figure \ref{fig:api-modules}:
 
 \begin{enumerate}[label=(\alph*)]
   \item Tiberius API: Uses Falcon to accept \gls{HTTP} \gls{POST} requests and act upon the body of the messages.  % (a)
@@ -83,7 +83,7 @@ NavigationResource     & \texttt{/navigation}  & Initiates navigation algorithms
 
 \subsubsection{Authentication Middleware}
 Each request that the \gls{controlapi} receives is passed through an authentication filter, passing only valid authenticated requests. The implemented authentication mechanism looks for a valid token in the \texttt{X-Auth-Token} parameter of the request. Appendix \ref{app:authentication_middleware} includes the \gls{python} authentication middleware, with a description.
-
+\newline
 Figure \ref{fig:api-auth-middleware} illustrates the authentication middleware filtering out invalid (unauthenticated) requests, and passing authenticated requests as if nothing happened. A walkthrough of the sequence of events to send an authenticated \gls{HTTP} \gls{POST} request to the \gls{controlapi} is described in Appendix \ref{app:web_walkthrough}.
 
 % Diagram illustrating all the modules used within the API and web interface.
@@ -130,9 +130,9 @@ Control                          & /control/\textless id\textgreater       & The
 \label{sec:web_design_missions}
 
 One of the primary purposes of the web interface is to allow users to design their own missions. The user can then trigger the start of a mission and observe, as Tiberius works through the list of waypoints and tasks.
-
+\newline
 The waypoint-orientated design of missions was introduced to provide a strong location-based foundation for missions. Tasks were incorporated to support non-navigational objectives.
-
+\newline
 In previous years, missions have involved recognising objects and navigating past obstacles. This year, missions are more explicitly defined by a user, via the web interface which involves the following:
 
 \begin{enumerate}
@@ -141,7 +141,7 @@ In previous years, missions have involved recognising objects and navigating pas
 \item Assign tasks to waypoints, these tasks are started once Tiberius has reached it's waypoint.
 \end{enumerate}
 
-
+\newline
 Missions are stored in a database on the web server, and sequentially transmitted to Tiberius when a mission is started. Tasks can also me initiated manually at any time, from the web interface. Available tasks are defined in Tiberius's \gls{controlapi} software. Currently the amount of implemented tasks is slim, but a strong software infrastructure is in place to define new tasks. Code listing \ref{code:drive-task} is an example of a simple task.
 
 \begin{lstlisting}[style=custompython,label=code:drive-task][!htb]
@@ -166,15 +166,16 @@ class DriveForwardsUntilWall(Task):
         self.runTask()
 \end{lstlisting}
 
+\newline
 Referring to Code Listing \ref{code:drive-task}, each task implements \texttt{runTask()}, \texttt{pauseTask()} and \texttt{resumeTask()}. These functions are called from the \gls{controlapi} when an appropriate task request is received. The \texttt{task\_id} is used by the \gls{controlapi} to distinguish between tasks. The web interface defines all known tasks in it's database. The \gls{webinterface} uses a fixture to populate the database with tasks \cite{github-fixtures}.
 
 
 \subsubsection{Teleoperation}
 
 The web interface allows tele-operation of Tiberius's motors and robotic arm. Tiberius can be tele-operated during or outwith missions. Both the motors and robotic arm can be controlled from the same page. The interface supports motor speed control, skid steering and forward and backwards motion. Each axis of the robotic arm can also be controlled. A live video stream from a webcam allows Tiberius to be teleoperated, without the user having a visual line of sight.
-
+\newline
 Future improvements to our current tele-operation implementation are discussed in section \ref{sec:web_future_work_access_tele}.
 
 
 \subsubsection{Fleet Management}
-Within the \gls{webinterface}, the user can store details about all robots. The most important detail to store is the device's IP address, this is used by the web interface to send requests to the correct device. 
+Within the \gls{webinterface}, the user can store details about all robots. The most important detail to store is the device's IP address, this is used by the web interface to send requests to the correct device. Figure \ref{fig:web_fleet} in Appendix \ref{app:web_screenshots} is a screenshot of the web interface, displaying the fleet used throughout development.

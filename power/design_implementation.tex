@@ -3,10 +3,11 @@
 \subsection{Overall power management design}
 
 The aims set out for the preliminary design were to incorporate new batteries into Tiberius III, use more efficient motors, reduce the weight and improve the monitoring and control of the power from the various devices and motors that Tiberius would use.  These features were implemented with varying degrees of success.  
-The weight was dramatically reduced due to the restructuring of the chassis by removing about half of the aluminium extrusion, the various mountings and battery holders were all 3D printed using lightweight PLA, the batteries themselves were also significantly lighter than the previous versions.  However, the total weight reduction ended up being quite small due to the additional hardware including a robotic arm which added quite a bit of weight.  
+The weight was dramatically reduced due to the restructuring of the chassis by removing about half of the aluminium extrusion, the various mountings and battery holders were all 3D printed using lightweight PLA and the batteries themselves were also significantly lighter than the previous versions.  However, Tiberius III ended up being about 10Kg heavier than Tiberius II due to the additional hardware including robotic arm which added quite a bit of weight.  
+\newline
+The control Raspberry Pi had a power monitoring mbed which allowed it to monitor the power usage and used capacity of the batteries and an Arduino to control relays which could be used to turn off the Kinect 2 sensor and processor, the robotic arm and even the ability to shut down the motors if necessary. Figure \ref{fig:power} shows the initial design of the power system for Tiberius III. This design has changed slightly with the sensors not being turned off due to how little power they used and the spare relay being used to control 12v to the stepper driver instead.
 
-The control Raspberry Pi had a power management module that allowed it to monitor and control the different components and even turn parts of the vehicle off, including the Kinect 2 sensor and processor, the robotic arm and even the ability to shut down the motors if necessary.  
-Relays were used to allow the Kinect 2, the motors and the robotic arm which are controlled by the control pi and can turn off those components in low power mode.  
+  
 
 \begin{figure}[!htb]
 \begin{center}

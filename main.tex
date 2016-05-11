@@ -44,6 +44,16 @@
 \usepackage[table,x11names]{xcolor} %To give table rows a bit of colour if so desired
 \usepackage[export]{adjustbox}	%To position logo on right
 \usepackage{xstring}			%For case statement on strings
+
+\usepackage{xparse}
+\DeclareDocumentCommand{\newdualentry}{ O{} O{} m m m m } {
+  \newglossaryentry{gls-#3}{name={#5},text={#5\glsadd{#3}},
+    description={#6},#1
+  }
+  \makeglossaries
+  \newacronym[see={[Glossary:]{gls-#3}},#2]{#3}{#4}{#5\glsadd{gls-#3}}
+}
+
 \usepackage[toc,page]{appendix}	%Use package for generating appendices
 \usepackage{amssymb}			%Use package for checkmark
 
@@ -65,6 +75,7 @@
 \usepackage{float}				%For positioning things correctly
 
 \usepackage{listings}			%For code formatting and highlighting
+\usepackage{gensymb}
 
 % Define custom fomratting style for Python code
 \lstdefinestyle{custompython}{

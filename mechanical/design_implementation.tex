@@ -56,7 +56,7 @@ The completed design for the wheel mount unit, with suspension and steering actu
 \end{figure}
 
 \subsection{Chassis}
-\label{sec:Mech_DI_Chassis}
+\label{sec:mech_DI_Chassis}
 With the drastic changes to Tiberius' wheel mounts, a re-design of the chassis was required. The double wishbone suspension system requires two vertical attachment points, so the new chassis would have to be fairly tall. Similarly the wishbones protrude almost 30cm out from the hinges; in order to keep the robot a reasonable width, they would have to be mounted as close to the centre of the chassis as possible.
 \newline
 While Tiberius II was low and wide, the new chassis for Tiberius III is designed to be tall and slim. This allows the wishbones to be mounted at the centre on two columns, leaving plentiful space in the middle for new components. Space has been left at the front and back above the bumpers; at the front for the new robotic arm, and at the back for the batteries.
@@ -73,14 +73,12 @@ The objective of reducing wasted material has truly been fulfilled; the new chas
 \subsection{Motion}
 % Covers all the stuff with Jim's mbeds
 
-The new steering mechanics has introduced a new level of complexity to Tiberius's control software and hardware. 
-
-
+The new steering mechanics have introduced a new level of complexity to Tiberius's control software and hardware.
 
 \subsubsection{Motor Control Architecture}
 A new motor control subsystem has been introduced, introducing a \gls{canbus} network, a \gls{UDP} interface, whilst maintaining the existing \gls{i2c} interfaced MD03 motor drivers. \ref{fig:motor-control-architecture} illustrates the communications that exist in order to drive the wheel and steering motors.
 
-The new control system introduces a PID control loop, working with the rotary encoders to provide a controlled motor speed.
+The new control system will use a PID control loop, working with the rotary encoders to provide a controlled motor speed.
 
 \begin{figure}[!htb]
 \begin{center}

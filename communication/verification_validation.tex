@@ -2,10 +2,10 @@
 
 \subsection{VPN failover}
 The ability for the network to automatically switch over to 4G when the Wi-Fi signal is lost was tested in several different ways.
+\newline
+The system was initially set up with with both a Wi-Fi and 4G connection, and the VPN running on a PC in the lab which was connected to the OpenWRT router.
 
-The initial state of the system was with both Wi-Fi and 4G connected and the VPN running on a pc in the lab connected to the OpenWRT router.
-
-The Wi-Fi network in the lab was then turned off. At the same time as the network was disconnected a ping was being run on the pc to a public server. The ping timed out for a few seconds before the router made the switch to 4G. The Wi-Fi was then turned back on again and the same behaviour was seen when the router reconnected to the Wi-Fi and switched traffic back to that interface.
+The Wi-Fi network in the lab was then turned off, whilst simultaneously a ping was being run on the PC to a public server. The ping timed out for a few seconds before the router made the switch to 4G. The Wi-Fi was then turned back on again and the same behaviour was seen when the router reconnected to the Wi-Fi and switched traffic back to that interface.
 
 \subsection{Wi-Fi antennas}
 The antennas were tested outdoors on the road and managed to provide a strong signal up to 800 meters away with no amplification. While still maintaining usable bandwidth.

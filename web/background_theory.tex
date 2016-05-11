@@ -7,30 +7,25 @@ familiarised with the key technologies behind the web interface, to allow a
 greater understanding of how the components interacts with Tiberius and the
 user.
 
-Some of these concepts have been previously described in our preliminary report \cite{tibby-lit-review}, so technologies described in this section are kept sucinct. An overview of
-the technologies discussed is given below:
+%should you not \ref{tibby} rather than cite it!
+Some of these concepts have been previously described in our preliminary report \cite{tibby-lit-review}, so technologies described in this section are kept sucinct. Elaboration of unfamiliar technologies can be found in the glossary.
 
-\textbf{High Level Technologies}
+% An overview of
+% the technologies discussed is given below:
 
-\begin{description}[align=left]
-\item [MVC] is a the Model-View-Controller design pattern, and is most commonly
-used in web frameworks such as Django.
+% \begin{description}[align=left]
+% \item [MVC] is a the Model-View-Controller design pattern, and is most commonly
+% used in web frameworks such as Django.
 
-\item [Django] is a popular web framework, used for small scale application
-such as this one, to large commercial applications.
+% \item [Django] is a popular web framework, used for small scale application
+% such as this one, to large commercial applications.
 
-\end{description}
+% \end{description}
+% Further definitions
 
-\textbf{Low Level Technologies}
-
-\begin{description}[align=left]
-\item [HTTP] some detail
-\item [TCP] some detail
-\item [UDP] some detail
-\item [VPN] some detail
-\end{description}
 
 \subsection{Django}
+Django is a \gls{MVC} web framework, written in Python. The framework is designed for rapid development, suiting the requirements of this project well. Figure \ref{django-mvc} gives an overview of how the MVC architecture works.
 
 % Diagram illustrating the internal structure of the Django framework.
 \begin{figure}[!htb]
@@ -40,6 +35,15 @@ such as this one, to large commercial applications.
 \caption{Django's MVC Architecture}
 \label{fig:django-mvc}
 \end{figure}
+
+\begin{itemize}
+\item A request is sent from the user's browser to the web server.
+\item Django's URL Dispatcher matches the request URL with a View.
+\item The View gets all data required to load the web page, from the Models.
+\item The Models get their data from a data repository, a database in this case.
+\item The View passes all it's data through the appropriate template, to get the HTML.
+\item The HTML is returned to the browser by the view.
+\end{itemize}
 
 \subsection{Falcon}
 

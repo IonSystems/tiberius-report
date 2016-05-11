@@ -1,8 +1,8 @@
 \section{Introduction and Planning}
 
-The web interface and it's supporting software are crucial components that enable users to interact with Tiberius remotely. It is also the enabler for mission planning and execution. These concepts are further discussed in section \ref{sec:web_design_missions}
+The web interface and it's supporting software are crucial components that enable users to interact with Tiberius remotely. It is also the enabler for mission planning and execution. These concepts are further discussed in Section  \ref{sec:web_design_missions}.
 
-Figure \ref{fig:web-interface-communication} illustrates the communication relationships between the Tiberius robots and the web applications, and gives a clear overview of our web components. The figure illustrates two Tiberius robots (left), an instance of the web interface(top right) and an android application (bottom left). In this configuration, both the web interface and android application can communicate with either robot.
+Figure \ref{fig:web-interface-communication} illustrates the communication relationships between the Tiberius robots and the web applications, and gives a clear overview of our web components. The figure illustrates two Tiberius robots (left), an instance of the web interface (top right) and an android application (bottom left). In this configuration, both the web interface and android application can communicate with either robot.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -20,7 +20,6 @@ Multiple robots can exist on our network but at the same time each robot must be
 All communication between devices is in the form of \gls{HTTP} \gls{POST} requests/responses. The security benefits of this message type are described in section \ref{sec:web_subsystem_overview}.
 
 Figure \ref{fig:api-interaction} illustrates the existing functions of the \gls{controlapi}, as well as unimplemented functions that could be considered for future work. Possible future projects are described in-depth in section \ref{sec:web_future_work}.
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=10cm]{api_diagram.png}
@@ -32,11 +31,11 @@ Figure \ref{fig:api-interaction} illustrates the existing functions of the \gls{
 The \gls{controlapi} is a server application that runs on each Tiberius robot, allowing authenticated devices to communicate with it. The \gls{controlapi} may also be refereed to as the 'API' or 'Tiberius API', from herein. The \gls{controlapi} is 'supporting software', as it supports the operation of the web interface, by handling it's \gls{HTTP} \gls{POST} messages. Like most application on Tiberius, the \gls{controlapi} is written in Python, so can interact with Tiberius's other software extremely easily, this integration with existing software is crucial to allow the \gls{controlapi} to operate Tiberius. The \gls{controlapi} provides the following to compatible applications:
 
 \begin{itemize}
-\item Provides access to Tiberius's basic motor control functions, allowing external applications to tele-operate the vehicle.
+\item Provides access to Tiberius' basic motor control functions, allowing external applications to tele-operate the vehicle.
 
 \item Similarly, the robotic arm can be tele-operated by interfacing with the \gls{controlapi}.
 
-\item Allows external applications to make queries to Tiberius's in-memory database. These are controlled queries, there is no direct SQL statement support. This is a security measure preventing misuse of the API's database access.
+\item Allows external applications to make queries to Tiberius' in-memory database. These are controlled queries, there is no direct SQL statement support. This is a security measure preventing misuse of the API's database access.
 
 \item Supporting applications can provide authenticated start, pause and stop commands to control tasks. These are used during missions when Tiberius reaches a waypoint with tasks assigned to it.
 

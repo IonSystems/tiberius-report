@@ -1,25 +1,26 @@
 \section{Background Theory}
-Various other messaging patterns exist, such as publish and subscript; these patterns were considered and then rejected in favour of the database model.
+A database is one method of passing information. There are many other forms such as publish and subscript - which is used in ROS (Robot Operating System).  These patterns were considered and then rejected in favour of the database model, as the development team agreed this would be an interesting and different approach to take.
 
 \subsubsection{Definition}
-A database is central location in which information is stored \cite{databasedefinition}. The most prevalent approach is the relational database. A relational database is a collection of data items organized as a set of formally described tables, which can be accessed or manipulated \cite{relationaldatabasedefinition}.
+A database is a central location in which information is stored \cite{databasedefinition}. The most prevalent approach is the relational database. A relational database is a collection of data items organized as a set of formally described tables, which can be accessed or manipulated \cite{relationaldatabasedefinition}.
 
 \subsection{Types of database}
-Various different database vendors were on offer. 
-ideally be free 
+There are a number of different relational database management systems to select from: Advantage Database Server, ClustrixDB, Empress Embedded Database, InterBase to name a few. Of all the systems inspected two stood out: SQLite and Polyhedra. This is because SQLite is one of the most heavily deployed systems in the embedded world and because polyhedra had previously been used with Tiberius. Both of these options were available for free, which made them more appealing.
 
-\subsubsection{SQL}
-
+\subsubsection{SQLite}
+SQLite is a well known Relational database management system (RDBMS), which can be embedded into the end program. It does not operate like a client-server system since the engine has no standalone processes for communication with the application program. The database in its entirety is held as a file on the host machine, which in Tiberius' case would be the Raspberry Pi. This file implements a locking mechanism during writing to avoid race conditions. It still permits concurrent reading of a file, since there will be no modification and hence no race conditions. 
 
 \subsubsection{Polyhedra}
-The benefit polyhedra holds over other database's namely SQL in this case is that it is an in-memory database. This means it can handle a high throughput and has a very short access time. Tiberius is a real time robot, which means it actions must occur with out a noticeable delay. 
+The benefit polyhedra has over other databases is that it is an in-memory database. This means it can handle a high throughput and has a very short access time. This is necessary since Tiberius is a real-time robot, which means its actions must occur without a noticeable delay. 
 \newline
-Polyhedra uses TCP/IP for communication between modules and SQL for data access; because data access uses SQL it makes it easier for the development team to debug problems since some of the development team already had experience working with MySQL which uses the same commands. 
+Polyhedra uses TCP/IP for communication between modules and SQL for data access; because data access uses SQL it makes it easier for the development team to debug problems since SQL commands are well documented and the development team already had experience working with them.
+\newline
+Polyhedra is produced by Enea, which offers four versions of the database, one of which they distribute for free - Polyhedra Lite. This imposes some limits such as 32 bit address mode, lack of fault tolerance, lack of historian module and lack of a debugging module. These limits are not of great significance, and therefore the lite option was selected. 
 
-\subsubsection{Validation}
-The intent is to validate all sensor and actuator data before being inserted into the database. This ensures all the data stored in the database is correct, and all other threads reading the database can trust it is error free. 
+\subsection{Validation}
+The intent was to validate all sensor and actuator data before being inserted into the database. This ensures all the data stored in the database is correct, and all other threads reading the database can trust that it is error free. 
 \newline
-It is beneficial for the user and possibly in the future some control software to know if a sensor is producing invalid data. Therefore a data validation table exists within the database; which sets a sensor to false when it gives invalid data. 
-This table is read by the diagnostics program, which operates a series of LEDs to give a physical indication of erroneous sensor data. To read more on the diagnostics LEDs see diagnostic section (\ref{diagnostics}).
+It is beneficial, for the user and possible future control software, to know if a sensor is producing invalid data. Therefore a data validation table exists within the database which sets a sensor to false when it gives invalid data. 
+This table is read by the diagnostics program which operates a series of LEDs to give a physical indication of erroneous sensor data. To read more on the diagnostics LEDs see diagnostics section (\ref{diagnostics}).
 The table can also be read by control software in the future. By collating all the sensor validity into one table, it allows the validity of all the sensors to be determined by one table query as opposed to a query for each sensor table.
 

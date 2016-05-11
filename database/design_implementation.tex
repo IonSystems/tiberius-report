@@ -1,13 +1,14 @@
 \section{Design and Implementation}
 
 \subsection{Table definitions}
-Each table has unique set of columns to suit the transducer data; this is required because different transducers produce different data which requires it's unique format. Two columns in every set of columns is the same across all tables, these are the id and the timestamp. 
+Each table has unique set of columns to suit the transducer data; this is required because different transducers produce different data which requires this unique format. Two column headings common to every table are the id and the timestamp. 
 \newline
-The id is a unique number assigned to each row; it is necessary as it allows a mechanism to specify each row. The first insert into the table has id one, and thereafter each new insert has the id incremented from the previous id. Therefore the id for the second entry would be two.
+The id is a unique number assigned to each row, which is necessary as it allows a mechanism to specify each row. The first insert into the table has id 1, and thereafter each new insert has the id incremented from the previous id. Therefore the id for the second entry would be 2.
 \newline
-The timestamp associates a time with every reading. The timestamp is taken from when the data is inserted into the database; since the time taken between acquiring data and inserting it is negligible, it can be assumed that the timestamp correlates to the time the transducer data was read. Therefore the timestamp can be used to determine how old a transducer reading is, which is necessary especially with the sensor data, as the environment may have changed significantly after the last reading.
+The timestamp associates a time with every reading. The timestamp is taken from when the data is inserted into the database; since the time taken between acquiring data and inserting it is negligible, it can be assumed that the timestamp correlates to the time the transducer data was read. The timestamp can therefore be used to determine the age of a transducer reading, which is especially necessary with the sensor data as the environment may have changed significantly after the last reading.
 \newline
-To increase modularity and readability, each table is defined as its own class. Below is an example of the GPS table. 
+To increase modularity and readability, each table is defined as its own class. Below is an example of the GPS table:
+\newline
 \begin{lstlisting}[style=custompython]
 class GPSTable(Table):
     table_name = "gps_reading"
@@ -23,7 +24,6 @@ class GPSTable(Table):
         'fixmode': 'int',
         'timestamp': 'float'}
 \end{lstlisting}
-
 The database structure remains compatible with SQL, however the examples provided all use polyhedra database as it is the selected choice.
 
 \subsubsection{Ultrasonics}
@@ -82,7 +82,7 @@ int primary key & float    & float     & float    & int       & int       & floa
 \begin{itemize}
 \item{\textbf{latitude}}: the latitude specifies a location's distance north or south of the equator.
 \item{\textbf{longitude}}: the longitude specifies the location's distance east or west of the Prime Meridian.
-\item{\textbf{altitude}}: the height of the robotin relation to sea level or ground level.
+\item{\textbf{altitude}}: the height of the robot in relation to sea level or ground level.
 \item{\textbf{gps\_qual}}: the value of the signal
 \item{\textbf{num\_stats}}: the number of satellites the gps unit has communication with
 \item{\textbf{velocity}}: the velocity which the robot is travelling at
@@ -201,7 +201,7 @@ int primary key & float 	  & float 	  & float    & float & float & float       &
 %***********************Creating*****************
 \subsection{Creating table}
 \label{create}
-Creating a database refers to the act generating a new table. This act has the possibility of breaking if a table with the same name already exists. With Tiberius this case may arise, if the user has restarted the Tiberius software without resetting the raspberry pi - thus retaining the old tables. Since the old tables do not contain any pertinent information they can be deleted with out regard. Therefore before creating a new table, it is checked to see if it already exists, if it does it is deleted and the new table is created. 
+Creating a database refers to the act of generating a new table. This act has the possibility of breaking if a table with the same name already exists. With Tiberius this case may arise if the user has restarted the Tiberius software without resetting the raspberry pi - thus retaining the old tables. Since the old tables do not contain any pertinent information they can be deleted without regard. Therefore before creating a new table, it is checked to see if it already exists, if it does it is deleted and the new table is created. 
 
 \begin{lstlisting}[style=custompython]
 def drop_create(poly, table):
@@ -284,16 +284,12 @@ def overwrite_gps_reading(poly, id, data):
 \end{lstlisting}
 
 \subsection{Polyhedra wrapper}
-
-TODO: all of this shit
-
-
-
+A wrapper function is a subroutine in a software library or a computer program whose main purpose is to call a second subroutine[1]. 
 
 
 \subsection{Procedure}
 \label{database_process}
-The procedure the Tiberius software follows in order to run the database can be thought of as four distinct sections - starting the database, creating the table, running the sensor threads and the decorators for the actuator functions. 
+The procedure that Tiberius software follows in order to run the database can be thought of as four distinct sections - starting the database, creating the tables, running the sensor threads and calling the decorators for the actuator functions. 
 \newline
 The start Tiberius script does the following
 \begin{itemize}
@@ -304,7 +300,7 @@ The start Tiberius script does the following
 Therefore all the database set up is achieved by running the script since the actuator decorators do not require any set up.
 
 \subsubsection{Starting database}
-When Tiberius is first powered up, and consequently the raspberry pi is first powered  up, the database will not be running. 
+When Tiberius is first powered up and consequently the raspberry pi is first powered  up, the database will not be running. 
 It is therefore necessary in the script to initiate the database; this is done by the following command.
 
 \begin{lstlisting}[style=custompython]
@@ -312,8 +308,7 @@ database = Popen("/home/pi/poly9.0/linux/raspi/bin/rtrdb -r data_service=8001 db
 \end{lstlisting}
 
 \subsubsection{Creating tables}
-The table for every transducer must be created at the start, regardless if the transducer is installed or not. This is done to ensure there are not errors further down the line, by 
-
+The table for every transducer must be created at the start, regardless of whether the transducer is installed or not. This is done to ensure that there are not errors further down the line.
 The tables for all the sensors is created using the create function described above in section \ref{create}. As described in said section, the tables are dropped if they exist before being created.
 %************************sensor threads*************
 \subsubsection{Sensor threads}
@@ -321,7 +316,7 @@ The next stage is to initiate the sensor threads. The purpose of the threads is 
 \newline
 Threads are only started if the sensor is installed - this is defined in the configuration file. For more detail on the configuration file see configuration (\ref{configuration}).
 \newline
-The database continuously gets more data as Tiberius is running. Therefore it is necessary to start removing old transducer data as it will become less relevant the older it gets. To do this the number of readings which a sensor is to hold is set; the number of readings (rows) does not exceed this; therefore newest information starts overwriting the oldest information. 
+The database continuously gets more data as Tiberius is running. Therefore it is necessary to start removing old transducer data as it will become less relevant the older it gets. To do this, the number of readings which a sensor should hold is set and the number of readings (rows) does not exceed this.  The newest information then starts overwriting the oldest information. 
 
 % TODO: overwrite after so many values.
 
@@ -341,8 +336,8 @@ while True:
 
 \subsubsection{Actuator decorators}
 
-The motor and arm are actuators rather than sensors, and therefore are employ a different technique to update the value; this technique is further described in the Decorators section (\cite{decoratordefinition})
- 
+The motor and arm are actuators rather than sensors, and therefore employ a different technique to update the value; this technique is further described in the decorators section (\cite{decoratordefinition})
+\newline
 Unlike the sensors, the actuator database should not be updated in a periodic manner. This is because the actuators don't change unless specified by the control software. Therefore decorators are placed on the functions that alter an actuators position.
 \newline
 Decorators dynamically alter the functionality of a function, method or class without having to directly use subclasses \cite{decoratordefinition}. A decorator function is called, whenever the function it is decorating is called. So for this implementation, whenever the function to move an actuator is called, the function to update the actuators location is called.
@@ -359,29 +354,19 @@ def move_elbow(self, change, angle=None):
 \end{lstlisting}
 Therefore each one of these function is decorated with the database arm update function. This function takes the new values of X, Y, Z, waist, elbow, shoulder and writes it to the database. 
 \newline
-
 \subsubsection{Validation}
-The data validation is currently performed in the the sensor threads. Each thread gets its data from the appropriate driver and 
-
-\subsubsection{Ultrasonics}
-There is currently no verification on this data.
-
-\subsubsection{LIDAR}
-The lidar SDK contains it's own validity on the data it recieves. It was considered to remove readings in which the distance was below the radius of tiberius, however this was decided against since this would disregard any overhanging object. 
+The data validation is currently performed in the sensor threads. Each thread gets its data from the appropriate driver and validated if necessary.
 \newline
-Unforunatly the lidar is not the highest component of tiberius and therefore does not have a full 360 degree view. Its's line of sight is obstructred by the directional antenna. Therefore the lidar reading which have angles which are affected by the antenna are removed; the rest of the lidar readings are inserted into the database. 
+\newline
+\textbf{Ultrasonic sensors}, \textbf{GPS} and \textbf{power} do not have any validation, since there is no method to tell if a numeric value is wrong.
+\newline
+\newline
+The \textbf{lidar} SDK contains its own validity on the data it receives, therefore it can be assumed that all the objects detected are real objects. Although every object detected is most likely a real object, our own validation was still required since the directional antenna is placed above the LIDAR. Since the LIDAR is not the highest placed component it does not receive a full 360 \degree sweep, because it's line of sight is obstructed by the antenna's mount. Currently this data is omitted by not reading it from the database, although this could be improved simply by validating before insertion.  This is done by comparing the LIDAR reading's angle against a range of forbidden angles and disregarding it if it does not meet the requirements.
+\newline
+\newline
+\textbf{GPS} currently has no high level validation. The distance between the positions of each sequential reading could be compared against the robot's maximum distance per time step, where time step is equal to the time between readings. 
+The GPS driver does have validation to ensure it doesn't return NULL values. The GPS is checked to ensure it has a fix and a valid position, and that both of these have been checked recently before returning.
+\newline
+\textbf{Compass} data is validated using the latest reading and the previous 10 values. The previous 10 are stored in an array and exist outside of the database. The validation algorithm takes the standard deviation of the readings and rejects the latest reading if the result is too large. This algorithm has not been thoroughly tested and could be improved upon greatly. Another form of validation would be to compare the bearing on the GPS and compass, and take an average if they are close. Currently GPS does not produce a heading, however a program could be written to do this when the robot is moving.
 
-\subsubsection{GPS}
-The gps is checked to see if it is usable. 
-The usability function returns usable  if the gps has a fix, it has a position and that information is recent. 
-the gps validity is set to false.
-
-\subsubsection{Compass}
-Heading is read of compass, and the 10 most recent readings are stored into an array. 
-The standard deviation is taken of the last 10 readings. 
-If the standard deviation > 10 then the last reading must be false. Typically this may be because the robot has neared at an ionized metal structure such as a steel support beam in a building. 
-The compass validity is set to false.
-
-
-
-
+% could talk about calibrate compass as well

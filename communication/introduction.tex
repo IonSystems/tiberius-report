@@ -1,6 +1,6 @@
 \section{Introduction and Planning}
 \subsection{Tiberius II}
-The communications system on Tiberius II was very simplistic. With a single WiFi router being used to provide short range communication between the control Pi and an Android tablet. This allowed Tiberius to be easily controlled while walking alongside without the need for a laptop or keyboard.
+The communications system on Tiberius II was very simplistic. With a single WiFi router being used to provide short range communication between the control Raspberry Pi and an Android tablet. This allowed Tiberius to be easily controlled while walking alongside without the need for a laptop or keyboard.
 
 However this approach was fraught with problems, it was impossible to update the software unless you either downloaded it onto a flash drive and copied it manually or plugged in a network cable and reconfigured the network settings on the control pi. There was also no way to remotely control Tiberius unless you were within range of the WiFi network.
 
@@ -19,28 +19,16 @@ We decided on several key features that the new system had to include.
 \item A VPN bridge to allow easy communications over all the other networks by simplifying the network layout.
 \item Static IP addresses for all components on Tiberius to allow easy connection without having to plug in a monitor to find out which DHCP address it has received.
 \end{itemize}
-
-In addition to these features there was also a few situations that we came up with to demonstrate how the new system would benefit Tiberius.
-
+These key features would be utilized when Tiberius is undergoing the following tasks. These tasks would serve a demonstrates to prove the new systems capability. 
+% In addition to these features there was also a few situations that we came up with to demonstrate how the new system would benefit Tiberius.
 \begin{itemize}
+\item Testing in the lab with Tiberius connected to the lab WiFi and able to use any PC there to control and test, with multiple users able to work on different aspects of Tiberius at the same time, without needing multiple network cables plugged in.
 
-\item Testing in the lab, with Tiberius connected to the lab WiFi and able to use any pc there to control and test, with multiple users able to work on different aspects of Tiberius at the same time, without needing lots of network cables plugged in.
+\item Testing Tiberius outside whilst still connected to the lab WiFi and falling back to the 4G connection seamlessly using the VPN if a WiFi connection is lost. Multiple users can still be working on different systems on Tiberius from the comfort of the lab, or they can be outside connected to the local WiFi on Tiberius while still keeping an internet connection to look things up or push changes to the software.
 
+\item Using the web interface Tiberius could theoretically be anywhere so long as it has either a WiFi or 4G connection it can still be controlled.
 
-
-
-\item Testing outside, with Tiberius still connected to the lab WiFi and falling back to the 4G connection seamlessly using the VPN if a WiFi connection is lost. Multiple users can still be working on different systems on Tiberius from the comfort of the lab, or they can be outside connected to the local WiFi on Tiberius while still keeping an internet connection to look things up or push changes to the software.
-
-
-
-\item Using the web interface, Tiberius could theoretically be anywhere so long as it has either a WiFi or 4G connection it can still be controlled.
-
-
-
-\item On a mission, Tiberius could lose WiFi and 4G connection and still be able to continue the mission giving status updates when it regains signal.
-
-
-
+\item On a mission Tiberius could lose WiFi and 4G connection and still be able to continue the mission giving status updates when it regains signal.
 \end{itemize}
 
 

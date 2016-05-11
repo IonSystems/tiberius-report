@@ -2,28 +2,27 @@
 
 \subsection{Testing}
 \subsubsection{Overview}
-Tiberius's In-memory Database is a critical area of our architecture. Two decisions regarding the architecture were which RPi to use and which database to use. A script was created to measure the speed at which different configuration could carry out operations. This script created a database, inserted arbitrary values, updated the values, queried the  values and then deleted the database. All of these functions were carried out 1000 times and then an average was produced for each of the following tasks.
+Tiberius's In-memory Database is a critical area of our architecture. Two decisions regarding the architecture were which RPi to use and which database to use. A script was created to measure the speed at which different configuration could carry out operations. This script created a database, inserted arbitrary values, updated the values, queried the values and then deleted the database. All of these functions were carried out 1000 times and then an average was produced for each of the following tasks.
 \begin{itemize}
-\item drop table
 \item create
 \item insert
 \item update
 \item query
+\item drop table
 \end{itemize}
-
-The script was tested using the SQL database and using the polyhedra database, to determine which version was superior. The test was to be run again on three different raspberry pi models - model 1 version B, model 2 version B and model 3 version B. However the development team did not have a model 2, and therefore the results for that section are ommitted. 
+The script was tested using the SQL database and using the polyhedra database to determine which version was superior. The test was to be run again on three different raspberry pi models - model 1 version B, model 2 version B and model 3 version B. The development team, however, did not have a model 2, and so the results for that section are omitted. 
 
 \subsubsection{Results}
-The results can be found under appendix A.
+The results are in tabular form and can be found under appendix A.
 
 \subsubsection{Analysis}
 Polyhedra tends to outperform SQL in most operations. For create, insert, update and delete polyhedra will usually perform the task in less than a tenth of time it takes SQL. Query is the only operation in which SQL out performs polyhedra, although the difference is less significant as seen in the other operations.
 \newline
-Changing between Raspberry Pi had a small effect on the SQL database; the only operation which had a noticable effect was query which was speed up. This differed from polyhedra database which benefited significantly by the change in Raspberry Pi. Every operation other than delete had it time reduced by atleast one order of magnitude.
+Changing between Raspberry Pi had a small effect on the SQL database; the only operation which had a noticeable effect was query which was sped up. This differed from polyhedra database which benefited significantly with each change in Raspberry Pi model. Every operation other than delete had a reduction in time by at least one order of magnitude.
 \newline
-Considering the above analysis tiberius 3 will run polyhedra database and run on a raspberry pi 3 model B. 
+Considering the above analysis, the best composition for Tiberius 3 is to run polyhedra database on a raspberry pi 3 model B. 
 \newline
-This test was flawed though since it had different SD card in it, which probably are of different quality. This should only affect the SQL database since it is not in-memory. The script is still good but the test could be re-ran.
+After testing and analysis, it was noticed that the tests were flawed by overlooking a confounding variable; namely the SD card used. The raspberry pi's were running different classes of SD card which differed in access time. The effects should not have been significant on the polyhedra database since it is an in-memory database and therefore the data was held in RAM. The test could be carried out again using the same script and eliminating confounding factors but it will likely have the same outcome which are the results proving that the best composition is polyhedra running on a raspberry pi 3. 
 
 
 

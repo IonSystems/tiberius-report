@@ -2,25 +2,116 @@
 Once decisions were made about which types of navigation would be used for \gls{tiberius3} and that there would need to be a difference between indoor and outdoor navigation, the following systems where designed. After the design process was complete some of the systems where implemented in order to demonstrate some of the navigation options available to \gls{tiberius3}. 
 \subsection{Point to Point Algorithm}
 \label{sec:nav_design_p2p} %This needs to stay, Cam ref section this from web
-As a starting point for the outdoor navigation systems of \gls{tiberius3}, a base movement algorithm was created called Point to Point. The purpose of this was to allow Tiberius the ability to move from the current location that the robot would be in, to a given destination using a direct, effectively straight path. The path is created using equations found on \cite{lat-long-points}, these where then converted to python in order to be used within tiberius' control system. The Equations used to create the point to point algorithm were as follows:
+As a starting point for the outdoor navigation systems of \gls{tiberius3}, a base movement algorithm was created called Point to Point. The purpose of this was to allow Tiberius the ability to move from the current location that the robot would be in, to a given destination using a direct, effectively straight path. The path is created using equations found on \cite{lat-long-points}, these where then converted to python in order to be used within \gls{tiberius3}' control system. The functions used to create the point to point algorithm were as follows:
 \begin{itemize}
 \item \textbf{Distance}, where the distance between the two locations is calculated.
+\begin{lstlisting}[style=custompython, label=Distance-equation, caption=Equation for the distance between two points]
+def getDistance(self, curlocation, destination):
+        r = 6371000.0  # radius of the earth in meters
+        theta1 = math.radians(curlocation[0])
+        theta2 = math.radians(destination[0])
+        deltaTheta = math.radians(destination[0] - curlocation[0])
+        deltaLambda = math.radians(destination[1] - curlocation[1])
+        a = math.pow(math.sin(deltaTheta / 2.0), 2) + \
+            math.cos(theta1) * math.cos(theta2) * \
+            math.pow(math.sin(deltaLambda / 2.0), 2)
+        c = 2.0 * math.atan2(math.sqrt(a), math.sqrt(1.0 - a))
+        d = r * c
+        return d
+\end{lstlisting}
 \item \textbf{Bearing}, Where the heading that the robot needs to be facing/travelling in is determined.
+\begin{lstlisting}[style=custompython, label=Bearing-equation, caption=Equation for the bearing needed to travel from one point to another]
+def getHeading(self, curlocation, destination):
+        theata1 = math.radians(curlocation[0])
+        theata2 = math.radians(destination[0])
+        deltaThetha = math.radians(destination[0] - curlocation[0])
+        deltaLambda = math.radians(destination[1] - curlocation[1])
+        y = math.sin(deltaLambda) * math.cos(theata2)
+        x = math.cos(theata1) * math.sin(theata2) - \
+            math.sin(theata1) * math.cos(theata2) * math.cos(deltaLambda)
+        bearing = math.degrees(math.atan2(y, x)) + 180
+        bearing_math.normalize_bearing(bearing)
+        return bearing
+\end{lstlisting}
 
 \end{itemize}
-After implementing the equations that allow for the algorithm to operate the next objective was to measure the speed of the robot so that an estimation of travel distance could be determined. This estimation was then used to decide upon when the algorithm would check that it was moving in the right direction while at the same time checking if it had reached its destination. The check lets the robot re-orientate itself onto a path that could fix any movement defects that might occur due to terrain or other factors. The distance travelled between each check is reduced as the current location and destination become closer together, this allows \gls{tiberius3} to get within about 1 metre of the provided destination, this is however limited by the accuracy of the \gls{GPS} fix.
-\subsubsection{Follow Path}
-The follow path extension algorithm lets the point to point algorithm get called multiple times. This allows a user who has a clear understanding of the terrain and area that the robot would be operating in, to create a path through without having to manually call point to point multiple times. This works well with the mission planning that has been implemented on the web interface, see \ref{web-missions} for an explanation of the mission planning system. It also allows for the A-Star algorithm to provide its path as latitude and longitude values in an array that can then be executed through follow path. This means that all the autonomous outdoor movement is done using the base point to point algorithm.
+After implementing the functions that allow for the algorithm to operate the next objective was to measure the speed of the robot so that an estimation of travel distance could be determined. This estimation was then used to decide upon when the algorithm would check that it was moving in the right direction while at the same time checking if it had reached its destination. The check lets the robot re-orientate itself onto a path that could fix any movement defects that might occur due to terrain or other factors. The distance travelled between each check is reduced as the current location and destination become closer together, this allows \gls{tiberius3} to get within about 1 metre of the provided destination, this is however limited by the accuracy of the \gls{GPS} fix.
+
+\subsubsection{Point to Point Implementation}
+The code below is the point to point function that gets called when running the algorithm.
+\begin{lstlisting}[style=custompython, label=point-to-point, caption=shortened point to point algorithm code]
+    def pointToPoint(self, destination, speedpercent):
+        destination[0] = float(destination[0])
+        destination[1] = float(destination[1])
+        int(speedpercent)
+        checkdistance = 10.0
+        speed = 100 / speedpercent
+        curlocation = self.getLocation()
+        if curlocation is None:
+            return
+        print 'The current Location is:' + str(curlocation)
+        heading = self.getHeading(curlocation, destination)
+        distance = self.getDistance(curlocation, destination)
+        time = checkdistance / (self.SPEED / speed)
+        if not __debug__:
+            self.control.turnTo(heading)
+        while distance > 1:
+            if checkdistance > 0.5:
+                if distance < (checkdistance * 2):
+                    checkdistance /= 2
+            if not __debug__:
+                self.control.driveStraight(speedpercent, time)
+            curlocation = self.getLocation()
+            if curlocation is None:
+                return
+            newheading = self.getHeading(curlocation, destination)
+            distance = self.getDistance(curlocation, destination)
+            if not (heading + 5 < newheading < 5 - heading):
+                heading = newheading
+                distance = self.getDistance(curlocation, destination)
+                if not __debug__:
+                    self.control.turnTo(heading)
+        curlocation = self.getLocation()
+        if curlocation is None:
+            return
+        heading = self.getHeading(curlocation, destination)
+        distance = self.getDistance(curlocation, destination)
+        time = distance / (self.SPEED / speed)
+        if not __debug__:
+            self.control.turnTo(heading)
+            self.control.driveStraight(speedpercent, time)
+\end{lstlisting}
+For an explanation of the code see section \ref{sec:nav_design_p2p} where the intent is explained. The algorithm uses an instance of the control API to control the motors while constantly checking that it is still on track to arrive at the given destination. The code has been shortened from the full version on git however it still contains the relevant code for the point to point algorithm. In order to see the full code see appendix \ref{app:Algorithms}.
+\subsection{Follow Path}
+The follow path extension algorithm lets the point to point algorithm get called multiple times. This allows a user who has a clear understanding of the terrain and area that the robot would be operating in, to create a path through it without having to manually call point to point multiple times. This works well with the mission planning that has been implemented on the web interface, see \ref{web-missions} for an explanation of the mission planning system. It also allows for the A-Star algorithm to provide its path as latitude and longitude values in an array that can then be executed through follow path. This means that all the autonomous outdoor movement is done using the base point to point algorithm.
+\subsubsection{Follow Path Implementation}
+This section contains the code for the follow path extension that is contained within the Algorithms class that contains point to point and that is contained in appendix \ref{app:Algorithms}, it shows how the point to point algorithm has been used to operate over multiple destination points. The function passes in an array of points that contains multiple latitude and longitude tuples which get called one by one using a for loop that ends when it has iterated through the whole of the array.
+\begin{lstlisting}[style=custompython, label=follow-path, caption=follow path function]
+    def followPath(self, points, speedpercent):
+        for i in range(0, points.__len__(), 1):
+            destination = points[i]
+            self.pointToPoint(destination, speedpercent)
+
+        print "The task is complete"
+        print "The current location of tiberius is : " + str(self.getLocation())
+        print "with the desired location being : " + str(destination)
+\end{lstlisting}
+
+
 \subsection{A-Star Algorithm}
-As a means of making \gls{tiberius3} more autonomous, the use of A-Star was decided upon. A-Star was implemented using python, with the specification that it would take data from the database as arguments that could be used to fill a grid with objects and bumpy terrain. The algorithm creates a grid that can then have each of its squares linked to a number that is used to identify the accessibility of the given square. Once the grid is created the algorithm will then try to solve the grid by creating the best path through to the destination.
+As a means of making \gls{tiberius3} more autonomous, the use of A-Star was decided upon. A-Star was implemented using python, with the specification that it would take data from the database as arguments that could be used to fill a grid with objects and bumpy terrain. The algorithm creates a grid that can then have each of its squares linked to a number that is used to identify the accessibility of the given square. Once the grid is created the algorithm will then try to solve the grid by creating the best path to the destination.
+
+\subsubsection{A-Star Implementation}
+The code for the A-Star algorithm is too long to be placed within this section of the report, therefore the full code is contained within appendix \ref{app:Astar}. 
 \subsubsection{Grid Creation}
-The grid is the current area around \gls{tiberius3}, with the robot located in the centre of the grid. The destination, which is provided by a user through the web interface, is then add to the grid in the appropriate square, if possible. If the destination is outside the gird then a line is drawn through the grid in order to find the closest square within the grid to the destination. As the grid size is by default set to 9x9, there is a good chance that the initial grid created would not have the destination contained within it. Therefore after an initial cycle of the algorithm it will check if the destination and the current location are within the same square.
+The grid is the current area around \gls{tiberius3}, with the robot located in the centre of the grid. The destination, which is provided by a user through the web interface, is then added to the grid in the appropriate square, if possible. If the destination is outside the gird then a line is drawn through the grid in order to find the closest square within the grid to the destination. As the grid size is by default set to 9x9, with each cell being a meter square, there is a good chance that the initial grid created would not have the destination contained within it. Therefore after an initial cycle of the algorithm it will check if the destination and the current location are within the same square. The grid creation can be seen within appendix \ref{app:Astar} in the init\_grid() function.
 \newline
-Each square is created as its own object called Cell that includes its position within the grid as will as a latitude and longitude value and accessibility variable, which should range between 1 and 9. The cell also includes a variable called parent that represents the square that comes before it in the found path through the grid. As each grid cell has a latitude and longitude position it becomes possible to use sensor data as information about squares that are close to the robot. An example of this is the kinect that can be used to locate object in front of tiberius. The data is also given a location when passed into the database, meaning that the data can be taken from there rather that at the sensor.
+Each square is created as its own object called Cell that includes its position within the grid as well as a latitude and longitude value and accessibility variable, which should range between 1 and 9. The cell also includes a variable called parent that represents the square that comes before it in the found path through the grid. As each grid cell has a latitude and longitude position it becomes possible to use sensor data as information about squares that are close to the robot. An example of this is the Kinect 2 that can be used to locate object in front of Tiberius. The data is also given a location when passed into the database, meaning that the data can be taken from there rather that at the sensor.
+
 \subsubsection{Path Finding}
-In order to get the algorithm to calculate the best path through the grid, each cell need to have a heuristic value and a travel cost. These values provide the code the means to distinguish between cells by giving them values based off the combination of: cost + heuristic + accessibility. The accessibility within the code is created by using the number between 1 and 9 and multiplying it by 10 so that it matches the scale of the other two values. With this value assigned to each square the algorithm can begin to derive a path through the current grid to the current destination. Once the path is created \gls{tiberius3} will begin to move along the path using each square as a destination within the follow path algorithm. Once a grid has been created it is stored in the database so that if the robot ever returns to the area data can be found that might help with creating a new grid, this however as with all the navigation algorithms can be overwritten by a sensor that think that there is a wall or object directly in the path of the moving robot.
+In order to get the algorithm to calculate the best path through the grid, each cell needs to have a heuristic value and a travel cost. These values provide the code the means to distinguish between cells by giving them values based off the combination of: cost + heuristic + accessibility. The accessibility within the code is created by using the number between 1 and 9 and multiplying it by 10 so that it matches the scale of the other two values. With this value assigned to each square the algorithm can begin to derive a path through the current grid to the current destination. The path finding function, solve(), can be seen in appendix \ref{init-grid}. Once the path is created \gls{tiberius3} will begin to move along the path using each square as a destination within the follow path algorithm. Once a grid has been created it is stored in the database so that if the robot ever returns to the area data can be found that might help with creating a new grid, however this, as with all the navigation algorithms can be overwritten by a sensor that thinks that there is a wall or object directly in the path of the moving robot.
 \subsubsection{Sensor Data}
-The A-Star algorithm requires data about the grid that it is being used on, so that it can properly create the best path for \gls{tiberius3}. This data would be stored on the database within the control pi that exists on the robot. This as of the end of the project has not been full implemented however. As a means to test the correctness of the algorithm false data has been enter into the system as objects that would block tiberius.
+The A-Star algorithm requires data about the grid that it is being used on, so that it can properly create the best path for \gls{tiberius3}. This data would be stored on the database within the control pi that exists on the robot. However, as of the end of the project this has not been full implemented. As a means to test the correctness of the algorithm false data has been entered into the system as objects that would block Tiberius.
 
 
 

@@ -1,0 +1,15 @@
+\section{External Hardware Controller}
+The External Hardware Controller (EHC) is used for any hardware external to the control pi that has to be directly controlled from python using the database.
+
+\subsection{Communication Protocol}
+The EHC expects serial data in the form of a start bit 's' then 'd' before each data element. This is an example of the data that gets sent to the EHC by the control pi. This command would set the first 3 LEDs on the LED strip, the 21st LED on the ring and set the servo to stop turning.
+\begin{lstlisting}
+sd1d1d0d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d9d1d9d9d9d0d0d0d0d75 
+\end{lstlisting}
+
+The EHC will return with 'ok' when it has processed the command.
+
+\subsection{Current uses}
+The EHC is currently used for the two diagnostic NeoPixel strips, the power management relays and the antenna servo with lots of extra room to expand its functionality.
+
+

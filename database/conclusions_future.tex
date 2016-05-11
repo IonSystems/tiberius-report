@@ -1,23 +1,26 @@
 \section{Conclusions and Future Work}
 \subsection{Conclusions}
-Tiberius has shown that a database model for information passing in robotics is possilbe. During certain applications, the sensor data has to be written to the database and then read shortly after by the control software in order to manipulate some actuator; this process has to happen in real time, meaning the write time and access time of the database must be very fast. The use of an in-memory database ensures fast read and write times. As RAM is getting cheaper, more RAM is being incorporated into systems, therefore the use of database's in robotics may become more prevalient.  
+Tiberius has shown that a database model for information passing in robotics is possible. During certain applications, the sensor data has to be written to the database and then read shortly after by the control software in order to manipulate one or more actuators; this process has to happen in real time, meaning the write time and access time of the database must be very fast. The use of an in-memory database ensures fast read and write times. As RAM is getting cheaper, more RAM is being incorporated into systems, therefore systems which have in-memory databases will also have more usable memory. This may, in turn, result in the prevalence of in-memory database's being used in robotics.
 
 \subsection{Future Work}
-\subsection{Dedicated database Pi}
-Since polyhedra uses an in-memory database, it is required to run on a system with sufficient RAM. Currently the database and all the control software is being run on the same raspberry pi, which leaves limited RAM for the database when all the control software is running. Future work measure the RAM usage and analyse the effect on the database.
+\subsection{Dedicated Database Pi}
+Since polyhedra uses an in-memory database, it requires a system with sufficient RAM. Currently the database and all the control software is being run on the same raspberry pi, which leaves limited RAM for the database when all the control software is running. A future task would be to measure the RAM usage and analyse the effects on the database. If the results are determined to be appropriate it can move the database onto its own dedicated Raspberry Pi.
 
-\subsection{Sensor validity}
-Currently the sensor validity is done in the database threads. To increase modularity, this should be seperated into its own class. 
-The algorithm for validating the compass data is not perfect and has not been tested thoroughly. New algorithms should be derived and tested thoroughly.
+\subsection{Sensor Validity}
+Currently the sensor validity is done in the database threads. To increase modularity, this could be separated into its own class. 
+Furthermore the algorithms for validating some of the sensors data could be improved upon, especially the compass validation.
 
-\subsection{Steering table}
-Since the steering was not added until added did not have time to store steering information. 
+\subsection{Steering Table}
+Steering was never implemented and therefore no actuator data is written into the database. However, once it is implemented, the wheel direction should be stored in the database to allow 
+accurate odometry data to be produced.  
 
-\subsection{Arm table}
-On top of storing all the arm positions as is currently implemented, the arm should store certain key position which are not overwritten. These key positions would be user defined, and would specify a position of interest during a mission. For instance if a mission meant the arm was required to pick up a number of objects and drop them from the same location, the user could save the drop location. This would allow the user to recall that location, and the arm would move there without further input from the user.
+\subsection{Arm Table}
+On top of storing all the arm positions as is currently implemented, the arm should store certain key positions which are not overwritten. These key positions would be user defined, and would specify a position of interest during a mission. For instance if a mission meant the arm was required to pick up a number of objects and drop them from the same location the user could save the drop location. This would allow the user to recall that location, and the arm would move there without further input from the user.
 
 \subsection{Location ID}
-Each sensor reading should have a location correlating to it. All sensor data including GPS data have a timestamp, so it is possible to determine the robots location when a reading was taken. However this could be improved by giving each 
+Each sensor reading could have a location correlating to it. Since Tiberius is a portable robot, it may move away from where a sensor reading was taken. Therefore for mapping purposes it would be beneficial to associate each sensor reading with a location.
+\newline
+Currently all sensor data including GPS data have a timestamp, so it is possible to determine the robots location when a reading was taken. However this could be improved by giving each reading a location ID which correlates to a GPS reading. 
 
 
 

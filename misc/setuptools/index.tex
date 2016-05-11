@@ -1,8 +1,81 @@
 \section{Setup Tools}
+\pagestyle{cameron}
 
 %lol this is crap , eh ? -apg
 % The raspberry pi runs on the Raspbian operating system. Raspbian is based on Debian, which is a linux distribution (distro). Using a debian based distribution is useful as most of the development team run ubuntu which is also a Debian based distribution. This is beneficial is it meant the development team already had an in depth knowledge of command line commands.
 
-To install raspbian, the easiest method is run put NOOBs onto an sd 
-The raspberry pi requires a certain level of setup
-How the Rpi is can be set up.
+% To install raspbian, the easiest method is run put NOOBs onto an sd 
+% The raspberry pi requires a certain level of setup
+% How the Rpi is can be set up.
+
+One of the major problems in software can be replication of software across multiple devices, architectures and operating systems. Our setup tools, more specifically \texttt{setup.py} aim to remove this problem by automating the installation process. This allows the compatible dependant packages to be automatically installed for the platform being used.
+
+Our setup tools install all dependencies, including ODBC \gls{DBMS}, Polyhedra database drivers, and the \gls{LIDAR} driver.
+
+The key functions of \texttt{setup.py} are described below, to give an idea of how packages are being installed and configured.
+
+\begin{lstlisting}[style=custompython,label=code:i2c-blacklist,caption=Remove I2C from backlist function]
+def un_blacklist_i2c(self):
+        print "Removing I2C from blacklist on Raspberry Pi"
+        blacklist_dir = "/etc/modprobe.d/raspi-blacklist.conf"
+        enable_command = "sed -i 's/blacklist i2c-bcm2708/#blacklist" \
+            " i2c-bcm2708/g' " + blacklist_dir
+        check_output(enable_command, shell=True)
+\end{lstlisting}
+
+Code Listing \ref{code:i2c-blacklist} ensures that the \texttt{i2c-bcm2708} module is enabled (not blacklisted). The \texttt{sed} command is used to comment out the blacklist line, if found.
+
+\begin{lstlisting}[style=custompython,label=code:setup,caption=Python setuptools function call]
+setup(name='Tiberius',
+      version='1.0',
+      description='Tiberius Robot Software Suite',
+      author='Cameron A. Craig',
+      author_email='camieac@gmail.com',
+      url='https://github.com/IonSystems/tiberius-robot/',
+      packages=[
+          'tiberius',
+          'tiberius/control',
+          'tiberius/control/drivers',
+          'tiberius/control_api',
+          'tiberius/control_api/tasks',
+          'tiberius/diagnostics',
+          'tiberius/navigation/gps',
+          'tiberius/navigation/path_planning',
+          'tiberius/navigation',
+          'tiberius/logger',
+          'tiberius/testing',
+          'tiberius/database',
+          'tiberius/database_wrapper',
+          'tiberius/utils',
+          'tiberius/config',
+          'tiberius/smbus_dummy'],
+      data_files=[
+          (data_directory, ['tiberius/config/tiberius_conf.conf']),
+          (data_directory, ['tiberius/smbus_dummy/smbus_database.db']),
+          (odbc_directory, ['vendor/polyhedra-driver/odbc.ini']),
+          (odbc_directory, ['vendor/polyhedra-driver/odbcinst.ini']),
+          (odbc_directory, ['vendor/polyhedra-driver/odbcinst.ini']),
+          (motion_directory, ['vendor/motion/motion.conf']),
+          (default_directory, ['vendor/motion/motion']),
+      ],
+      platforms=['Raspberry Pi 2', 'Raspberry Pi 1'],
+      install_requires=requirements,
+      cmdclass={
+       'install': PostInstallDependencies},
+      )
+\end{lstlisting}
+
+Code Listing \ref{code:setup} calls a \texttt{setuptools} function, that takes care of packaging our software and installing it within the default Python installation directory. Additionally, various data files are moved into a predefined installation directory, so our software can reference read and write to them.
+
+\begin{lstlisting}[style=custompython,label=code:install-aptget,caption=Advanced packaging tool install function]
+def install_aptget(self, package_name):
+        res = check_output(
+            "sudo apt-get -y install " +
+            package_name,
+            shell=True)
+\end{lstlisting}
+
+For packages that cannot be installed via Python \texttt{setuptools}, they are installed using \gls{APT}, the \gls{APT} installation function is shown in Code Listing \ref{code:install-aptget}.
+
+After the setup tools have completed, all Tiberius software is ready to be used. The next chronological step would be to start all required processes, to get Tiberius fully up and running. This step is also automated, and described in section \ref{sec:misc_startup_script}.
+

@@ -1,19 +1,17 @@
 \section{Conclusions and Future Work}
-\subsection{Old vs New}
-On the whole the new system is much more advanced than the old one, but this brings additional problems to the table. Because of the complexity of the new network set up with multiple routers, switches, servers, Wi-Fi links and VPNs there is considerably more that can go wrong, and when things do go wrong they will clearly be much harder to diagnose and fix than before.
+\subsection{Comparison}
+On the whole the new system is much more advanced than the old system, but this brings additional problems. These problem arise because of the complexity of the new network set up with multiple routers, switches, servers, Wi-Fi links and VPNs. This long list of component allows considerably more to go wrong. Furthermore when things do go wrong diagnosing and fixing the problem will be much harder.
+Despite this it is still worth the switch. The new system provides so much extra functionality and is designed to simplify the networking for developers. It provides an environment which allows developers to focus on what they are doing without having to constantly plug and unplug cables and using a flash drive every time they want to update code. 
 
-Having said that, it is still worth the switch. The new system provides so much extra functionality and is designed to simplify the networking for developers who just want to focus on what they are doing, not having to constantly plug and unplug cables and using a flash drive every time they want to update code. 
+\subsection{OpenWRT}
+Being an open source bare-bones Linux distribution it took a fair amount of time to figure out how to use it. The documentation was very disjointed and contradicted itself, this resulted in a large amount of trial and error until the system was working. The biggest hurdle being that one of the Wi-Fi cards was very temperamental and could not maintain a connection for longer than a few minutes. However it took a long time to realise that the card was at fault and not the way OpenWRT was set up.
 
-\subsection{Was OpenWRT the right choice?}
-Being an open source bare-bones Linux distribution it took a fair amount of time to figure out how to use it. With very disjointed documentation that contradicts itself every way you look it ended up being a large amount of trial and error until the system was working. The biggest hurdle being that one of the Wi-Fi cards was very temperamental and could not maintain a connection for longer than a few minutes. However it took a long time to realise that the card was at fault and not the way OpenWRT was set up.
-
-\subsection{Are the antennas any good?}
-After doing an massive amount of research on different antenna designs I was fairly sure that I had found the right one for the job. The Biquad Yagi is extremely powerful for its size and was able to be mounted on a servo on Tiberius III. The only minor concern is if Tiberius was to drive under a low obstacle and knock the antenna off the pylon it is mounted on. Although it doesn't seem like it would be very likely for this to happen.
-
-In testing the antennas we found that they worked very well in line-of-sight and would easily be able to provide more than a kilometre of high speed Wi-Fi if amplifiers were used at both ends of the link.
+\subsection{Antenna Quality}
+After doing an massive amount of research on different antenna designs I was fairly sure that I had found the right one for the job. The Biquad Yagi is extremely powerful for its size and was able to be mounted on a servo on Tiberius III. The only minor concern is if Tiberius was to drive under a low obstacle and knock the antenna off of its mount. Although possible the chances of this happening are low. 
+\newline
+Whilst testing the antennas it was found that they worked very well in line-of-sight and would easily be able to provide more than a kilometre of high speed Wi-Fi if amplifiers were used at both ends of the link.
 
 \subsection{Future Work}
-There is always room for improvement on everything and there is no exception here. The most important thing that could be done at this stage is for sort of base station to be made thats could enable Tiberius to be used away from the Lab. 
-
-In addition, the functionality to aim the antenna is at the time of writing not working yet and the VPN has not been setup on the Control Pi. These will both be required for testing outside without accompaniment.
-
+The most important thing that could be done at this stage is to make some form of portable base station instead of the base station being confined to the university lab. This would allow Tiberius to move to any (land based) location on earth as long the base station is set up.
+\newline
+In addition, the functionality to aim the antenna is at the time of writing not working yet and the VPN has not been set up on the Control Pi. These will both be required for testing outside without accompaniment.

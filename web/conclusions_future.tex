@@ -2,12 +2,11 @@
 
 \subsection{Conclusion}
 The development of the web interface and it's supporting software has been extremely time constrained. During the preliminary stages of the project, no plans were made for the development of the database, or control software as these topics had been covered in previous work. This led to an extremely busy development schedule in semester 2 of the project.
-
+\newline
 Looking back, it would have been sensible to limit the scope of work planned to be carried out. In our Preliminary Design Review \cite{tibby-lit-review} we discussed six areas of work, covering almost every topic imaginable. This meant that each member of the team had a area of work to cover. Any two of the topics discussed could have been removed, an each team member would still have a a decent amount of work.
-
-The work carried out by me personally (\cameron) ranged from writing drivers for new sensors, integrating existing C++ drivers into our control software, writing a Python database wrapper class, integrating Polyhedra database with our existing control software, creating scripts to automate repetitive tasks and developing the web interface. The \gls{webinterface} was a trivial task compared to some of the task mentioned before. I can say that almost all of the additional tasks I just described were not planned for in the first semester. A more thorough plan from the outset would have revealed a more accurate picture, at an early enough stage that the workload could be managed and better spread over time.
-
-
+\newline
+The work carried out by me personally (\cameron) ranged from writing drivers for new sensors, integrating existing C++ drivers into our control software, writing a Python database wrapper class, integrating Polyhedra database with our existing control software, creating scripts to automate repetitive tasks and developing the web interface. The \gls{webinterface} was a trivial task compared to some of the task mentioned before. Almost all of the additional tasks were not planned for in the first semester. A more thorough plan from the outset would have revealed a more accurate picture, at an early enough stage that the workload could be managed and better spread over time.
+\newline
 If time and foresight had permitted, the following implementation changes would have been made:
 \begin{itemize}
 \item If this project had not been time constrained, or (more realistically) had more time allocated, then our software implementation would most likely have been in C/C++. This is a more suited language for an embedded system such as Tiberius, lower level languages allow more explicit control of memory, and (in this case) compiled, rather than interpreted. But the explicit control of memory (no garbage collection) is more hassle, and certainly more time consuming. That is the primary reason why it was decided to stick with Python. A port of our current code is an idea for future work, described later on.
@@ -21,24 +20,23 @@ If time and foresight had permitted, the following implementation changes would 
 
 The web interface is very easy to extend, encouraging future development.
 The work carried out this year is simply a proof-of-concept, so there is a large chunk of work that could be done to further improve integration with Tiberius.
-
+\newline
 Our issue tracker on Github also displays work that has not yet been completed. (\url{https://github.com/IonSystems/tiberius-robot/issues}).
 
 \subsubsection{Joystick Integration}
 During development of Tiberius - before all systems were fully integrated, we required an easy
 to control Tiberius, this was realised by the development of a keyboard control script, allowing a developer to control the motors and robotic arm. This is suitable for testing, but it soon became apparent that a middle-ground interface was required that is self-sustained, like the keyboard control, but was also aesthetic and intuitive to use.
-
+\newline
 It was suggested that a console controller could be integrated, similar to an existing system used in the Oceans Laboratory. Development of a console controller interface should be initiated by talking to the Oceans Laboratory, they kindly offered a spare controller to be used on Tiberius.
 
 
 \subsubsection{MPEG-2 Video Streams}
 Time constraints during the project did not allow for the implementation of
 \gls{MPEG-2} video streams from Tiberius to the web interface.
-
-What is currently implemented is inefficient in terms of network bandwidth and
-compute power on Tiberius' PC, and the device viewing the stream. Rather than streaming video, it was easier to rapidly publish snapshots from the webcam and Kinect camera. On the receiving end, a simple iframe automatically refreshes to load the next image.
-
-We are aware of the inefficiencies, but haven't had the time to implement a full video stream. This is a suggested improvement if the video streaming is to be improved.
+\newline
+What is currently implemented is inefficient in terms of network bandwidth and compute power on Tiberius' PC, and the device viewing the stream. Rather than streaming video, it was easier to rapidly publish snapshots from the webcam and Kinect camera. On the receiving end, a simple iframe automatically refreshes to load the next image.
+\newline
+The development team are aware of the inefficiencies, but haven't had the time to implement a full video stream. This is a suggested improvement if the video streaming is to be improved.
 
 \subsubsection{Database Synchronisation}
 During a full system run there are currently two separate databases up and
@@ -49,10 +47,10 @@ information between the web interface and Tiberius. Currently, communication of
 data is achieved by sending HTTP requests to the Control API, where the
 requests are translated to an SQL query, and the results of that query returned
 in the HTTP response.
-
+\newline
 Database synchronisation would be an interesting alternative for communications,
 but comes with benefits as well as drawbacks.
-
+\newline
 An Sqlite implementation of Tiberius's in-memory database exists, but isn't
 favoured for normal use. Polyehedra demonstrated superior performance in
 our benchmark testing. The Python database wrapper has been designed to allow
@@ -64,7 +62,7 @@ wrapper can be found in our online documentation.
 A framework is already in place to support authenticated requests between
 Tiberius and the web interface. However, currently we have a fixed
 authentication token, configured via the web interface and API settings.
-
+\newline
 This is is an acceptable level of security for the scope of this project, which
 is purely research and education-based work. However, security improvements
 should be considered as a possible area of work for future years, if this
@@ -81,8 +79,8 @@ This work includes the following:
 \end{itemize}
 
 \subsubsection{Restoring support for Android}
-An Android Application was developed in the year prior to ours, by Tasos Deligiannis. It was always our intention in re-integrate this application with our new Control API, however time did not allow. This would be an interesting task, that would require familiarisation with HTTP, and Android Programming.
-
+An Android Application was developed in the year prior to ours. It was always our intention in re-integrate this application with our new Control API, however time did not allow. This would be an interesting task, that would require familiarisation with HTTP, and Android Programming.
+\newline
 Restoring support would involve changing the Android Application to interface with the Control API via \gls{HTTP} \gls{POST} requests. The control API already supports motor, database and robotic arm interaction. But does not currently support control of missions. The control of missions is another matter to be discussed elsewhere.
 
 \subsubsection{Control API Mission Support}
@@ -91,7 +89,7 @@ Missions are not well integrated into the \gls{webinterface}/gls{controlapi}. Fu
 \subsubsection{Limited Access Teleoperation}
 \label{sec:web_future_work_access_tele}
 Currently there is no measure in place to prevent multiple users controlling a robot simultaneously. This is unlikely to cause problems for experienced users, may cause confusion if two separate remote users are simultaneously trying to navigate a robot.
-
+\newline
 The \gls{controlapi} should only allow a single user to teleoperate a robot. This additional measure will require a user identification number to be sent with each request, so that the \gls{controlapi} can recognise the user.
 
 

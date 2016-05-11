@@ -1,6 +1,6 @@
 \section{Introduction and Planning}
 \subsection{Introduction}
-The database was completely redesigned from previous years in terms of the schema, and how our Python code interfaces with the database.
+The database was completely redesigned from previous years in terms of the schema, and how the Python code interfaces with the database.
 A highly extendible database wrapper was written in Python, and support for SQLite and Polyhedra was included. The design of this wrapper makes incorporating new database engines - other than SQLite and Polyhedra - extremely easy.
 \newline
 A layer of abstraction is created to separate the developer from the raw SQL statements, but also allowing controller access to raw SQL statements when no other option is available.
@@ -10,8 +10,8 @@ The database will allow a central storage location of sensor and actuator data. 
 
 \subsection{Planning}
 The database was designed to have a different table for each sensor and each actuator. This is necessary as different sensor and actuators require different formats to store their data in. Furthermore this initiative design makes it easier for a human to read, which in turn benefits debugging. 
-\newline
-Initially it was only considered to include sensor data, however after consideration it was decided it would be beneficial to include actuator data as well; such benefits may be using the motor data for odometer and using the arm data to replay previous actions.
+Initially it was only considered to include sensor data, however after consideration it was decided it would be beneficial to include actuator data as well; such benefits may be using the motor data for odometer and using the arm data to replay previous movements.
+A robust polyhedra wrapper will move the all the commands up a level of abstraction. This will provide a clean error catching mechanism.
 
 
 

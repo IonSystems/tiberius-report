@@ -4,10 +4,7 @@
 
 
 \subsubsection{Waist}
-The base of the arm (or waist) was placed on a rotating platform at the front of Tiberius.  This controls the azimuthal angle of the arm, to allow it to position itself to the homed position, the active position or to move to face the direction of the object.  A large stepper motor is used to turn a corrugated rubber belt which turns a large base cog which was custom made using 3D printing.  This rotates the whole arm through the desired angle.
-
-
-
+The waist joint of the arm is mounted directly to the frame of Tiberius using an M12 bolt. The joint contains 3 bearings and is powered by a 2.5:1 ratio timing belt drive. The home position is at the maximum extent of the axis with the endstop mounted on the extrusion under the arm.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -18,7 +15,7 @@ The base of the arm (or waist) was placed on a rotating platform at the front of
 \end{figure}
 
 \subsubsection{Shoulder}
-The shoulder joint controls the bottom part of the arm which holds the rest of the arm.  It is moved by a stepper motor connected to a corrugated rubber band in a similar fashion to the base.  The rubber band loops around a piece connected to a worm drive which rotates a large cog which sits at the base of the shoulder joint.  This enables the upper part of the arm to be moved to the correct altitude.  The arm is composed of two parallel thin pieces of aluminium extrusion with the wiring attached to the arm.  The joint of the waist to the shoulder is made with a specially designed 3D printed unit which holds both pieces of extrusion and has screws through two hold them tight as well as the aforementioned cog.  
+The shoulder joint is raised up on an A-frame mounted to the waist by m3 bolts. An shaft runs through the centre of the joint with bearings on either end and held in place with collars. The joint is powered by a 160:1 worm drive which allows the arm to have a theoretical torque of 284Nm. Clearly this would be impossible to achieve unless the gears were made of metal, the arm was tested to 20Nm with no problem although the plastic gears are likely to be damaged if this value is exceeded. The reason for such a high designed torque was to reduce the torque required to turn the pulleys, which in turn reduces the power consumption of the arm. The extrusion slides into the holes in the joint and is held in place with a fixing plate and bolts. 
 
 \begin{figure}[!htb]
 \begin{center}
@@ -29,7 +26,7 @@ The shoulder joint controls the bottom part of the arm which holds the rest of t
 \end{figure}
 
 \subsubsection{Elbow}
-The elbow section of the arm functions, and is constructed, in much the same way as the shoulder section.  Another stepper motor is attached near the base of the shoulder joint and directly turns a rubber belt which is connected to a worm drive which turns a cog connected to the upper arm segment.  The elbow joint is composed of two pieces of PLA which rotate freely around a metal bearing attached to a metal rod.
+The elbow joint is a condensed version of the shoulder, using an M8 bolt as the pivot point with 4 thrust bearings to reduce friction while keeping the joint tight. The worm drive is identical to the shoulder but the gear ratio is only 80:1 which is suitable since there will be less load on the joint than the shoulder.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -40,7 +37,7 @@ The elbow section of the arm functions, and is constructed, in much the same way
 \end{figure}
 
 \subsubsection{Wrist}
-The wrist section joins the upper arm with the gripper an has no motor control associated with it.  It was decided for simplicity to use a hanging gripper which acts due to gravity and would be able to dangle directly above an object before picking it up. 
+The wrist is designed to always point down with another 4 bearings used to reduce friction. The joint block can be removed from the end of the arm easily by removing the M3 bolts that attach it to the end of the extrusion. This will facilitate extending the arm or changing the gripper.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -51,17 +48,7 @@ The wrist section joins the upper arm with the gripper an has no motor control a
 \end{figure}
 
 \subsubsection{End Effector}
-The end effector (or gripper) was the hand-like device which hangs from the end of the upper arm.  It is the tool used to actually pick up objects and release them in the desired place (such as the proposed on board basket).  The gripper acted through the use of a servo.  A servo was stripped to function as a simple motor and this was given commands to either open or close for a set time.  This was done in 5 stages until fully open (homed position), or fully closed.  The stages of the grip are controlled by user input of a keyboard.
-
-% * <em232@hw.ac.uk> 2016-05-09T08:52:06.770Z:
-%
-% > gripper printed...
-% > \newline
-% > Rubber strips were placed on the interior of the claws, to allow a strong grip on objects.
-% > \newline
-% > The webcam was situated inside the gripper. It was placed in the centre of the gripper, because its small size meant it would not impede any of the mechanics and also it makes picking up objects more intuative.
-%
-% ^.
+The end effector was powered by a HITEC HS-5645MG servo modified for continuous rotation. The servo turns a worm gear which moves the fingers. The gripper has 5 states which give enough precision to pick up most objects. It also has a small USB webcam mounted on the side for teleoperation.
 
 
 \subsubsection{Electronics}
@@ -87,7 +74,7 @@ This involved taking a 3 dimensional Cartesian coordinate and converting it into
 
 The code was designed to be flexible and adaptable so the arm segments’ lengths were used as parameters in the code along with the x, y and z Cartesian coordinates of the desired position.  
 
-Each Cartesian coordinate was converted into the angles of the three motors from rest, which were denoted as ρ,σ and τ.  The angle of rotation, ρ around the base of the arm, was controlled by a large stepper motor, τ was the angle of the upper arm joint which could be positioned forwards or backwards depending on the depth of the object being picked up and σ was the angle of the elbow joint which allowed the gripper to be positioned above the object of interest.  
+Each Cartesian coordinate was converted into the angles of the three motors from rest, which were denoted as $\rho$,$\sigma$ and $\tau$.  The angle of rotation, $\rho$ around the base of the arm, was controlled by a large stepper motor, $\tau$ was the angle of the upper arm joint which could be positioned forwards or backwards depending on the depth of the object being picked up and $\sigma$ was the angle of the elbow joint which allowed the gripper to be positioned above the object of interest.  
 
 \begin{figure}[!htb]
 \begin{center}
@@ -156,13 +143,10 @@ Each Cartesian coordinate was converted into the angles of the three motors from
 \end{capequ}
 
 \subsubsection{Safety}
-There were a few considerations when dealing with the operation of the arm.  Firstly the use of several motors and a fair amount of current meant that they had to be safely electrically insulated.
-Another feature was that the arm could potentially swing around and damage the rest of Tiberius so precautions had to be made with end point switches and careful parameters in the code to prevent the arm moving beyond certain bounds.
+Since the arm is easily capable of damaging itself due to the very high torque outputs it was necessary to write the code in a way that never allowed commands to be run out of order. For example it should not be possible to move the arm until it has been homed and put the the centre position since at this point it can be limited to an area in front of Tiberius. The code also stops any command that would lead to a joint angle that is out of the arms range of motion.
 
 \subsubsection{Manual control}
-The ability to manually control the arm was necessary as the...The arm can be controlled with simple keyboard presses for up/down, left/right an back/forward.
-This moves the arm in increments for every command in that direction.
+The arm can be manually controlled either from the web interface or using the full control script. At the time of writing the web interface can only operate using joint rotations and the full control script has full functionality implemented.
 
 \subsubsection{Camera}
-The gripper had a small web cam attached so that the user could see what is being picked up.
-This enabled remote control of the arm through the web interface in real time.
+The gripper has a small web cam attached so the user can see what is being picked up. This enables remote control of the arm through the web interface in real time.

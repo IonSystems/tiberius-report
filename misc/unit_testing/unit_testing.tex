@@ -2,17 +2,55 @@
 \label{sec:unit-testing}
 \pagestyle{cameron}
 
-During development in semester one, unit tests were created for the database wrapper class, as well as some control functions. All unit tests can be found on Github, in the \texttt{testing} module. These tests are automatically ran after every commit, by Travis \gls{CI}.
+During development in semester one, unit tests were created for the database wrapper class, as well as some control functions. All unit tests can be found on Github, in the \texttt{testing} module. These tests are automatically ran after every commit, by Travis \gls{CI} - an online continuous integration tool that automatically builds and tests a repository after each commit.
 
-Travis \gls{CI} is triggered with each commit, and runs \texttt{setup.py} and runs all unit tests. The results are then posted to our Github repository, so developers can spot bugs.
+Travis \gls{CI} is triggered with each commit, and runs \texttt{setup.py} and runs all unit tests. The results are then posted to our Github repository, so developers can spot bugs. Travis CI has been an invaluable tool throughout the project, almost immediately highlighting errors, just after they were introduced.
 
-Figure \ref{fig:github-badges} shows the Markdown Badges displayed on our Github repository \texttt{README.md}.
-
+Figure \ref{fig:github-badges} shows the Markdown Badges displayed on our Github repository \texttt{README.md}. Travis CI has been an invaluable tool throughout the project, almost immediately highlighting errors, just after they were introduced.
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=10cm]{image_name.png}
+\includegraphics[width=10cm]{github_badges.png}
 \end{center}
-\caption{Image desc}
-\label{fig:image}
+\caption{Github Travis Badges}
+\label{fig:github-badges}
 \end{figure}
+
+
+Unit tests can also be executed locally by running \texttt{run\_tests.py}. Our test coverage is currently very low (\~9\%), so a lot of code is not covered by unit tests, for this remainder of code we rely on manual testing.
+
+Code Listing \ref{code:test-stop} is an example of a unit test that \textit{requires} a fully compatible platform (Not Travis CI). Travis would fail when it tries to send an \gls{i2c} command to the non-existent motors.  Code Listing \ref{code:test-query} can be tested by Travis, because no embedded libraries are required by the test.
+
+\begin{lstlisting}[style=custompython,label=code:test-stop][!htb]
+class TestStop(unittest.TestCase):
+
+    @unittest.skipUnless(os.uname()[4].startswith("arm"), "requires Raspberry Pi")
+    def runTest(self):
+        m.stop()
+        # Ensure speed of all the motors is zero
+        self.assertEquals(0, m.front_left.speed())
+        self.assertEquals(0, m.front_right.speed())
+        self.assertEquals(0, m.rear_left.speed())
+        self.assertEquals(0, m.rear_right.speed())
+\end{lstlisting}
+
+\begin{lstlisting}[style=custompython,label=code:test-query][!htb]
+class GenerateQueryString(unittest.TestCase):
+
+    def runTest(self):
+        specimen = pol._PolyhedraDatabase__generate_insert(
+            "insert", "test_table",
+            {'test_column': '100',
+             'test_column2': 'This is a test'})
+        control = "INSERT INTO test_table (test_column, test_column2) " \
+            "VALUES (100, 'This is a test')"
+        self.assertEquals(specimen, control)
+
+        specimen = pol._PolyhedraDatabase__generate_insert(
+            "insert or replace",
+            "test_table",
+            {'test_column': '100', 'test_column2': 200})
+        control = "INSERT OR REPLACE INTO test_table " \
+            "(test_column, test_column2) VALUES (100, 200)"
+        self.assertEquals(specimen, control)
+\end{lstlisting}

@@ -1,7 +1,9 @@
-\section{Design and Implementation}
+\chapter{Design and Implementation}
+
+\subsection{Overall communications system design}
 
 Figure \ref{fig:comms_network_map} shows the new network layout for Tiberius III. The new network has been designed for long range, high reliability and low power, while maintaining an easy to use architecture that makes it easy to connect to devices no matter where they reside.
-\subsection{Overall communications system design}
+
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=15cm]{comms_network_map.png}
@@ -10,14 +12,11 @@ Figure \ref{fig:comms_network_map} shows the new network layout for Tiberius III
 \label{fig:comms_network_map}
 \end{figure}
 
-
-
-
 \subsubsection{Self Aiming Wi-Fi Link}
 In order to facilitate a long range Wi-Fi link, long range highly directional antennas had to be used. Since the chosen antennas only have a 30 degree cone of signal  a system to point the antennas at each other was required.
-
-The antenna in the university lab is pointed in the general direction that Tiberius will be operated in. It can easily be adjusted by hand and will not be rotating so it made little sense to make it self aiming.
-
+\newline
+The antenna in the university lab is pointed in the general direction of Tiberius' area of operations. It can easily be adjusted by hand, when Tiberius and will not be rotating so it made little sense to make it self aiming.
+\newline
 The antenna on Tiberius III is able to automatically aim at the GPS location of the antenna in the lab. This means that both antennas will always be facing each other no matter what direction Tiberius is travelling in. In order to aim at the GPS point, the antenna is mounted on a pylon to raise it above the rest of the chassis and can be rotated using a servo. The servo is connected to control pi using the External Hardware Controller (An Arduino Mega which interfaces with any additional hardware that needs to be directly controlled by the control pi).
 
 \subsubsection{4G Connection using Mobile Phone}
@@ -38,9 +37,9 @@ One of the biggest challenges with a multi-network system is how to maintain com
 This leads to the single most important part of the new networking system, the VPN, which removes almost all the headaches of networking for developers. It seamlessly bridges all the various networks associated with Tiberius together over the internet. This allows a user in the university lab to stay connected to a device on Tiberius III even when operating on 4G. The VPN can bridge through firewalls and port restrictions to provide a continuous connection irrespective of the routes or subnets involved.
 
 \subsubsection{Subnets and IP allocations}
-To further simplify the problem it was decided that all devices in the lab and on Tiberius would have assigned IP addresses and be on the same subnet. This makes it much easier from the standpoint of remembering addresses of devices and allows different Tiberius's to communicate with each other easily. 
-
-The 10.113.211.XXX subnet was used for all devices meaning that users would only have to remember one number for each device. Or they could look the address up on a spreadsheet.
+To further simplify the problem it was decided that all devices in the lab and on Tiberius would have assigned IP addresses and be on the same subnet. This makes it much easier from the standpoint of remembering addresses of devices and allows different Tiberius' to communicate with each other easily. 
+\newline
+The 10.113.211.XXX subnet was used for all devices meaning that users would only have to remember three numbers for each device. Or they could look the address up on a spreadsheet.
 
 \subsection{Hardware setup}
 \subsubsection{Self Aiming Wi-Fi antenna}
