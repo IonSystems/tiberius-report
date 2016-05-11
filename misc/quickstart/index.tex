@@ -1,2 +1,77 @@
 \section{Quickstart}
-A short cut to commonly used scripts.
+A simple script was created that allows various scripts to be started, by providing different flags. The script saves time traversing the file system to find the correct executable.
+\newline
+Supported options and descriptions are defined in Code Listing \ref{code_quickstart}
+\begin{lstlisting}[style=custompython,label=code_quickstart]
+parser.add_option(
+    "-k",
+    "--keyboard-control",
+    action="store_const",
+    const=Action.KEYBOARD_CONTROL,
+    dest="action",
+    help="Start the keyboard control test script.")
+parser.add_option(
+    "-f",
+    "--full-control",
+    action="store_const",
+    const=Action.FULL_CONTROL,
+    dest="action",
+    help="Start the keyboard control test script and arm control.")
+parser.add_option(
+    "-c",
+    "--keyboard-control-collision",
+    action="store_const",
+    const=Action.KEYBOARD_CONTROL_COLLISION,
+    dest="action",
+    help="Start the keyboard control test script with ultrasonic sensors.")
+parser.add_option(
+    "-t",
+    "--run-tests",
+    action="store_const",
+    const=Action.RUN_TESTS,
+    dest="action",
+    help="Run the unit test suite.")
+parser.add_option(
+    "-w",
+    "--web-server",
+    action="store_const",
+    const=Action.WEB_SERVER,
+    dest="action",
+    help="Start the web interface on a web server.")
+parser.add_option(
+    "-a",
+    "--api-server",
+    action="store_const",
+    const=Action.API_SERVER,
+    dest="action",
+    help="Start the control API.")
+parser.add_option(
+    "-i",
+    "--i2c-check",
+    action="store_const",
+    const=Action.I2C_CHECK,
+    dest="action",
+    help="Check attached I2C devices.")
+parser.add_option(
+    "-u",
+    "--ultrasonics",
+    action="store_const",
+    const=Action.ULTRASONICS_READ,
+    dest="action",
+    help="Poll all known ultrasonic sensors.")
+parser.add_option(
+    "-s",
+    "--style",
+    action="store_const",
+    const=Action.STYLE_CHECKER,
+    dest="action",
+    help="Run the PEP8 style checker on all directories.")
+
+parser.add_option(
+    "-e",
+    "--emergency-stop",
+    action="store_const",
+    const=Action.EMERGENCY_STOP,
+    dest="action",
+    help="Send a stop command to all motors. Does not prevent further commands from other processes.")
+\end{lstlisting}

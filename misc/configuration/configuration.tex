@@ -3,8 +3,7 @@
 \label{configuration}
 \subsection{Introduction}
 Tiberius hosts numerous pieces of hardware; some of which is optional, meaning Tiberius can still perform some of it functions with out the need of all the hardware. For example, the ability to drive from location to location can still be carried out regardless if the robotic arm is attached.  
-
-
+\newline
 This feature is particular useful when working will multiple Tiberius' as some times there is a shortage of hardware which means different pieces have to be moved between Tiberius'.
 
 \subsection{Configuration layout}
@@ -14,18 +13,10 @@ The configuration file holds describes if the piece of hardware is installed and
 \subsection{Process}
 The configuration file is held on github and therefore downloaded onto every raspberry pi when the project is cloned. In the configuration file, all parts of hardware are assumed to be missing. 
 The set-up script copies the configuration file into /etc/tiberius. Since the set-up script is only run once on a new Tiberius, the user can now modify this file, setting which hardware is present and that state of it. 
-
-The configuration parser contains the function to read the configuration file. 
-
-An example function which return true if the lidar is installed and false if it is not is shown below.
+\newline
+The configuration parser contains the function to read the configuration file. An example function which return true if the lidar is installed and false if it is not is shown below.
 \begin{lstlisting}[style=custompython]
 @staticmethod
 def isLidarEnabled():
         return TiberiusConfigParser.getParser().getboolean(LIDAR_SECTION, 'installed')
 \end{lstlisting} 
-
-The functions in parser configuration are called ....
-
-
-
-

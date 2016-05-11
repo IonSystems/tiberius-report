@@ -6,7 +6,7 @@ understanding of how the web interface works. The reader will become
 familiarised with the key technologies behind the web interface, to allow a
 greater understanding of how the components interacts with Tiberius and the
 user.
-
+\newline
 %should you not \ref{tibby} rather than cite it!
 Some of these concepts have been previously described in our preliminary report \cite{tibby-lit-review}, so technologies described in this section are kept sucinct. Elaboration of unfamiliar technologies can be found in the glossary.
 
@@ -25,7 +25,7 @@ Some of these concepts have been previously described in our preliminary report 
 
 
 \subsection{Django}
-Django is a \gls{MVC} web framework, written in Python. The framework is designed for rapid development, suiting the requirements of this project well. Figure \ref{django-mvc} gives an overview of how the MVC architecture works.
+Django is a \gls{MVC} web framework, written in Python. The framework is designed for rapid development, suiting the requirements of this project well. Figure \ref{fig:django-mvc} gives an overview of how the MVC architecture works.
 
 % Diagram illustrating the internal structure of the Django framework.
 \begin{figure}[!htb]
@@ -48,9 +48,9 @@ Django is a \gls{MVC} web framework, written in Python. The framework is designe
 \subsection{Falcon}
 
 Falcon is an open-source web framework for developing \glspl{API}. Falcon was particularly suited for our application because it is developed in Python, and it is extremely lightweight - meaning that it has hardly any dependencies.
-
+\newline
 The following will describe an example interaction between our \gls{webinterface} and our \gls{controlapi}, illustrating the chain of events that take place in the \gls{controlapi}.
-
+\newline
 Figure \ref{fig:api-falcon-simple} is a simplified representation of Falcon's core components. 
 
 \begin{description}

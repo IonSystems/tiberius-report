@@ -2,14 +2,15 @@
 \pagestyle{aidan}
 \label{sec:misc_startup_script} % Referred to from web
 
-Tiberius requires a number of actions before it is fully capable of running. Start Tiberius aims to encompass and automate all of these tasks. 
-
-subsection{Database}
+Tiberius requires a number of actions before it is fully capable of running. \texttt{start_tiberius.py} aims to encompass and automate all of these tasks. 
+\newline
+\subsection{Database}
 Most of the tasks performed are associated with the database; these tasks include, starting the database, creating the tables and starting the sensor threads. To read more about these tasks see database section (\ref{database_process})
 
-subsection{API}
+\subsection{API}
+The \gls{controlapi} is started to allow incoming requests from external applications to be handled. Multiple instances of the API cannot be created, as multiple programs cannot bind to the same port. If the \gls{controlapi} is already running, the command fails to create another instance and continues. For further information look at Section \ref{sec:des_web_control_api}.
 %Cameron Craig please talk about this 
 
-subsection{Config parser}
-The config file holds information about transducers such as port numbers. Currently the user has to manually alter these details in the config file if they are different. Work has been started to automate this process. A script has been written to list the USB devices plugged in and their associated address. It is therefore possible to read the scripts output and set the appropriate ports in the config file using the 'set' function in TiberiusConfigParser. To read more about config read the configuration section (\ref{configuration}).
+\subsection{Configuration Parser}
+The configuration file holds information about transducers such as port numbers. The most important configuration values are the \texttt{enabled} boolean values that determine whether or not to use a feature. These are required to use the same software on multiple platforms that vary in capabilities.  Currently the user has to manually alter these details in the configuration file to suitable values for the device in use. Work has been started to automate this process part of this process. A script has been written to list the USB devices plugged in and their associated address. It is therefore possible to read the scripts output and set the appropriate ports in the configuration file using the appropriate \texttt{set...()} function in \texttt{TiberiusConfigParser}. To read more about configuration read the configuration section (\ref{configuration}).
 

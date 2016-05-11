@@ -19,7 +19,7 @@ Diagram \ref{fig:api-modules} gives an overview of all \gls{webinterface} and \g
 \caption{API Modules}
 \label{fig:api-modules}
 \end{figure}
-
+\noindent
 The following describes each web application component with reference to Figure \ref{fig:api-modules}:
 
 \begin{enumerate}[label=(\alph*)]
@@ -49,11 +49,12 @@ The following describes each web application component with reference to Figure 
 \end{enumerate}
 
 \subsection{Control API}
+\label{sec:des_web_control_api}
 \subsubsection{Overview}
 The \gls{controlapi} is automatically started in the startup script (discussed in section \ref{sec:misc_startup_script}). Currently the \gls{controlapi} runs using a basic WSGI server implementation - \texttt{wsgiref.simple\_server} \cite{python-wsgiref-simple_server}.
-
+\newline
 As the \gls{controlapi} is written in \gls{python}, it integrates seamlessly with the existing code base. Appendix \ref{app:on_post_code} is an example resource, showing how motor control requests are handles upon arrival.
-
+\newline
 \texttt{Resource}s make up most of the \gls{controlapi} code base, with one middleware component to handle authentication.
 
 
@@ -94,15 +95,15 @@ Figure \ref{fig:api-auth-middleware} illustrates the authentication middleware f
 \caption{API Authentication Middleware}
 \label{fig:api-auth-middleware}
 \end{figure}
-
+\noindent
 The authentication token is set in the \gls{controlapi} and \gls{webinterface} configuration files.
 
 \subsection{Web Interface}
 
 \subsubsection{Overview}
 Many independent applications exist on the \gls{webinterface}, allowing users to run missions and teleoperate robots. The necessary tools exist on the interface to create/edit/remove robots, tasks and missions.
-
-An overview of the layout and structure of the web interface's pages is best described in a table (Table \ref{tab:web_pages}). Many other pages exist to carry out rudimentary tasks, but are of no significance.
+\newline
+An overview of the layout and structure of the web interface's pages is best described in a table (Table \ref{tab:web_pages}). Many other pages exist to carry out rudimentary tasks, but are of no significance. Screenshots of the web interface can be viewed in Appendix \ref{app:web_screenshots}.
 
 % Table describing key web interface pages.
 \begin{table}[!htb]
@@ -141,7 +142,6 @@ In previous years, missions have involved recognising objects and navigating pas
 \item Assign tasks to waypoints, these tasks are started once Tiberius has reached it's waypoint.
 \end{enumerate}
 
-\newline
 Missions are stored in a database on the web server, and sequentially transmitted to Tiberius when a mission is started. Tasks can also me initiated manually at any time, from the web interface. Available tasks are defined in Tiberius's \gls{controlapi} software. Currently the amount of implemented tasks is slim, but a strong software infrastructure is in place to define new tasks. Code listing \ref{code:drive-task} is an example of a simple task.
 
 \begin{lstlisting}[style=custompython,label=code:drive-task][!htb]
@@ -165,8 +165,7 @@ class DriveForwardsUntilWall(Task):
     def resumeTask(self):
         self.runTask()
 \end{lstlisting}
-
-\newline
+\noindent
 Referring to Code Listing \ref{code:drive-task}, each task implements \texttt{runTask()}, \texttt{pauseTask()} and \texttt{resumeTask()}. These functions are called from the \gls{controlapi} when an appropriate task request is received. The \texttt{task\_id} is used by the \gls{controlapi} to distinguish between tasks. The web interface defines all known tasks in it's database. The \gls{webinterface} uses a fixture to populate the database with tasks \cite{github-fixtures}.
 
 

@@ -1,6 +1,6 @@
 \section{Design and Implementation}
 
-\subsection{Table definitions}
+\subsection{Table Definitions}
 Each table has unique set of columns to suit the transducer data; this is required because different transducers produce different data which requires this unique format. Two column headings common to every table are the id and the timestamp. 
 \newline
 The id is a unique number assigned to each row, which is necessary as it allows a mechanism to specify each row. The first insert into the table has id 1, and thereafter each new insert has the id incremented from the previous id. Therefore the id for the second entry would be 2.
@@ -24,6 +24,7 @@ class GPSTable(Table):
         'fixmode': 'int',
         'timestamp': 'float'}
 \end{lstlisting}
+\noindent
 The database structure remains compatible with SQL, however the examples provided all use polyhedra database as it is the selected choice.
 
 \subsubsection{Ultrasonics}
@@ -110,7 +111,6 @@ int primary key & float   & float & float & float & float       & float \\ \hlin
 \item{\textbf{roll}}: rotation around the front to back axis
 \item{\textbf{temperature}}: temperature reading of the compass
 \end{itemize}
-
 
 \subsubsection{Motors}
 % Please add the following required packages to your document preamble:
@@ -199,7 +199,7 @@ int primary key & float 	  & float 	  & float    & float & float & float       &
 
 
 %***********************Creating*****************
-\subsection{Creating table}
+\subsection{Creating Table}
 \label{create}
 Creating a database refers to the act of generating a new table. This act has the possibility of breaking if a table with the same name already exists. With Tiberius this case may arise if the user has restarted the Tiberius software without resetting the raspberry pi - thus retaining the old tables. Since the old tables do not contain any pertinent information they can be deleted without regard. Therefore before creating a new table, it is checked to see if it already exists, if it does it is deleted and the new table is created. 
 
@@ -282,9 +282,9 @@ def overwrite_gps_reading(poly, id, data):
         }
     )
 \end{lstlisting}
-
-\subsection{Polyhedra wrapper}
-A wrapper function is a subroutine in a software library or a computer program whose main purpose is to call a second subroutine[1]. 
+\noindent
+\subsection{Polyhedra Wrapper}
+A wrapper function is a subroutine in a computer program whose main purpose is to call a second subroutine. The Polyhedra wrapper calls the subroutines to interact directly with the database. The wrapper abstracts the control software to a higher level which allows a clean interaction with the database. The main improvement is the wrapper can handle errors without crashing the system by adding try and exceptions around all interactions. The wrapper also abstracts away from requiring raw SQL syntax, making it easier to interface with.
 
 
 \subsection{Procedure}
@@ -299,7 +299,7 @@ The start Tiberius script does the following
 \end{itemize} 
 Therefore all the database set up is achieved by running the script since the actuator decorators do not require any set up.
 
-\subsubsection{Starting database}
+\subsubsection{Starting Database}
 When Tiberius is first powered up and consequently the raspberry pi is first powered  up, the database will not be running. 
 It is therefore necessary in the script to initiate the database; this is done by the following command.
 
@@ -307,19 +307,18 @@ It is therefore necessary in the script to initiate the database; this is done b
 database = Popen("/home/pi/poly9.0/linux/raspi/bin/rtrdb -r data_service=8001 db", shell=True, stdout=PIPE)
 \end{lstlisting}
 
-\subsubsection{Creating tables}
+\subsubsection{Creating Tables}
 The table for every transducer must be created at the start, regardless of whether the transducer is installed or not. This is done to ensure that there are not errors further down the line.
 The tables for all the sensors is created using the create function described above in section \ref{create}. As described in said section, the tables are dropped if they exist before being created.
 %************************sensor threads*************
-\subsubsection{Sensor threads}
+\subsubsection{Sensor Threads}
 The next stage is to initiate the sensor threads. The purpose of the threads is to continuously acquire new data from the sensor, validate the data and insert it into the database. A time delay is incorporated in the threads to reduce the throughput, since the sensors are unlikely to change significantly in fractions of a second.
 \newline
 Threads are only started if the sensor is installed - this is defined in the configuration file. For more detail on the configuration file see configuration (\ref{configuration}).
 \newline
 The database continuously gets more data as Tiberius is running. Therefore it is necessary to start removing old transducer data as it will become less relevant the older it gets. To do this, the number of readings which a sensor should hold is set and the number of readings (rows) does not exceed this.  The newest information then starts overwriting the oldest information. 
-
 % TODO: overwrite after so many values.
-
+\newline
 Below is a shortened version of the GPS thread.
 \begin{lstlisting}[style=custompython]
 while True:
@@ -334,8 +333,7 @@ while True:
     no_data_time = 0
 \end{lstlisting}
 
-\subsubsection{Actuator decorators}
-
+\subsubsection{Actuator Decorators}
 The motor and arm are actuators rather than sensors, and therefore employ a different technique to update the value; this technique is further described in the decorators section (\cite{decoratordefinition})
 \newline
 Unlike the sensors, the actuator database should not be updated in a periodic manner. This is because the actuators don't change unless specified by the control software. Therefore decorators are placed on the functions that alter an actuators position.

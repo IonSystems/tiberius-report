@@ -1,6 +1,6 @@
-\chapter{Design and Implementation}
 
-\subsection{Overall communications system design}
+\section{Design and Implementation}
+\subsection{Overall Communications System design}
 
 Figure \ref{fig:comms_network_map} shows the new network layout for Tiberius III. The new network has been designed for long range, high reliability and low power, while maintaining an easy to use architecture that makes it easy to connect to devices no matter where they reside.
 
@@ -19,7 +19,7 @@ The antenna in the university lab is pointed in the general direction of Tiberiu
 \newline
 The antenna on Tiberius III is able to automatically aim at the GPS location of the antenna in the lab. This means that both antennas will always be facing each other no matter what direction Tiberius is travelling in. In order to aim at the GPS point, the antenna is mounted on a pylon to raise it above the rest of the chassis and can be rotated using a servo. The servo is connected to control pi using the External Hardware Controller (An Arduino Mega which interfaces with any additional hardware that needs to be directly controlled by the control pi).
 
-\subsubsection{4G Connection using Mobile Phone}
+\subsubsection{4G Connection Using Mobile Phone}
 Since mobile phones are an extremely easy way to get a 4G connection, it seemed logical to use one to provide a simple way of adding 4G connectivity to Tiberius III. In order for the internet connection to be used the phone needs to be running a portable Wi-Fi hotspot with the name "Tiberius-4G". The OpenWRT router will automatically connect to the network provided by the phone and use it as a failover internet connection in case the Wi-Fi connection is lost.
 
 \subsubsection{OpenWRT router}
@@ -33,7 +33,7 @@ The Wi-Fi access point is an essential component for outdoor testing, since it r
 
 \subsubsection{VPN Bridge} 
 One of the biggest challenges with a multi-network system is how to maintain communication between devices when they could be behind several firewalls or routers with no specific routes defined between devices.
-
+\newline
 This leads to the single most important part of the new networking system, the VPN, which removes almost all the headaches of networking for developers. It seamlessly bridges all the various networks associated with Tiberius together over the internet. This allows a user in the university lab to stay connected to a device on Tiberius III even when operating on 4G. The VPN can bridge through firewalls and port restrictions to provide a continuous connection irrespective of the routes or subnets involved.
 
 \subsubsection{Subnets and IP allocations}

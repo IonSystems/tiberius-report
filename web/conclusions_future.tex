@@ -3,7 +3,7 @@
 \subsection{Conclusion}
 The development of the web interface and it's supporting software has been extremely time constrained. During the preliminary stages of the project, no plans were made for the development of the database, or control software as these topics had been covered in previous work. This led to an extremely busy development schedule in semester 2 of the project.
 \newline
-Looking back, it would have been sensible to limit the scope of work planned to be carried out. In our Preliminary Design Review \cite{tibby-lit-review} we discussed six areas of work, covering almost every topic imaginable. This meant that each member of the team had a area of work to cover. Any two of the topics discussed could have been removed, an each team member would still have a a decent amount of work.
+Looking back, it would have been sensible to limit the scope of work planned to be carried out. In our Preliminary Design Review \cite{tibby-lit-review} six areas of work were discussed, covering almost every topic imaginable. This meant that each member of the team had a area of work to cover. Any two of the topics discussed could have been removed, an each team member would still have a a decent amount of work.
 \newline
 The work carried out by me personally (\cameron) ranged from writing drivers for new sensors, integrating existing C++ drivers into our control software, writing a Python database wrapper class, integrating Polyhedra database with our existing control software, creating scripts to automate repetitive tasks and developing the web interface. The \gls{webinterface} was a trivial task compared to some of the task mentioned before. Almost all of the additional tasks were not planned for in the first semester. A more thorough plan from the outset would have revealed a more accurate picture, at an early enough stage that the workload could be managed and better spread over time.
 \newline
@@ -24,7 +24,7 @@ The work carried out this year is simply a proof-of-concept, so there is a large
 Our issue tracker on Github also displays work that has not yet been completed. (\url{https://github.com/IonSystems/tiberius-robot/issues}).
 
 \subsubsection{Joystick Integration}
-During development of Tiberius - before all systems were fully integrated, we required an easy
+During development of Tiberius - before all systems were fully integrated, the team required an easy
 to control Tiberius, this was realised by the development of a keyboard control script, allowing a developer to control the motors and robotic arm. This is suitable for testing, but it soon became apparent that a middle-ground interface was required that is self-sustained, like the keyboard control, but was also aesthetic and intuitive to use.
 \newline
 It was suggested that a console controller could be integrated, similar to an existing system used in the Oceans Laboratory. Development of a console controller interface should be initiated by talking to the Oceans Laboratory, they kindly offered a spare controller to be used on Tiberius.
@@ -60,8 +60,7 @@ wrapper can be found in our online documentation.
 
 \subsubsection{Improved Security}
 A framework is already in place to support authenticated requests between
-Tiberius and the web interface. However, currently we have a fixed
-authentication token, configured via the web interface and API settings.
+Tiberius and the web interface. However, currently there is a single static authentication token, configured via the web interface and API settings.
 \newline
 This is is an acceptable level of security for the scope of this project, which
 is purely research and education-based work. However, security improvements

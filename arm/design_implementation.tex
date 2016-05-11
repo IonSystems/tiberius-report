@@ -15,7 +15,7 @@ The waist joint of the arm is mounted directly to the frame of Tiberius using an
 \end{figure}
 
 \subsubsection{Shoulder}
-The shoulder joint is raised up on an A-frame mounted to the waist by m3 bolts. An shaft runs through the centre of the joint with bearings on either end and held in place with collars. The joint is powered by a 160:1 worm drive which allows the arm to have a theoretical torque of 284Nm. Clearly this would be impossible to achieve unless the gears were made of metal, the arm was tested to 20Nm with no problem although the plastic gears are likely to be damaged if this value is exceeded. The reason for such a high designed torque was to reduce the torque required to turn the pulleys, which in turn reduces the power consumption of the arm. The extrusion slides into the holes in the joint and is held in place with a fixing plate and bolts. 
+The shoulder joint is raised up on an A-frame mounted to the waist by M3 bolts. A shaft runs through the centre of the joint with bearings on either end and held in place with collars. The joint is powered by a 160:1 worm drive which allows the arm to have a theoretical torque of 284Nm. Clearly this would be impossible to achieve unless the gears were made of metal, the arm was tested to 20Nm with no problem although the plastic gears are likely to be damaged if this value is exceeded. The reason for such a high designed torque was to reduce the torque required to turn the pulleys, which in turn reduces the power consumption of the arm. The extrusion slides into the holes in the joint and is held in place with a fixing plate and bolts. The worm gear is also mounted with 4 bearings in order to stop the plastic welding together from friction.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -26,7 +26,7 @@ The shoulder joint is raised up on an A-frame mounted to the waist by m3 bolts. 
 \end{figure}
 
 \subsubsection{Elbow}
-The elbow joint is a condensed version of the shoulder, using an M8 bolt as the pivot point with 4 thrust bearings to reduce friction while keeping the joint tight. The worm drive is identical to the shoulder but the gear ratio is only 80:1 which is suitable since there will be less load on the joint than the shoulder.
+The elbow joint is a condensed version of the shoulder, using an M8 bolt as the pivot point with 4 thrust bearings to reduce friction while keeping the joint tight. The worm drive is identical to the shoulder but the gear ratio is only 80:1 which is suitable since there will be less load on the joint than the shoulder. The worm is mounted in a similar fashion to the shoulder.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -71,10 +71,10 @@ The main control code of the arm is designed to stop it from damaging itself or 
 \subsubsection{Inverse Kinematics}
 
 This involved taking a 3 dimensional Cartesian coordinate and converting it into angular coordinates that the three arm joints would position to.  The basic way this was done was by using trigonometry to identify the required rotation angle, which would be done with the waist joint and by using further trigonometry to determine the two joint angles required to manoeuvre the joints to the correct point in space.	
-
+\newline
 The code was designed to be flexible and adaptable so the arm segments’ lengths were used as parameters in the code along with the x, y and z Cartesian coordinates of the desired position.  
-
-Each Cartesian coordinate was converted into the angles of the three motors from rest, which were denoted as $\rho$,$\sigma$ and $\tau$.  The angle of rotation, $\rho$ around the base of the arm, was controlled by a large stepper motor, $\tau$ was the angle of the upper arm joint which could be positioned forwards or backwards depending on the depth of the object being picked up and $\sigma$ was the angle of the elbow joint which allowed the gripper to be positioned above the object of interest.  
+\newline
+Each Cartesian coordinate was converted into the angles of the three motors from rest, which were denoted as $\rho$, $\sigma$ and $\tau$.  The angle of rotation, $\rho$ around the base of the arm, was controlled by a large stepper motor, $\tau$ was the angle of the upper arm joint which could be positioned forwards or backwards depending on the depth of the object being picked up and $\sigma$ was the angle of the elbow joint which allowed the gripper to be positioned above the object of interest.  
 
 \begin{figure}[!htb]
 \begin{center}
@@ -87,27 +87,22 @@ Each Cartesian coordinate was converted into the angles of the three motors from
 \begin{capequ}[!htb]
 \begin{center}
 \begin{equation}
-\cos \tau = \frac{m^{2}+s^{2}-n^{2}}{2ms}
+\theta = tan^{-1}\left (  \frac{y}{x}\right )
 \end{equation}
-\label{Equation1}
+\caption{Rotation Angle of Base}
+\label{Equation4}
 \end{center}
 \end{capequ}
 
-\begin{capequ}[!htb]
-\begin{center}
-\begin{equation}
-\cos \sigma  = \frac{m^{2}+n^{2}-s^{2}}{2mn}
-\end{equation}
-\label{Equation2}
-\end{center}
-\end{capequ}
+The first angle to be calculated is the azimuthal angle which is the horizontal plane angle, which is controlled by the base motor.
+This angle can be calculated by using the inverse tangent function of the y and x coordinate
 
 \begin{capequ}[!htb]
 \begin{center}
 \begin{equation}
 \tau = cos^{-1}\left (\frac{m^{2}+s^{2}-n^{2}}{2ms}\right )
 \end{equation}
-\caption{}
+\caption{Acute angle from the triangle facing the object}
 \label{Equation6}
 \end{center}
 \end{capequ}
@@ -122,15 +117,6 @@ Each Cartesian coordinate was converted into the angles of the three motors from
 \end{center}
 \end{capequ}
 
-\begin{capequ}[!htb]
-\begin{center}
-\begin{equation}
-\theta = tan^{-1}\left (  \frac{y}{x}\right )
-\end{equation}
-\caption{Rotation Angle of Base}
-\label{Equation4}
-\end{center}
-\end{capequ}
 
 \begin{capequ}[!htb]
 \begin{center}
@@ -142,10 +128,13 @@ Each Cartesian coordinate was converted into the angles of the three motors from
 \end{center}
 \end{capequ}
 
+The remaining angles were calculated using some more advanced trigonometry and these were finally passed to the motor controllers.  This was all implemented in Python which uses simple functions such as acos, atan etc.
+
+
 \subsubsection{Safety}
 Since the arm is easily capable of damaging itself due to the very high torque outputs it was necessary to write the code in a way that never allowed commands to be run out of order. For example it should not be possible to move the arm until it has been homed and put the the centre position since at this point it can be limited to an area in front of Tiberius. The code also stops any command that would lead to a joint angle that is out of the arms range of motion.
 
-\subsubsection{Manual control}
+\subsubsection{Manual Control}
 The arm can be manually controlled either from the web interface or using the full control script. At the time of writing the web interface can only operate using joint rotations and the full control script has full functionality implemented.
 
 \subsubsection{Camera}

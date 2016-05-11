@@ -3,9 +3,9 @@
 \pagestyle{cameron}
 
 During development in semester one, unit tests were created for the database wrapper class, as well as some control functions. All unit tests can be found on Github, in the \texttt{testing} module. These tests are automatically ran after every commit, by Travis \gls{CI} - an online continuous integration tool that automatically builds and tests a repository after each commit.
-
+\newline
 Travis \gls{CI} is triggered with each commit, and runs \texttt{setup.py} and runs all unit tests. The results are then posted to our Github repository, so developers can spot bugs. Travis CI has been an invaluable tool throughout the project, almost immediately highlighting errors, just after they were introduced.
-
+\newline
 Figure \ref{fig:github-badges} shows the Markdown Badges displayed on our Github repository \texttt{README.md}. Travis CI has been an invaluable tool throughout the project, almost immediately highlighting errors, just after they were introduced.
 
 \begin{figure}[!htb]
@@ -15,10 +15,9 @@ Figure \ref{fig:github-badges} shows the Markdown Badges displayed on our Github
 \caption{Github Travis Badges}
 \label{fig:github-badges}
 \end{figure}
-
-
+\noindent
 Unit tests can also be executed locally by running \texttt{run\_tests.py}. Our test coverage is currently very low (\~9\%), so a lot of code is not covered by unit tests, for this remainder of code we rely on manual testing.
-
+\newline
 Code Listing \ref{code:test-stop} is an example of a unit test that \textit{requires} a fully compatible platform (Not Travis CI). Travis would fail when it tries to send an \gls{i2c} command to the non-existent motors.  Code Listing \ref{code:test-query} can be tested by Travis, because no embedded libraries are required by the test.
 
 \begin{lstlisting}[style=custompython,label=code:test-stop][!htb]

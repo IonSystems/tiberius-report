@@ -11,7 +11,7 @@ Navigation for \gls{tiberius3} was to be designed to be used from the \gls{webin
 \subsection{A-Star Grid}
 For \gls{tiberius3} to work with the proposed \gls{a-star} algorithm it was required that there was a grid that could hold information about the surrounding area. The grid was then stored within the database in order to let it be accessed again if \gls{tiberius3} was to re-enter a grid location that it had already been in. This grid was designed to work outside, using \gls{GPS} as a means to correctly position objects within the grid.
 
-\subsection{Indoor and Outdoor navigation}
+\subsection{Indoor and Outdoor Navigation}
 \gls{tiberius3} was designed with the intention of being both an outdoor robot as well as being an indoor robot. However because of this multiple navigation systems would have to be implemented. As \gls{GPS} can only reliably be used outdoors, it was not useful for the indoor systems. This meant that the indoor systems where left to use the other sensors such as the \gls{LIDAR} and the Kinect. An initial attempt was made to use \gls{SLAM} in order to map out an indoor area. This however was not used within the final design of \gls{tiberius3}. As a result the outdoor navigation ended up being the main focus of the project.
 
 \subsection{Building a World}
