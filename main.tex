@@ -30,12 +30,9 @@
     {web/figures/}
     {communication/figures/}
     {power/figures/}
+    {arm/figures/}
+    {navigation/figures/}
 }
-
-% Enable these lines for draft reports
-\usepackage{draftwatermark}
-\SetWatermarkText{DRAFT}
-\SetWatermarkScale{4}
 
 \renewcommand{\arraystretch}{1.5} %Set a bit more padding in the tables
 
@@ -48,6 +45,12 @@
 \usepackage{xstring}			%For case statement on strings
 \usepackage[toc,page]{appendix}	%Use package for generating appendices
 \usepackage{amssymb}			%Use package for checkmark
+
+% Add support for equation captions
+\usepackage{caption}
+\DeclareCaptionType{capequ}[][List of equations]
+\captionsetup[capequ]{labelformat=empty}
+
 \usepackage{pdfpages}			%Use package for including pdf files
 \usepackage{longtable}			%Used for tables over more than one page
 \usepackage{booktabs}			%For height of stuff (adjustments)
@@ -61,6 +64,8 @@
 \usepackage{float}				%For positioning things correctly
 
 \usepackage{listings}			%For code formatting and highlighting
+
+% Define custom fomratting style for Python code
 \lstdefinestyle{custompython}{
   belowcaptionskip=1\baselineskip,
   breaklines=true,
@@ -76,6 +81,7 @@
   numbers=left
 }
 
+% Add formatting support for Javascript
 \lstdefinelanguage{JavaScript}{
   keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
   keywordstyle=\color{blue}\bfseries,
@@ -173,9 +179,14 @@
 
 \tableofcontents
 \listoffigures
+\listofcapequs
 \listoftables
 
 \end{frontmatter}
+
+% Increase default spaces between paragraphs
+% \setlength{\parindent}{4em}
+% \setlength{\parskip}{1em}
 
 \input{index.tex}
 \input{appendices/appendices.tex}
@@ -186,5 +197,4 @@
 \bibliographystyle{unsrt}
 
 \printglossaries
-
 \end{document}

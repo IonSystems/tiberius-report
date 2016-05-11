@@ -1,3 +1,14 @@
 \section{Startup Script}
-Due to the sheer amount of things that need to be setup and started before Tiberius can be used, it was decided that a script was needed to simplify using Tiberius III. 
+\label{sec:misc_startup_script} % Referred to from web
+
+Tiberius requires a number of actions before it is fully capable of running. Start Tiberius aims to encompass and automate all of these tasks. 
+
+subsection{Database}
+Most of the tasks performed are associated with the database; these tasks include, starting the database, creating the tables and starting the sensor threads. To read more about these tasks see database section (\ref{database_process})
+
+subsection{API}
+%Cameron Craig please talk about this 
+
+subsection{Config parser}
+The config file holds information about transducers such as port numbers. Currently the user has to manually alter these details in the config file if they are different. Work has been started to automate this process. A script has been written to list the USB devices plugged in and their associated address. It is therefore possible to read the scripts output and set the appropriate ports in the config file using the 'set' function in TiberiusConfigParser. To read more about config read the configuration section (\ref{configuration}).
 

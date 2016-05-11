@@ -6,7 +6,7 @@ A lightweight Python framework was used to create an API, the communication brid
 
 Each request is sent with an X-Auth \gls{POST} parameter, with a authentication token. The authentication token set on Tiberius and the web server must match.
 
-The \gls{API} and \gls{webinterface} server must be operating on the same network, to allow a route for packets to reach their destination address. In our instance we have used a \gls{VPN} to allow all devices to operate on the same network.
+The \gls{controlapi} and \gls{webinterface} server must be operating on the same network, to allow a route for packets to reach their destination address. In our instance we have used a \gls{VPN} to allow all devices to operate on the same network.
 
 Diagram \ref{fig:api-modules} gives an overview of all \gls{webinterface} and \gls{controlapi} components.
 \newline
@@ -49,27 +49,132 @@ The following describes each web application component with reference to Figure 
 \end{enumerate}
 
 \subsection{Control API}
+\subsubsection{Overview}
+The \gls{controlapi} is automatically started in the startup script (discussed in section \ref{sec:misc_startup_script}). Currently the \gls{controlapi} runs using a basic WSGI server implementation - \texttt{wsgiref.simple\_server} \cite{python-wsgiref-simple_server}.
+
+As the \gls{controlapi} is written in \gls{python}, it integrates seamlessly with the existing code base. Appendix \ref{app:on_post_code} is an example resource, showing how motor control requests are handles upon arrival.
+
+\texttt{Resource}s make up most of the \gls{controlapi} code base, with one middleware component to handle authentication.
 
 
 
+\subsubsection{Resources}
+
+The \gls{controlapi} is responsible for a lot of different subsystems. In order to provide access to all of the subsystems in a modular manner, each subsystem is represented by a separate \texttt{Resource}. Each resource implements an \texttt{on\_post()} \gls{method}, which contains the logic to deal with \gls{POST} requests. An example of such a \texttt{on\_post()} \gls{method} is described in depth in Appendix \ref{app:on_post_code}. Table \ref{tab:web_api_resources} described the function of each resource used.
+
+% Table describing resources and their functions.
+\begin{table}[!htb]
+\centering
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Resource}      & \textbf{URL} & \textbf{Description}                                                                   \\ \hline
+SensorResource         & \texttt{/sensors}     & Provides access to sensor data, without using the database. (Not recommended)          \\ \hline
+MotorResource          & \texttt{/motors}      & Allows control of four fixed axis motors. Direction and speed.                         \\ \hline
+RobotArmResource       & \texttt{/arm}         & Allows control of the robotic arm, in cartesian form or individual joint manipulation. \\ \hline
+DebugResource          & \texttt{/debug}       & Instantly replies to requests for response time measurements.                          \\ \hline
+TaskControllerResource & \texttt{/task}        & Starts, pauses, resumes and stops tasks. Used by the web interface during missions.    \\ \hline
+DatabaseResource       & \texttt{/database}    & Provides access to pre-defined database interactions.                                  \\ \hline
+StatusResource         & \texttt{/status}      & Returns a generic response containing the current state of Tiberius.                   \\ \hline
+NavigationResource     & \texttt{/navigation}  & Initiates navigation algorithms when passed valid parameters. (Point-to-point and A*)  \\ \hline
+\end{tabular}
+\caption{API resources and their functions}
+\label{tab:web_api_resources}
+\end{table}
+
+\subsubsection{Authentication Middleware}
+Each request that the \gls{controlapi} receives is passed through an authentication filter, passing only valid authenticated requests. The implemented authentication mechanism looks for a valid token in the \texttt{X-Auth-Token} parameter of the request. Appendix \ref{app:authentication_middleware} includes the \gls{python} authentication middleware, with a description.
+
+Figure \ref{fig:api-auth-middleware} illustrates the authentication middleware filtering out invalid (unauthenticated) requests, and passing authenticated requests as if nothing happened. A walkthrough of the sequence of events to send an authenticated \gls{HTTP} \gls{POST} request to the \gls{controlapi} is described in Appendix \ref{app:web_walkthrough}.
+
+% Diagram illustrating all the modules used within the API and web interface.
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=12cm]{api_middleware.png}
+\end{center}
+\caption{API Authentication Middleware}
+\label{fig:api-auth-middleware}
+\end{figure}
+
+The authentication token is set in the \gls{controlapi} and \gls{webinterface} configuration files.
 
 \subsection{Web Interface}
 
+\subsubsection{Overview}
+Many independent applications exist on the \gls{webinterface}, allowing users to run missions and teleoperate robots. The necessary tools exist on the interface to create/edit/remove robots, tasks and missions.
+
+An overview of the layout and structure of the web interface's pages is best described in a table (Table \ref{tab:web_pages}). Many other pages exist to carry out rudimentary tasks, but are of no significance.
+
+% Table describing key web interface pages.
+\begin{table}[!htb]
+\centering
+\begin{tabular}{|l|l|p{7cm}|}
+\hline
+\textbf{Application} & \textbf{URL} & \textbf{Description} \\ \hline
+\multirow{6}{*}{Mission Planner} & /missionplanner                        & View all missions in a table.                                                                              \\ \cline{2-3} 
+                                 & /create                                & Define basic parameters for a new mission.                                                                 \\ \cline{2-3} 
+                                 & /plotting                              & Plot the waypoints to follow, as part of the mission. Assign tasks to the waypoints.                       \\ \cline{2-3} 
+                                 & /manage\_tasks                         & View all tasks in a table                                                                                  \\ \cline{2-3} 
+                                 & /view\_mission/\textless id\textgreater & Displays all associated data with mission: supported platforms, tasks, waypoints.                          \\ \cline{2-3} 
+                                 & /view\_task/\textless id\textgreater    & Displays description of the task, and it's supported platforms.                                            \\ \hline
+\multirow{3}{*}{Fleet}           & /fleet                                 & Displays all robots in the fleet. A fleet is a collective term used for robots.                            \\ \cline{2-3} 
+                                 & /modify/\textless id\textgreater        & Modify an existing robot.                                                                                  \\ \cline{2-3} 
+                                 & /view/\textless id\textgreater          & View an existing robot.                                                                                    \\ \hline
+Control                          & /control/\textless id\textgreater       & The user can operate a robot remotely (teleoperate), with control of the drive motors and the robotic arm. \\ \hline
+\end{tabular}
+\caption{Key web interface pages}
+\label{tab:web_pages}
+\end{table}
+
 \subsubsection{Mission Planning}
+\label{web-missions} %This needs to stay, stuart ref section this from nav :}
+\label{sec:web_design_missions}
+
+One of the primary purposes of the web interface is to allow users to design their own missions. The user can then trigger the start of a mission and observe, as Tiberius works through the list of waypoints and tasks.
+
+The waypoint-orientated design of missions was introduced to provide a strong location-based foundation for missions. Tasks were incorporated to support non-navigational objectives.
+
+In previous years, missions have involved recognising objects and navigating past obstacles. This year, missions are more explicitly defined by a user, via the web interface which involves the following:
+
+\begin{enumerate}
+\item Give the new mission a name and description.
+\item Plot waypoints, defining the path that Tiberius must take to complete the mission.
+\item Assign tasks to waypoints, these tasks are started once Tiberius has reached it's waypoint.
+\end{enumerate}
+
+
+Missions are stored in a database on the web server, and sequentially transmitted to Tiberius when a mission is started. Tasks can also me initiated manually at any time, from the web interface. Available tasks are defined in Tiberius's \gls{controlapi} software. Currently the amount of implemented tasks is slim, but a strong software infrastructure is in place to define new tasks. Code listing \ref{code:drive-task} is an example of a simple task.
+
+\begin{lstlisting}[style=custompython,label=code:drive-task][!htb]
+class DriveForwardsUntilWall(Task):
+
+    def __init__(self):
+        super(DriveForwardsUntilWall, self).__init__()
+        self.task_name = 'Drive Forwards Until Wall'
+        self.task_id = 0
+        self.task_description = '''Drive forwards at half speed until a wall
+				is sensed using the ultrasonics with a
+				distance of 10cm.'''
+
+    def runTask(self):
+        self.control.driveForwardUntilWall(50)
+        self.completeTask()
+
+    def pauseTask(self):
+        self.control.stop()
+
+    def resumeTask(self):
+        self.runTask()
+\end{lstlisting}
+
+Referring to Code Listing \ref{code:drive-task}, each task implements \texttt{runTask()}, \texttt{pauseTask()} and \texttt{resumeTask()}. These functions are called from the \gls{controlapi} when an appropriate task request is received. The \texttt{task\_id} is used by the \gls{controlapi} to distinguish between tasks. The web interface defines all known tasks in it's database. The \gls{webinterface} uses a fixture to populate the database with tasks \cite{github-fixtures}.
+
 
 \subsubsection{Teleoperation}
 
-The web interface allows tele-operation of Tiberius's motors and robotic arm. Tiberius can be tele-operated during or outwith missions.
-
-Both the motors and robotic arm can be controlled from the same page.
+The web interface allows tele-operation of Tiberius's motors and robotic arm. Tiberius can be tele-operated during or outwith missions. Both the motors and robotic arm can be controlled from the same page. The interface supports motor speed control, skid steering and forward and backwards motion. Each axis of the robotic arm can also be controlled. A live video stream from a webcam allows Tiberius to be teleoperated, without the user having a visual line of sight.
 
 Future improvements to our current tele-operation implementation are discussed in section \ref{sec:web_future_work_access_tele}.
 
-A walkthrough of the sequence of events to send an authenticated \gls{HTTP} \gls{POST} request to the \gls{controlapi} is described in Appendix \ref{app:web_walkthrough}.
 
-\subsection{Missions}
-\label{sec:web_design_missions}
-
-
-
-\subsection{System Integration}
+\subsubsection{Fleet Management}
+Within the \gls{webinterface}, the user can store details about all robots. The most important detail to store is the device's IP address, this is used by the web interface to send requests to the correct device. 

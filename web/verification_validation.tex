@@ -1,6 +1,5 @@
 \section{Verification and Validation}
 
-\subsection{Unit Testing}
 
 
 \subsection{Portability}
@@ -8,5 +7,55 @@ Portability in the context of software defines how well software will respond to
 
 We have implemented a setup script that makes a few decisions based on the detected Raspberry Pi version and operating system, so ensure only compatible software is installed. This enables a high level of portability among current Raspberry Pi versions, but makes no effort to install a working system on any other device.
 
-\subsection{Usability Testing}
-Internal usability tests were carried out to ensure the web interface was intuitive to use, by students familiar with basic robotics concepts. %TODO! maybe
+% \subsection{Usability Testing}
+% Internal usability tests were carried out to ensure the web interface was intuitive to use, by students familiar with basic robotics concepts. %TODO! maybe
+
+\subsection{Requirements Satisfaction}
+Making reference to the requirements set up in the Preliminary Design Review\cite{tibby-lit-review}, the following requirements have not been satisfied (see Table \ref{tab:web_requirements_verification}). A justification for each unimplemented requirement is also included in Table \ref{tab:web_requirements_verification}.
+
+The requirement satisfaction percentage has been calculated as 82\%. This figure has been calculated based on the 6 unimplemented requirements, out of the total of 33 requirements. This figure is approximate, some features were not initialled defined. All requirements are not made equal.
+
+% Table describing resources and their functions.
+\begin{table}[!htb]
+\centering
+\begin{tabular}{|p{2cm}|p{5cm}|p{5cm}|}
+\hline
+
+\textbf{Requirement Code} & \textbf{Description} & \textbf{Justification}   \\ \hline
+
+% Start of requirement
+R 18 (g) &
+Missions should not be shared with other users. &
+Support for multiple users is supported, but all missions and tasks are global. For our use case, we had no reason to restrict access to missions.
+\\ \hline
+%---------------------
+% Start of requirement
+R 18 (j) &
+Missions should not be able to be edited during a live mission. &
+Missions can be edited during a live mission, but the live mission remains unaffected, this is because all mission data is sent all at one at the beginning of the mission. This functionality was deemed suitable.
+\\ \hline
+%---------------------
+% Start of requirement
+R 19 (b) &
+The estimated time until completion should be displayed to the user. &
+No implementation of time monitoring has been done, so no indication of time until completion is available.
+This requirement would be useful, but not essential. More time would allow this feature to come to life.
+\\ \hline
+%---------------------
+% Start of requirement
+R 19 (c) \& (d) &
+The number of completed tasks should be displayed to the user. \&
+The number of task remaining should be displayed to the user.&
+The framework is in place to allow the web interface to count tasks, but there was not enough demand for these features to be implemented.
+\\ \hline
+%---------------------
+% Start of requirement
+R 22 &
+The web interface must display live data from Tiberius.&
+This requirement has been partially fulfilled, motor and arm status is provided. No sensor data is displayed live to the user.
+\\ \hline
+%---------------------
+\end{tabular}
+\caption{Unimplemented Web Interface Requirements}
+\label{tab:web_requirements_verification}
+\end{table}

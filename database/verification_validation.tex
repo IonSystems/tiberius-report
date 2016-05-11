@@ -1,35 +1,5 @@
 \section{Verification and Validation}
 
-\subsection{Data validation}
-Each sensor has it own validation before being inserted into the database. This ensures the sensor is reading correct data.
-
-It is beneficial for the user and possibly in the future some control software to know if a sensor is producing invalid data. Therefore a data validation table exists; which sets a sensor to false when it gives invalid data. 
-\newline
-This table is read by the diagnostics program, which operates a series of LEDs to give a physical indication of erroneous sensor data. To read more on the diagnostics LEDs see diagnostic section (\ref{diagnostics}).
-\newline
-The table can also be read by control software in the future. By collating all the sensor validity into one table, it allows the validity of all the sensors to be determined by one table query as opposed to a query for each sensor table.
-
-\subsubsection{Ultrasonics}
-There is currently no verification on this data.
-
-\subsubsection{LIDAR}
-The lidar SDK contains it's own validity on the data it recieves. It was considered to remove readings in which the distance was below the radius of tiberius, however this was decided against since this would disregard any overhanging object. 
-\newline
-Unforunatly the lidar is not the highest component of tiberius and therefore does not have a full 360 degree view. Its's line of sight is obstructred by the directional antenna. Therefore the lidar reading which have angles which are affected by the antenna are removed; the rest of the lidar readings are inserted into the database. 
-
-\subsubsection{GPS}
-The gps is checked to see if it is usable. 
-The usability function returns usable  if the gps has a fix, it has a position and that information is recent. 
-the gps validity is set to false.
-
-\subsubsection{Compass}
-Heading is read of compass, and the 10 most recent readings are stored into an array. 
-The standard deviation is taken of the last 10 readings. 
-If the standard deviation > 10 then the last reading must be false. Typically this may be because the robot has neared at an ionized metal structure such as a steel support beam in a building. 
-The compass validity is set to false.
-
-
-
 \subsection{Testing}
 \subsubsection{Overview}
 Tiberius's In-memory Database is a critical area of our architecture. Two decisions regarding the architecture were which RPi to use and which database to use. A script was created to measure the speed at which different configuration could carry out operations. This script created a database, inserted arbitrary values, updated the values, queried the  values and then deleted the database. All of these functions were carried out 1000 times and then an average was produced for each of the following tasks.
@@ -52,6 +22,8 @@ Polyhedra tends to outperform SQL in most operations. For create, insert, update
 Changing between Raspberry Pi had a small effect on the SQL database; the only operation which had a noticable effect was query which was speed up. This differed from polyhedra database which benefited significantly by the change in Raspberry Pi. Every operation other than delete had it time reduced by atleast one order of magnitude.
 \newline
 Considering the above analysis tiberius 3 will run polyhedra database and run on a raspberry pi 3 model B. 
+\newline
+This test was flawed though since it had different SD card in it, which probably are of different quality. This should only affect the SQL database since it is not in-memory. The script is still good but the test could be re-ran.
 
 
 

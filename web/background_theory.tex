@@ -54,7 +54,7 @@ Figure \ref{fig:api-falcon-simple} is a simplified representation of Falcon's co
 
 \item [Application] Each Falcon application must create an instance of API. 
 
-\item [Resource] The resource class is designed to be responsible for a particular type of resource. A diagrammatic representation of the resources we created can be found in Figure \ref{api-modules}. Each resource class manages all requests delivered to the resource. Once the request has been dealt with, a HTTP response is returned to the source of the original request.
+\item [Resource] The resource class is designed to be responsible for a particular type of resource. A diagrammatic representation of the resources we created can be found in Figure \ref{fig:api-modules}. Each resource class manages all requests delivered to the resource. Once the request has been dealt with, a HTTP response is returned to the source of the original request.
 
 \item [Middleware] components define global behaviour that can occur before a request is passed on the the resource, or after the response has been created, but not yet sent. We have one middleware components that authenticates each incoming request before it is passed to a resource.
 \end{description}

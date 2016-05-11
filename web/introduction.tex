@@ -2,7 +2,7 @@
 
 The web interface and it's supporting software are crucial components that enable users to interact with Tiberius remotely. It is also the enabler for mission planning and execution. These concepts are further discussed in section \ref{sec:web_design_missions}
 
-Figure \ref{fig:web-interface-communication} illustrates the communication relationships between the Tiberius robots and the web applications, and gives a clear overview of our web components.
+Figure \ref{fig:web-interface-communication} illustrates the communication relationships between the Tiberius robots and the web applications, and gives a clear overview of our web components. The figure illustrates two Tiberius robots (left), an instance of the web interface(top right) and an android application (bottom left). In this configuration, both the web interface and android application can communicate with either robot.
 
 \begin{figure}[!htb]
 \begin{center}
@@ -12,9 +12,10 @@ Figure \ref{fig:web-interface-communication} illustrates the communication relat
 \label{fig:web-interface-communication}
 \end{figure}
 
+
 Remaining with Figure \ref{fig:web-interface-communication}, everything is encapsulated within the \gls{VPN}. This is a network with virtual bridges to allow one network to exist but in multiple physical locations. For a more detailed description of our \gls{VPN}, refer to section \ref{sec:comms_theory_vpn}. All robots and web applications must be connected to our \gls{VPN} to allow communication.
 
-Multiple robots can exist on our network at the same time, each robot must be assigned a static IP address. In theory, multiple instances of the web interface can also exits on the same network, although we only require one for our purposes. Also, many applications such as the Android Application can be active on the network at once.
+Multiple robots can exist on our network but at the same time each robot must be assigned a static IP address. In theory, multiple instances of the web interface can exist on the same network, although we only require one for our purposes. Many applications such as the Android Application can also be active on the network at once.
 
 All communication between devices is in the form of \gls{HTTP} \gls{POST} requests/responses. The security benefits of this message type are described in section \ref{sec:web_subsystem_overview}.
 
@@ -42,21 +43,6 @@ The \gls{controlapi} is a server application that runs on each Tiberius robot, a
 \item The point-to-point algorithm (discussed in section \ref{sec:nav_design_p2p}) can be started from the \gls{controlapi}, this is used during missions to navigate from waypoint to waypoint.
 
 \end{itemize}
-
-\subsection{Missions}
-\label{web-missions} %This needs to stay, stuart ref section this from nav :}
-In previous years, missions have involved recognising objects and navigating past obstacles. This year, missions are more explicitly defined by a user, via the web interface which involves the following:
-
-\begin{enumerate}
-\item Give the new mission a name and description.
-\item Plot waypoints, defining the path that Tiberius must take to complete the mission.
-\item Assign tasks to waypoints, these tasks are started once Tiberius has reached it's waypoint.
-\end{enumerate}
-
-Missions are stored in a database on the web server, and sequentially transmitted to Tiberius when a mission is started. Tasks can also me initiated manually at any time, from the web interface.
-
-\subsection{Tasks}
-
 
 % \begin{lstlisting}[caption=HTTP POST Example, label=amb]
 % Name=Gareth+Wylie&Age=24&Formula=a+%2B+b+%3D%3D+13%25%21

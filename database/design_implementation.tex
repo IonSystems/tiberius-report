@@ -1,11 +1,13 @@
 \section{Design and Implementation}
 
 \subsection{Table definitions}
-Each table has unique set of columns to suit the sensor data.
-Every table has 2 columns in common. One is the id, this column represents the reading and provides a way to identify each reading. The first reading has id 1, and it increments with each reading. The other column in the timestamp, this is the time when the sensor data was inserted into the database - which is very close to the time the sensor data was aquired. Therefore the timestamp can be used to determine how old a sensor reading is.
+Each table has unique set of columns to suit the transducer data; this is required because different transducers produce different data which requires it's unique format. Two columns in every set of columns is the same across all tables, these are the id and the timestamp. 
 \newline
-Each table is defined in its own class.
-Below is an example of the GPS table. The reason for the column names is expanded later in the GPS section.
+The id is a unique number assigned to each row; it is necessary as it allows a mechanism to specify each row. The first insert into the table has id one, and thereafter each new insert has the id incremented from the previous id. Therefore the id for the second entry would be two.
+\newline
+The timestamp associates a time with every reading. The timestamp is taken from when the data is inserted into the database; since the time taken between acquiring data and inserting it is negligible, it can be assumed that the timestamp correlates to the time the transducer data was read. Therefore the timestamp can be used to determine how old a transducer reading is, which is necessary especially with the sensor data, as the environment may have changed significantly after the last reading.
+\newline
+To increase modularity and readability, each table is defined as its own class. Below is an example of the GPS table. 
 \begin{lstlisting}[style=custompython]
 class GPSTable(Table):
     table_name = "gps_reading"
@@ -22,9 +24,9 @@ class GPSTable(Table):
         'timestamp': 'float'}
 \end{lstlisting}
 
+The database structure remains compatible with SQL, however the examples provided all use polyhedra database as it is the selected choice.
 
 \subsubsection{Ultrasonics}
-
 \begin{table}[!htb]
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|l|}
@@ -38,29 +40,15 @@ int primary key & float & float & float & float & float & float & float \\ \hlin
 
 
 \begin{itemize}
-\item{\textbf{fl}}: distance in millimeters from front left sensor
-\item{\textbf{fc}}: distance in millimeters from  front centre sensor
-\item{\textbf{fr}}: distance in millimeters from  front right sensor
-\item{\textbf{rl}}: distance in millimeters from rear left sensor
-\item{\textbf{rc}}: distance in millimeters from rear centre sensor
-\item{\textbf{rr}}: distance in millimeters from rear right sensor
+\item{\textbf{fl}}: distance in millimetres from front left sensor
+\item{\textbf{fc}}: distance in millimetres from  front centre sensor
+\item{\textbf{fr}}: distance in millimetres from  front right sensor
+\item{\textbf{rl}}: distance in millimetres from rear left sensor
+\item{\textbf{rc}}: distance in millimetres from rear centre sensor
+\item{\textbf{rr}}: distance in millimetres from rear right sensor
 \end{itemize}
 
 \subsubsection{LIDAR}
-\iffalse
-\gls{LIDAR} data read using SDK (C++)
-Changed the output to return a JSON format
-Python dictionary in this format...
-Small error with the last comma breaking the JSON object so used python \lstinline{data.replace(',\n' , ']')} which replaced the last comma with a ]
-
-Lidar class validates the data
- - removes data (angle) which is obscured by the antenna
-\fi
-
-
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
 \begin{table}[!htb]
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|}
@@ -81,11 +69,6 @@ int primary key & varchar     & float & float    & float   & int            & fl
 
 
 \subsubsection{GPS}
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
 \begin{table}[!htb]
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
@@ -134,12 +117,10 @@ int primary key & float   & float & float & float & float       & float \\ \hlin
 % \usepackage{booktabs}
 \begin{table}[!htb]
 \centering
-\caption{Motors table}
-\label{tab:db-motors}
 \begin{tabular}{|l|l|l|l|l|l|}
-\toprule
-id              & front\_left & front\_right & rear\_left & rear\_right & timestamp \\ \midrule
-int primary key & float       & float        & float      & float       & float
+\hline
+id              & front\_left & front\_right & rear\_left & rear\_right & timestamp \\ \hline
+int primary key & float       & float        & float      & float       & float \\ \hline
 \end{tabular}
 \caption{IMDB: Motors table}
 \label{tab:db-motors}
@@ -157,12 +138,10 @@ int primary key & float       & float        & float      & float       & float
 % \usepackage{booktabs}
 \begin{table}[!htb]
 \centering
-\caption{Steering table}
-\label{tab:db-steering}
 \begin{tabular}{|l|l|l|l|l|l|}
-\toprule
-id              & front\_left & front\_right & rear\_left & rear\_right & timestamp \\ \midrule
-int primary key & float       & float        & float      & float       & float
+\hline
+id              & front\_left & front\_right & rear\_left & rear\_right & timestamp \\ \hline
+int primary key & float       & float        & float      & float       & float \\ \hline
 \end{tabular}
 \caption{IMDB: Steering Table}
 \label{tab:db-steering}
@@ -173,20 +152,20 @@ int primary key & float       & float        & float      & float       & float
 \item{\textbf{rear\_left}}:  the angle the rear left wheel is set at
 \item{\textbf{rear\_right}}:  the angle the rear right wheel is set at
 \end{itemize}
-
+%******************ARM*****************************
 \subsubsection{Arm}
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
+
 \begin{table}[!htb]
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|l|}
-\toprule
-id              & X     & Y     & Z     & waist & elbow & shoulder & timestamp \\ \midrule
-int primary key & float & float & float & float & float & float    & float
+\hline
+id              & X     & Y     & Z     & waist & elbow & shoulder & timestamp \\ \hline
+int primary key & float & float & float & float & float & float    & float \\ \hline
 \end{tabular}
 \caption{IMDB: Arm Table}
 \label{tab:db-arm}
 \end{table}
+
 \begin{itemize}
 \item{\textbf{X}}: the x position of the gripper 
 \item{\textbf{Y}}: the y position of the gripper
@@ -196,13 +175,33 @@ int primary key & float & float & float & float & float & float    & float
 \item{\textbf{shoulder}}: the angle of the shoulder
 \end{itemize}
 
-\subsection{Creating database}
-Several functions are called when creating the tables. On normal usage the table are created when start\_tiberius.py is run. In start Tiberius all the configured files are called
+\subsubsection{Battery}
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+id              & monitor     & volts     & amps     & power & time  & amp\_hours  & timestamp \\ \hline
+int primary key & float 	  & float 	  & float    & float & float & float       & float \\ \hline
+\end{tabular}
+\caption{IMDB: Battery Table}
+\label{tab:db-arm}
+\end{table}
+
+\begin{itemize}
+\item{\textbf{monitor}}: selected battery being monitored
+\item{\textbf{volts}}: the output voltage of the battery
+\item{\textbf{amps}}: the output current of the battery
+\item{\textbf{power}}: the power being drawn
+\item{\textbf{time}}: the estimation of time left 
+\item{\textbf{amp\_hours}}: the amount of energy charge in a battery that will allow one ampere of current to flow for one hour.
+\end{itemize}
 
 
-
-
-It is then created with unique columns described in the next subsections.
+%***********************Creating*****************
+\subsection{Creating table}
+\label{create}
+Creating a database refers to the act generating a new table. This act has the possibility of breaking if a table with the same name already exists. With Tiberius this case may arise, if the user has restarted the Tiberius software without resetting the raspberry pi - thus retaining the old tables. Since the old tables do not contain any pertinent information they can be deleted with out regard. Therefore before creating a new table, it is checked to see if it already exists, if it does it is deleted and the new table is created. 
 
 \begin{lstlisting}[style=custompython]
 def drop_create(poly, table):
@@ -226,10 +225,10 @@ def drop_create(poly, table):
         print table.table_name + " already exists."
 \end{lstlisting}
 
-As can be seen the table is dropped before being created. This means is Tiberius was previously running and Tiberius had not been switched off
 
 \subsection{Insert}
-Insert is used to add a new row to of data to into a table. The data is packed into one variable using python dictionary. The data is then extracted by specifying the keyword, which the data is related to.  
+Insert is the action of adding a new row to an existing table. 
+To do this the data is packed into one variable in the format of a python dictionary. Dictionaries are indexed by keys, which can be any immutable type, in the Tiberius software only strings are used. Dictionaries can be thought of as an unordered set of key: value pairs, with the requirement that the keys are unique. The data can then be extracted when given the corresponding key.
 
 \begin{lstlisting}[style=custompython]
 def insert_gps_reading(poly, id, data):
@@ -250,10 +249,11 @@ def insert_gps_reading(poly, id, data):
 \end{lstlisting}
 
 \subsection{Update}
-Update is used whe only one value in a certain row needs changed, and all other rows remain the same. This is not currently used, as the need to alter a reading has never arised. 
+The update function is used when only a certain value in a row needs modified. This function modifies that certain value with the new value and leaves all other values in the row (and table) unchanged. This function is not used with the transducer data itself, since there is no desire to modify old readings, however it is used for the validity table which is consistently being updated. 
+
 
 \subsection{Overwrite}
-Overwrite allow a compelete row to be overwritten with new information. The id remains the same, as the function calling overwrite has to use the id inorder to specify which row it wants overwrite.
+Overwrite allows a full row of data to be overwritten with new data. The only row which remains constant is the id. The id remains the same since the function which calls overwrite needs to know which id to specify. 
 
 \begin{lstlisting}[style=custompython]
 def overwrite_gps_reading(poly, id, data):
@@ -285,22 +285,46 @@ def overwrite_gps_reading(poly, id, data):
 
 \subsection{Polyhedra wrapper}
 
+TODO: all of this shit
+
 
 
 
 
 \subsection{Procedure}
+\label{database_process}
+The procedure the Tiberius software follows in order to run the database can be thought of as four distinct sections - starting the database, creating the table, running the sensor threads and the decorators for the actuator functions. 
+\newline
+The start Tiberius script does the following
+\begin{itemize}
+\item run the database
+\item create the tables
+\item start the sensor threads
+\end{itemize} 
+Therefore all the database set up is achieved by running the script since the actuator decorators do not require any set up.
+
 \subsubsection{Starting database}
-Upon start up the database will not be running. It is therefore necessary to run the start tiberius script to initiate the database and start the threads. The database is started using the command shown below.
+When Tiberius is first powered up, and consequently the raspberry pi is first powered  up, the database will not be running. 
+It is therefore necessary in the script to initiate the database; this is done by the following command.
 
 \begin{lstlisting}[style=custompython]
 database = Popen("/home/pi/poly9.0/linux/raspi/bin/rtrdb -r data_service=8001 db", shell=True, stdout=PIPE)
 \end{lstlisting}
 
-The tables for all the sensors are then created. This is done by calling the create function described above. Next the threads are started to continuously update the database. Threads are only started if the sensor is installed - this is ensured by the configuration file. For more detail on the configuration file see configuration  (\ref{configuration}). The motor and arm are actuators rather than sensors, and therefore are employ a different technique to update the value; this technique is further described in the Decorators section (\ref{decoratordefinition})
+\subsubsection{Creating tables}
+The table for every transducer must be created at the start, regardless if the transducer is installed or not. This is done to ensure there are not errors further down the line, by 
 
+The tables for all the sensors is created using the create function described above in section \ref{create}. As described in said section, the tables are dropped if they exist before being created.
+%************************sensor threads*************
 \subsubsection{Sensor threads}
-Each sensor has its own thread; the purpose of which is to collect the data from the sensor it is assigned to. The threads run concurrently and have a their own time delay to reduce the workload.
+The next stage is to initiate the sensor threads. The purpose of the threads is to continuously acquire new data from the sensor, validate the data and insert it into the database. A time delay is incorporated in the threads to reduce the throughput, since the sensors are unlikely to change significantly in fractions of a second.
+\newline
+Threads are only started if the sensor is installed - this is defined in the configuration file. For more detail on the configuration file see configuration (\ref{configuration}).
+\newline
+The database continuously gets more data as Tiberius is running. Therefore it is necessary to start removing old transducer data as it will become less relevant the older it gets. To do this the number of readings which a sensor is to hold is set; the number of readings (rows) does not exceed this; therefore newest information starts overwriting the oldest information. 
+
+% TODO: overwrite after so many values.
+
 Below is a shortened version of the GPS thread.
 \begin{lstlisting}[style=custompython]
 while True:
@@ -315,9 +339,10 @@ while True:
     no_data_time = 0
 \end{lstlisting}
 
-old data in the database is overwritten with new data TODO:fill this in
-
 \subsubsection{Actuator decorators}
+
+The motor and arm are actuators rather than sensors, and therefore are employ a different technique to update the value; this technique is further described in the Decorators section (\cite{decoratordefinition})
+ 
 Unlike the sensors, the actuator database should not be updated in a periodic manner. This is because the actuators don't change unless specified by the control software. Therefore decorators are placed on the functions that alter an actuators position.
 \newline
 Decorators dynamically alter the functionality of a function, method or class without having to directly use subclasses \cite{decoratordefinition}. A decorator function is called, whenever the function it is decorating is called. So for this implementation, whenever the function to move an actuator is called, the function to update the actuators location is called.
@@ -335,8 +360,27 @@ def move_elbow(self, change, angle=None):
 Therefore each one of these function is decorated with the database arm update function. This function takes the new values of X, Y, Z, waist, elbow, shoulder and writes it to the database. 
 \newline
 
+\subsubsection{Validation}
+The data validation is currently performed in the the sensor threads. Each thread gets its data from the appropriate driver and 
 
+\subsubsection{Ultrasonics}
+There is currently no verification on this data.
 
+\subsubsection{LIDAR}
+The lidar SDK contains it's own validity on the data it recieves. It was considered to remove readings in which the distance was below the radius of tiberius, however this was decided against since this would disregard any overhanging object. 
+\newline
+Unforunatly the lidar is not the highest component of tiberius and therefore does not have a full 360 degree view. Its's line of sight is obstructred by the directional antenna. Therefore the lidar reading which have angles which are affected by the antenna are removed; the rest of the lidar readings are inserted into the database. 
+
+\subsubsection{GPS}
+The gps is checked to see if it is usable. 
+The usability function returns usable  if the gps has a fix, it has a position and that information is recent. 
+the gps validity is set to false.
+
+\subsubsection{Compass}
+Heading is read of compass, and the 10 most recent readings are stored into an array. 
+The standard deviation is taken of the last 10 readings. 
+If the standard deviation > 10 then the last reading must be false. Typically this may be because the robot has neared at an ionized metal structure such as a steel support beam in a building. 
+The compass validity is set to false.
 
 
 

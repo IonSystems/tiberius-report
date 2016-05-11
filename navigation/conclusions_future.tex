@@ -7,9 +7,29 @@ Many of the sensors that operate to help navigation can be used indoors and outd
 \subsection{Future Development}
 With the current iteration of the tiberius project complete, there was a chance to reflect some on areas that could be improved in later projects as well as opportunities to further advance the robot in terms of navigation. within this final navigation section there will be a run-down of things that the current group believe could make for the next steps in the development of \gls{tiberius3}. 
 \subsubsection{Integrate Database Data}
-
+The A-Star algorithm was not implemented with data from the database and was instead feed test data so that the code could be tested as a proof of concept. This means that the next step in its development would be to create function that call the database in order to get data from each of the relevant sensors. Within these functions there would have to be some means of identifying the relevance of the data via a timestamp so that old data would have less relevance compared to new data. Alongside this there would also need to be a means of assessing the data, so that a accessibility value could be set for the appropriate square that the data relates too. For this to work the data within the database needs to have a latitude and longitude position stored as part of the database entry.
 \subsubsection{Refining A-Star}
-
-\subsubsection{SLAM}
-
+The A-Star algorithm created as part of this iteration of the project is able to find a path trough grids that have a clear picture of the area. However it needs to stop and re-run so that it can create a new path with the new data. To further this navigation system it would be advisable to move towards a more dynamic implementation. Where new data can be directly fed to the algorithm at the same time as it is being sent to the database and the path can be changed as the robot is moving through the points along the path.
+There is also a chance with improved steering and movement to change the way that tiberius traverses the path. This can be done by identifying corners within the path and either arcing around them or cutting across them to reduce the travel distance. The path array could also be shortened by only taking the end destination of a straight section of the path.
+\subsubsection{\gls{SLAM}}
+With the outdoor navigation of \gls{tiberius3} having been seen as a priority for this project, the indoor navigation is a large area for future improvement. This includes using data from sensor like the \gls{LIDAR} and the kinect to create an implementation of \gls{SLAM}. Breezy \gls{SLAM} would be the recommendation of the group as it is written in python, so it matches with the rest of the project and has the potential to provide meaningful data in its map. Breezy \gls{SLAM} should work with the current \gls{LIDAR}, however some work would have to be done in order to combine this with kinect data and data from the ultrasonics. Maps could be stored inside the database in the same way as the grids from the A-Star algorithm have been stored.
 \subsubsection{Aerial Data Collection}
+Another means of improving the navigation systems of \gls{tiberius3} could be to add an addition aerial drone that could be used to scan the surrounding area so to collect data for the database. This would dramatically increase the area that data could be collected for when entering new unknown locations. The Drone could either be housed on \gls{tiberius3} via a new platform or be separate entirely. Data could be collected by using cameras or by using a \gls{LIDAR} that mapped the surrounding area. The drone would then have to communicate the data that it had collected to the database on tiberius, by means of either Wi-Fi or 4G. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

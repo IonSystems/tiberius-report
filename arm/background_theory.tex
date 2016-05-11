@@ -1,2 +1,9 @@
 \section{Background Theory}
 \subsection{Cartesian Coordinates}
+The robotic arm was designed to operate by being fed a simple set of Cartesian coordinates.  These are usually denoted by a simple vector of the form (x,y,z).  This denotes the position of an object in 3-dimensional space.  X is the linear distance from the origin to the object in the x-axis (ie sideways).  Y is the linear distance from the origin to the object in the y-axis (forwards and backwards) and z gives the vertical distance of the object from the origin
+
+
+\subsection{Inverse Kinematics}
+The process of translating from a set of input coordinates in space to a set of coordinates translatable by the actuators, ie rotating motors or pistons is called inverse kinematics.  This can be done by simple trigonometric translations of say Cartesian coordinates to angular rotations about a joint.  
+This was the translation process required for Tiberius III to allow the arm to grab objects in three-dimensional space.  The coordinates were input into the algorithm in Cartesian coordinates and translated into angles.  These were then scaled up by a constant number to give the steps required by each stepper motors and this was then used to move the arm by a given angle.  The process of inverse kinematics can be quite complicated and requires quite a  bit of tinkering and testing.
+Although there were various sources which offer inverse kinematics algorithms, the arm we made had a fairly non-standard set-up including only 2 joints and a hanging gripper.  It was easier overall to create bespoke algorithms rather than fitting in others with Tiberius III

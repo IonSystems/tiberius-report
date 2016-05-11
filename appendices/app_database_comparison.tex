@@ -7,21 +7,22 @@ Each database must be created before any operations can be carried out on it. Th
 
 \begin{table}[!htb]
 \centering
-\caption{Create database }
+
 \label{Create}
 \begin{tabular}{lllll}
-     & RP1         & RP2 & RP3 &  \\
+     & RP1        & RP2 & RP3 &  \\
 Poly & 0.00338196 & N/A    & 0.00092792    &  \\
 SQL  & 0.03206205 & N/A    & 0.04080892    &  \\
      &             &     &     & 
 \end{tabular}
+\caption{Create database (seconds) }
 \end{table}
 
 \subsection{Insert}
 New data received from the sensors must be inserted into the database to be stored. This action is done regularly and there the time delay is important. 
 \begin{table}[!htb]
 \centering
-\caption{insert into database}
+
 \label{insert}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
@@ -29,52 +30,56 @@ Poly & 0.00236365 & N/A    & 0.0002626    &  \\
 SQL  & 0.03206205 & N/A    & 0.0577037    &  \\
      &             &     &     & 
 \end{tabular}
+\caption{Insert into database (seconds)}
 \end{table}
 
 \subsection{Update}
 On certain occasions data in the table may need to be updated. This differs from inserted information as a new row of information is not appended however an existing row is searched for and it values are changed. This action is not done as often as inserting or querying although more often than creating and deleting.
 \begin{table}[!htb]
 \centering
-\caption{Update the database}
+
 \label{Update}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
 Poly & 0.00347629 & N/A    & 0.00042764    &  \\
-SQL  & 0.03939703 & N/A    & 0.04500420    &  \\
+SQLite  & 0.03939703 & N/A    & 0.04500420    &  \\
      &             &     &     & 
 \end{tabular}
+\caption{Update the database (seconds)}
 \end{table}
 
 \subsection{Query}
 To retrieve the information stored in the database it has to be queried (searched). This is done regularly and the time delay is important.
 \begin{table}[!htb]
 \centering
-\caption{Query into database}
+
 \label{Query}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
 Poly & 0.138572986 & N/A    & 0.02222729 &  \\
-SQL  & 0.051900138 & N/A    & 0.00766252 &  \\
+SQLite  & 0.051900138 & N/A    & 0.00766252 &  \\
      &             &     &     & 
 \end{tabular}
+\caption{Query into database (seconds)}
 \end{table}
 
 \subsection{Delete}
 The database may need to be deleted under certain circumstances. This will not happen often and therefore the delay is not important.
 \begin{table}[!htb]
 \centering
-\caption{Delete the database}
+
 \label{Delete}
 \begin{tabular}{lllll}
      & RP1         & RP2 & RP3 &  \\
 Poly & 0.001752495 & N/A    & 0.00370311    &  \\
-SQL  & 0.068341016 & N/A    & 0.07257699    &  \\
+SQLite  & 0.068341016 & N/A    & 0.07257699    &  \\
      &             &     &     & 
 \end{tabular}
+\caption{Delete the database (seconds)}
 \end{table}
 
 
 \iffalse
 The chosen RPi we are using is ...
-For this RPi this bar graph which seperate bar for each operation and shaded for sql and unshaded for poly.
+For this RPi this bar graph which seperate bar for each operation and shaded for SQLite and unshaded for poly.
 \fi

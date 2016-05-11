@@ -14,7 +14,10 @@ The algorithm for validating the compass data is not perfect and has not been te
 Since the steering was not added until added did not have time to store steering information. 
 
 \subsection{Arm table}
-Ontop of storing all the arm positions as is currently implemented, the arm should store certain key position which are not overwritten. These key positions would be user defined, and would specify a position of interest during a mission. For instance if a mission meant the arm was required to pick up a number of objects and drop them from the same location, the user could save the drop location. This would allow the user to recall that location, and the arm would move there without further input from the user.
+On top of storing all the arm positions as is currently implemented, the arm should store certain key position which are not overwritten. These key positions would be user defined, and would specify a position of interest during a mission. For instance if a mission meant the arm was required to pick up a number of objects and drop them from the same location, the user could save the drop location. This would allow the user to recall that location, and the arm would move there without further input from the user.
+
+\subsection{Location ID}
+Each sensor reading should have a location correlating to it. All sensor data including GPS data have a timestamp, so it is possible to determine the robots location when a reading was taken. However this could be improved by giving each 
 
 
 

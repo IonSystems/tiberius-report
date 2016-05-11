@@ -4,9 +4,6 @@ On the whole the new system is much more advanced than the old one, but this bri
 
 Having said that, it is still worth the switch. The new system provides so much extra functionality and is designed to simplify the networking for developers who just want to focus on what they are doing, not having to constantly plug and unplug cables and using a flash drive every time they want to update code. 
 
-\subsection{Future Work}
-There is always room for improvement on everything and there is no exception here. The most important thing that could be done at this stage is for sort of base station to be made that could enable Tiberius to be used away from the Lab. 
-
 \subsection{Was OpenWRT the right choice?}
 Being an open source bare-bones Linux distribution it took a fair amount of time to figure out how to use it. With very disjointed documentation that contradicts itself every way you look it ended up being a large amount of trial and error until the system was working. The biggest hurdle being that one of the Wi-Fi cards was very temperamental and could not maintain a connection for longer than a few minutes. However it took a long time to realise that the card was at fault and not the way OpenWRT was set up.
 
@@ -14,4 +11,9 @@ Being an open source bare-bones Linux distribution it took a fair amount of time
 After doing an massive amount of research on different antenna designs I was fairly sure that I had found the right one for the job. The Biquad Yagi is extremely powerful for its size and was able to be mounted on a servo on Tiberius III. The only minor concern is if Tiberius was to drive under a low obstacle and knock the antenna off the pylon it is mounted on. Although it doesn't seem like it would be very likely for this to happen.
 
 In testing the antennas we found that they worked very well in line-of-sight and would easily be able to provide more than a kilometre of high speed Wi-Fi if amplifiers were used at both ends of the link.
+
+\subsection{Future Work}
+There is always room for improvement on everything and there is no exception here. The most important thing that could be done at this stage is for sort of base station to be made thats could enable Tiberius to be used away from the Lab. 
+
+In addition, the functionality to aim the antenna is at the time of writing not working yet and the VPN has not been setup on the Control Pi. These will both be required for testing outside without accompaniment.
 
